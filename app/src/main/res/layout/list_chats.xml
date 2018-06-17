@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="55dp">
+    
+    <TextView
+        android:id="@+id/lblListChat"
+        android:textSize="21sp"
+        android:paddingLeft="?android:expandableListPreferredChildPaddingLeft"
+        android:paddingTop="5dp"
+        android:paddingRight="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

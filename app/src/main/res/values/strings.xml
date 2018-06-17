@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MAPP_CA1</string>
+    <string name="meetup_name">Meetup Name</string>
+    <string name="meetup_description">Meetup Description</string>
+    <string name="edit_meet_name">e.g Lets study math!</string>
+    <string name="edit_meet_desc">e.g Need help on differentiation and integration for A Math! I can teach English in return</string>
+    <string name="meet_up_date">Date of Meetup</string>
+    <string name="date_hint">Wed, Apr 25, 2018</string>
+    <string name="hint_time">5.30pm-7.30pm</string>
+    <string name="location">Location</string>
+</resources>
