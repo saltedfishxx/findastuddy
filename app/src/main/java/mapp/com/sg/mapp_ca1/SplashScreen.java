@@ -44,7 +44,7 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                SplashScreen.this.startActivity(new Intent(SplashScreen.this,Login.class));
+                SplashScreen.this.startActivity(new Intent(SplashScreen.this,WelcomeActivity.class));
                 SplashScreen.this.finish();
             }
         },3200); //3000 = 3 seconds

@@ -8,4 +8,5 @@
     <string name="date_hint">Wed, Apr 25, 2018</string>
     <string name="hint_time">5.30pm-7.30pm</string>
     <string name="location">Location</string>
+    <string name="send_button_label">send</string>
 </resources>
