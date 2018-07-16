@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import mapp.com.sg.mapp_ca1.Adapter.MainAdapter;
 import mapp.com.sg.mapp_ca1.Adapter.MyAdapter;
 import mapp.com.sg.mapp_ca1.Models.TitleChild;
 import mapp.com.sg.mapp_ca1.Models.TitleCreator;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        ((MyAdapter)recyclerView.getAdapter()).onSaveInstanceState(outState);
+        //((MainAdapter)recyclerView.getAdapter()).onSaveInstanceState(outState);
     }
 
     @Override
@@ -48,9 +49,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = (RecyclerView)findViewById(R.id.mRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        MyAdapter adapter = new MyAdapter(this,initData());
-        adapter.setParentClickableViewAnimationDefaultDuration();
-        adapter.setParentAndIconExpandOnClick(true);
+        MainAdapter adapter = new MainAdapter(this);
+        //adapter.setParentClickableViewAnimationDefaultDuration();
+        //adapter.setParentAndIconExpandOnClick(true);
 
         recyclerView.setAdapter(adapter);
 
