@@ -55,6 +55,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             holder.messageTextView.setText(message.getText());
         }
         holder.authorTextView.setText(message.getName());
+        holder.timestampView.setText(message.getTimestamp());
 
     }
 
@@ -98,6 +99,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         ImageView photoImageView;
         TextView messageTextView;
         TextView authorTextView;
+        TextView timestampView;
 
         /**
          * Constructor for the TaskViewHolders.
@@ -109,6 +111,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             photoImageView = (ImageView) itemView.findViewById(R.id.photoImageView);
             messageTextView = (TextView) itemView.findViewById(R.id.messageTextView);
             authorTextView = (TextView) itemView.findViewById(R.id.nameTextView);
+            timestampView = (TextView) itemView.findViewById(R.id.timestamp);
         }
 
     }

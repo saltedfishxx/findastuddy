@@ -15,25 +15,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import mapp.com.sg.mapp_ca1.Adapter.MainAdapter;
-import mapp.com.sg.mapp_ca1.Adapter.MyAdapter;
-import mapp.com.sg.mapp_ca1.Models.TitleChild;
-import mapp.com.sg.mapp_ca1.Models.TitleCreator;
-import mapp.com.sg.mapp_ca1.Models.TitleParent;
 
 
 public class MainActivity extends AppCompatActivity {
-//    private ExpandableListView listView;
-//    private ExpandableListAdapter listAdapter;
-//    private List<String> listDataHeader;
-//    private HashMap<String,List<String>> listHash;
     RecyclerView recyclerView;
 
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        //((MainAdapter)recyclerView.getAdapter()).onSaveInstanceState(outState);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,64 +27,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        listView = (ExpandableListView)findViewById(R.id.listChats);
-//        initData();
-//        listAdapter = new ExpandableListAdapter(this,listDataHeader,listHash);
-//        listView.setAdapter(listAdapter);
-
         recyclerView = (RecyclerView)findViewById(R.id.mRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         MainAdapter adapter = new MainAdapter(this);
-        //adapter.setParentClickableViewAnimationDefaultDuration();
-        //adapter.setParentAndIconExpandOnClick(true);
+
 
         recyclerView.setAdapter(adapter);
 
-       // getSupportActionBar().setDisplayShowHomeEnabled(true);
-       // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
-    private List<ParentObject> initData() {
-        TitleCreator titleCreator = TitleCreator.get(this);
-        List<TitleParent> titles = titleCreator.getAll();
-        List<ParentObject> parentObjects = new ArrayList<>();
-        for(TitleParent title:titles){
-            List<Object> childList = new ArrayList<>();
-            childList.add(new TitleChild("Literature Chat"));
-            childList.add(new TitleChild("Math Chat"));
-            title.setChildObjectList(childList);
-            parentObjects.add(title);
-        }
-        return parentObjects;
-    }
-
-//    private void initData() {
-//        listDataHeader = new ArrayList<>();
-//        listHash = new HashMap<>();
-//
-//        listDataHeader.add("Chats created by me");
-//        listDataHeader.add("Chats you are currently in");
-//
-//        List<String> myChats = new ArrayList<>();
-//        myChats.add("Literature Chat");
-//
-//        List<String> chatsIncluded = new ArrayList<>();
-//        chatsIncluded.add("A Math Discussion");
-//
-//        listHash.put(listDataHeader.get(0),myChats);
-//        listHash.put(listDataHeader.get(1),chatsIncluded);
-//    }
-
-   //@Override
-   /* public boolean onOptionsItemSelected(MenuItem item){
-        int id = item.getItemId();
-
-        if(id == android.R.id.home){
-            //ends the activity
-            this.finish();
-        }
-        return true;
-    }*/
 }

@@ -20,7 +20,11 @@ import android.widget.ProgressBar;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import mapp.com.sg.mapp_ca1.Adapter.MessageAdapter;
@@ -116,7 +120,11 @@ public class ChatRoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // TODO: Send messages on click
-                Message message = new Message(mMessageEditText.getText().toString(),mUsername,null);
+                DateFormat dateFormatter = new SimpleDateFormat("hh:mm");
+                dateFormatter.setLenient(false);
+                Date currentTime = Calendar.getInstance().getTime();
+                String s = dateFormatter.format(currentTime);
+                Message message = new Message(mMessageEditText.getText().toString(),mUsername,null, s);
                 firestoreHelper.saveData(message);
                 // Clear input box
                 mMessageEditText.setText("");

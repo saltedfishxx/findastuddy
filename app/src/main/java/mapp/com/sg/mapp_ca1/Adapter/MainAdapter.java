@@ -25,9 +25,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     public MainAdapter(Context context){
         this.mContext = context;
         this.chatList = new ArrayList<>();
+        this.chatList.add("Literature Chat");
     }
 
-    private Context getmContext(){return mContext;};
+    private Context getmContext(){return mContext;}
 
     @NonNull
     @Override
@@ -48,11 +49,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
 
     @Override
     public int getItemCount() {
-//        if(messageList != null){
-//            return messageList.size();
-//        }else {
+       if(chatList != null){
+           return chatList.size();
+        }else {
             return 0;
-//        }
+        }
     }
 
 //    public void clearAll() {

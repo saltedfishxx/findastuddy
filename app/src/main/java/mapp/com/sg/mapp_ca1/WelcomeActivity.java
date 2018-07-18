@@ -33,6 +33,8 @@ public class WelcomeActivity extends AppCompatActivity {
                     break;
                 case R.id.signupbtn:
                     // it was the second button
+                    Intent intent2 = new Intent(getApplicationContext(), Signup.class);
+                    startActivity(intent2);
                     break;
             }
         }
