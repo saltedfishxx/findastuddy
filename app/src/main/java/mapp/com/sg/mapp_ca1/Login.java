@@ -31,7 +31,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
         //check if logged in
         if(auth.getCurrentUser()!=null){
-            startActivity(new Intent(Login.this, MainActivity.class));
+            startActivity(new Intent(Login.this, ChatRoomActivity.class));
         }
     }
 

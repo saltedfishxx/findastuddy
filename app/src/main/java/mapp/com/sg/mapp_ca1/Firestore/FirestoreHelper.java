@@ -13,6 +13,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -44,9 +46,11 @@ public class FirestoreHelper {
                                 String name = document.getString("name");
                                 String text = document.getString("text");
                                 String url = document.getString("photoUrl");
-                                String time = document.getString("timestamp");
+                                Date t = document.getDate("timestamp");
 
-                                Message fm = new Message(name,text,url, time);
+                                SimpleDateFormat format = new SimpleDateFormat("hh:mm");
+                                String time = format.format(t);
+                                Message fm = new Message(text,name,url, time);
                                 messageList.add(fm);
 
                                 reference.UpdateList(messageList);
@@ -67,11 +71,18 @@ public class FirestoreHelper {
 
 
     public void saveData(Message f){
+        Date timestamp = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss");
+        try {
+             timestamp = format.parse(f.getTimestamp());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("name", f.getName());
         data.put("text", f.getText());
         data.put("photoUrl", f.getPhotoUrl());
-        data.put("timestamp", f.getTimestamp());
+        data.put("timestamp", timestamp);
         messagesCollection.document().set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

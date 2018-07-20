@@ -6,11 +6,11 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        tools:replace="android:label"
         android:label="My Chats"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:label">
         <activity
             android:name=".SplashScreen"
             android:theme="@style/Theme.AppCompat.NoActionBar">
@@ -22,18 +22,15 @@
         </activity>
         <activity
             android:name=".Login"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-        </activity>
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".ChatRoomActivity">
-
-        </activity>
-
+            android:theme="@style/Theme.AppCompat.NoActionBar"> </activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".ChatRoomActivity"> </activity>
         <activity android:name=".Signup"> </activity>
-        <activity android:name=".WelcomeActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+        <activity android:name=".termsandconditions"> </activity>
+        <activity
+            android:name=".WelcomeActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"> </activity>
 
-        </activity>
     </application>
 
 </manifest>

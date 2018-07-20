@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -60,6 +61,7 @@ public class ChatRoomActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         if(firebaseAuth.getCurrentUser() != null){
             mUsername = firebaseAuth.getCurrentUser().getDisplayName();
+            Log.d("Current User : ", mUsername);
         }else{
             mUsername = ANONYMOUS;
         }
@@ -120,7 +122,7 @@ public class ChatRoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // TODO: Send messages on click
-                DateFormat dateFormatter = new SimpleDateFormat("hh:mm");
+                DateFormat dateFormatter = new SimpleDateFormat("hh:mm:ss");
                 dateFormatter.setLenient(false);
                 Date currentTime = Calendar.getInstance().getTime();
                 String s = dateFormatter.format(currentTime);
