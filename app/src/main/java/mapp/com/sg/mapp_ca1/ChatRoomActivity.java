@@ -76,7 +76,7 @@ public class ChatRoomActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(layoutManager);
 
         //initialize adapter and attach to recycler view
-        mAdapter = new MessageAdapter(this);
+        mAdapter = new MessageAdapter(this, messageList);
         mRecyclerView.setAdapter(mAdapter);
 
 
@@ -122,7 +122,7 @@ public class ChatRoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // TODO: Send messages on click
-                DateFormat dateFormatter = new SimpleDateFormat("hh:mm:ss");
+                DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                 dateFormatter.setLenient(false);
                 Date currentTime = Calendar.getInstance().getTime();
                 String s = dateFormatter.format(currentTime);

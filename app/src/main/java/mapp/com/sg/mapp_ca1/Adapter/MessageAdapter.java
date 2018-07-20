@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,45 +19,65 @@ import java.util.List;
 import mapp.com.sg.mapp_ca1.Models.Message;
 import mapp.com.sg.mapp_ca1.R;
 
-public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
+public class MessageAdapter extends RecyclerView.Adapter {
+    private static final int VIEW_TYPE_MESSAGE_SENT = 1;
+    private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
     List<Message> messageList;
     Context mContext;
+    private FirebaseAuth firebaseAuth;
 
-    public MessageAdapter(Context context){
+    public MessageAdapter(Context context, List<Message> messageList){
         this.mContext = context;
         this.messageList = new ArrayList<>();
     }
 
     private Context getmContext(){return mContext;};
 
+    // Determines the appropriate ViewType according to the sender of the message.
+    @Override
+    public int getItemViewType(int position) {
+        Message message = (Message) messageList.get(position);
+        firebaseAuth = FirebaseAuth.getInstance();
+        if (message.getName().equals(firebaseAuth.getCurrentUser().getDisplayName())) {
+            // If the current user is the sender of the message
+            return VIEW_TYPE_MESSAGE_SENT;
+        } else {
+            // If some other user sent the message
+            return VIEW_TYPE_MESSAGE_RECEIVED;
+        }
+    }
+
     @NonNull
     @Override
-    public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext)
-                .inflate(R.layout.item_message, parent,false);
-        return new MessageViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view;
+
+        if (viewType == VIEW_TYPE_MESSAGE_SENT) {
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_message, parent, false);
+            return new SentMessageHolder(view);
+        } else if (viewType == VIEW_TYPE_MESSAGE_RECEIVED) {
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_message_received, parent, false);
+            return new ReceivedMessageHolder(view);
+        }
+
+        return null;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MessageAdapter.MessageViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
         //replaces content of the view
         Message message = messageList.get(position);
-        boolean isPhoto = message.getPhotoUrl() != null;
-        if (isPhoto) {
-            holder.messageTextView.setVisibility(View.GONE);
-            holder.photoImageView.setVisibility(View.VISIBLE);
-            Glide.with(holder.photoImageView.getContext())
-                    .load(message.getPhotoUrl())
-                    .into(holder.photoImageView);
-        } else {
-            holder.messageTextView.setVisibility(View.VISIBLE);
-            holder.photoImageView.setVisibility(View.GONE);
-            holder.messageTextView.setText(message.getText());
-        }
-        holder.authorTextView.setText(message.getName());
-        holder.timestampView.setText(message.getTimestamp());
 
+        switch (holder.getItemViewType()) {
+            case VIEW_TYPE_MESSAGE_SENT:
+                ((SentMessageHolder) holder).bind(message);
+                break;
+            case VIEW_TYPE_MESSAGE_RECEIVED:
+                ((ReceivedMessageHolder) holder).bind(message);
+        }
     }
 
     @Override
@@ -93,26 +114,88 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     }
 
     // Inner class for creating ViewHolders
-    class MessageViewHolder extends RecyclerView.ViewHolder {
+    class ReceivedMessageHolder extends RecyclerView.ViewHolder {
+        TextView messageText, timeText, nameText;
+        ImageView profileImage, photoImageView;
 
-        // Class variables for the task description and priority TextViews
-        ImageView photoImageView;
-        TextView messageTextView;
-        TextView authorTextView;
-        TextView timestampView;
-
-        /**
-         * Constructor for the TaskViewHolders.
-         *
-         * @param itemView The view inflated in onCreateViewHolder
-         */
-        public MessageViewHolder(View itemView) {
+        ReceivedMessageHolder(View itemView) {
             super(itemView);
+            messageText = (TextView) itemView.findViewById(R.id.messageTextView);
+            timeText = (TextView) itemView.findViewById(R.id.timestamp);
+            nameText = (TextView) itemView.findViewById(R.id.nameTextView);
+            profileImage = (ImageView) itemView.findViewById(R.id.image_message_profile);
             photoImageView = (ImageView) itemView.findViewById(R.id.photoImageView);
-            messageTextView = (TextView) itemView.findViewById(R.id.messageTextView);
-            authorTextView = (TextView) itemView.findViewById(R.id.nameTextView);
-            timestampView = (TextView) itemView.findViewById(R.id.timestamp);
         }
 
+        void bind(Message message) {
+            boolean isPhoto = message.getPhotoUrl() != null;
+            if (isPhoto) {
+                messageText.setVisibility(View.GONE);
+                photoImageView.setVisibility(View.VISIBLE);
+                Glide.with(photoImageView.getContext())
+                        .load(message.getPhotoUrl())
+                        .into(photoImageView);
+            } else {
+                messageText.setVisibility(View.VISIBLE);
+                photoImageView.setVisibility(View.GONE);
+                messageText.setText(message.getText());
+            }
+            nameText.setText(message.getName());
+            timeText.setText(message.getTimestamp());
+
+                  }
     }
+
+    class SentMessageHolder extends RecyclerView.ViewHolder {
+        TextView messageText, timeText;
+        ImageView photoImageView;
+
+        SentMessageHolder(View itemView) {
+            super(itemView);
+            messageText = (TextView) itemView.findViewById(R.id.messageTextView);
+            timeText = (TextView) itemView.findViewById(R.id.timestamp);
+            photoImageView = (ImageView) itemView.findViewById(R.id.photoImageView);
+        }
+
+        void bind(Message message) {
+            boolean isPhoto = message.getPhotoUrl() != null;
+            if (isPhoto) {
+                messageText.setVisibility(View.GONE);
+                photoImageView.setVisibility(View.VISIBLE);
+                Glide.with(photoImageView.getContext())
+                        .load(message.getPhotoUrl())
+                        .into(photoImageView);
+            } else {
+                messageText.setVisibility(View.VISIBLE);
+                photoImageView.setVisibility(View.GONE);
+                messageText.setText(message.getText());
+            }
+            timeText.setText(message.getTimestamp());
+
+            }
+    }
+
+
+
+//    class MessageViewHolder extends RecyclerView.ViewHolder {
+//
+//        // Class variables for the task description and priority TextViews
+//        ImageView photoImageView;
+//        TextView messageTextView;
+//        TextView authorTextView;
+//        TextView timestampView;
+//
+//        /**
+//         * Constructor for the TaskViewHolders.
+//         *
+//         * @param itemView The view inflated in onCreateViewHolder
+//         */
+//        public MessageViewHolder(View itemView) {
+//            super(itemView);
+//            photoImageView = (ImageView) itemView.findViewById(R.id.photoImageView);
+//            messageTextView = (TextView) itemView.findViewById(R.id.messageTextView);
+//            authorTextView = (TextView) itemView.findViewById(R.id.nameTextView);
+//            timestampView = (TextView) itemView.findViewById(R.id.timestamp);
+//        }
+//    }
 }
