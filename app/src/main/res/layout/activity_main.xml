@@ -12,4 +12,14 @@
         android:id="@+id/mRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/background_color"
+        app:menu="@menu/nav_items"
+        app:itemIconTint="@color/colorPrimary"
+
+        />
 </RelativeLayout>
