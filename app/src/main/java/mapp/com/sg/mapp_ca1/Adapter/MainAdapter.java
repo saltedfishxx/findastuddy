@@ -26,8 +26,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         this.mContext = context;
         this.chatList = new ArrayList<>();
         this.chatList.add("Literature Chat");
-        //loLQW
-        
     }
 
     private Context getmContext(){return mContext;}
