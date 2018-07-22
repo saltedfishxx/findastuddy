@@ -1,11 +1,14 @@
 package mapp.com.sg.mapp_ca1;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -31,9 +34,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
         //check if logged in
         if(auth.getCurrentUser()!=null){
-            startActivity(new Intent(Login.this, ChatRoomActivity.class));
+            startActivity(new Intent(Login.this, MainActivity.class));
         }
-    }
+            }
 
     @Override
     public void onClick(View v) {

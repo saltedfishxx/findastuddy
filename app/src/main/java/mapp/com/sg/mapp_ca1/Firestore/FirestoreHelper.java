@@ -29,8 +29,10 @@ import static android.content.ContentValues.TAG;
 
 public class FirestoreHelper {
     List<Message> messageList;
+    //get the reference for collection in firestore
     static CollectionReference messagesCollection = FirebaseFirestore.getInstance().collection("messages");
 
+    //constructor to call when want to retrieve data
     public FirestoreHelper(ChatRoomActivity r) {
         final ChatRoomActivity reference = r;
 
@@ -43,6 +45,7 @@ public class FirestoreHelper {
                         messageList = new ArrayList<>();
                         if (task.isSuccessful()) {
                             for (DocumentSnapshot document : task.getResult()) {
+                                //for each document retrieved from collection pass it to the variables
                                 String name = document.getString("name");
                                 String text = document.getString("text");
                                 String url = document.getString("photoUrl");
@@ -50,9 +53,12 @@ public class FirestoreHelper {
 
                                 SimpleDateFormat format = new SimpleDateFormat("hh:mm");
                                 String time = format.format(t);
+
+                                //create message object and add to list
                                 Message fm = new Message(text,name,url, time);
                                 messageList.add(fm);
 
+                                //update adapter based on new list
                                 reference.UpdateList(messageList);
                                 reference.updateTasks();
 
@@ -65,11 +71,13 @@ public class FirestoreHelper {
                 });
     }
 
+    //empty constructor
     public FirestoreHelper(){
 
     }
 
 
+    //called when saving message object
     public void saveData(Message f){
         Date timestamp = new Date();
         SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss");

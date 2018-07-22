@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="48dp"
+        app:stackFromEnd="true"
         android:paddingBottom="8dp"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
@@ -22,10 +23,10 @@
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="46dp"
-        android:layout_marginBottom="2dp"
-        android:background="@color/light_grey"
-        android:gravity="bottom"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/border"
+        android:gravity="bottom"
         android:orientation="horizontal">
 
         <ImageButton
@@ -40,7 +41,7 @@
 
         <LinearLayout
             android:layout_width="310dp"
-            android:layout_height="match_parent"
+            android:layout_height="44dp"
             android:layout_centerInParent="true"
             android:background="@color/color_white">
 
@@ -79,6 +80,7 @@
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
+        android:indeterminate="true"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
 </RelativeLayout>

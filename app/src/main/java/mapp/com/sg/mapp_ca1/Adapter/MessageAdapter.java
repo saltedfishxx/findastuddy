@@ -26,6 +26,8 @@ public class MessageAdapter extends RecyclerView.Adapter {
     Context mContext;
     private FirebaseAuth firebaseAuth;
 
+
+    //constructor for adapter when called
     public MessageAdapter(Context context, List<Message> messageList){
         this.mContext = context;
         this.messageList = new ArrayList<>();
@@ -38,6 +40,8 @@ public class MessageAdapter extends RecyclerView.Adapter {
     public int getItemViewType(int position) {
         Message message = (Message) messageList.get(position);
         firebaseAuth = FirebaseAuth.getInstance();
+
+        //TODO: add uid to message and use it to compare instead
         if (message.getName().equals(firebaseAuth.getCurrentUser().getDisplayName())) {
             // If the current user is the sender of the message
             return VIEW_TYPE_MESSAGE_SENT;
@@ -52,6 +56,8 @@ public class MessageAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
 
+        //if the message content is sent by the current user --> create sender UI view
+        //else create receiver UI view
         if (viewType == VIEW_TYPE_MESSAGE_SENT) {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_message, parent, false);
@@ -71,12 +77,15 @@ public class MessageAdapter extends RecyclerView.Adapter {
         //replaces content of the view
         Message message = messageList.get(position);
 
+        //if message item is sent by sender --> it is bind to sentMessageHolder
+        //else the message received is bind to receiveMessageHolder
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_MESSAGE_SENT:
                 ((SentMessageHolder) holder).bind(message);
                 break;
             case VIEW_TYPE_MESSAGE_RECEIVED:
                 ((ReceivedMessageHolder) holder).bind(message);
+                break;
         }
     }
 
@@ -120,6 +129,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
         ReceivedMessageHolder(View itemView) {
             super(itemView);
+            //get name of views from XMl side
             messageText = (TextView) itemView.findViewById(R.id.messageTextView);
             timeText = (TextView) itemView.findViewById(R.id.timestamp);
             nameText = (TextView) itemView.findViewById(R.id.nameTextView);
@@ -128,6 +138,8 @@ public class MessageAdapter extends RecyclerView.Adapter {
         }
 
         void bind(Message message) {
+            //bind the content to the view
+            //isPhoto is used to check if the message sent is a photo or a text message
             boolean isPhoto = message.getPhotoUrl() != null;
             if (isPhoto) {
                 messageText.setVisibility(View.GONE);
@@ -174,28 +186,4 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
             }
     }
-
-
-
-//    class MessageViewHolder extends RecyclerView.ViewHolder {
-//
-//        // Class variables for the task description and priority TextViews
-//        ImageView photoImageView;
-//        TextView messageTextView;
-//        TextView authorTextView;
-//        TextView timestampView;
-//
-//        /**
-//         * Constructor for the TaskViewHolders.
-//         *
-//         * @param itemView The view inflated in onCreateViewHolder
-//         */
-//        public MessageViewHolder(View itemView) {
-//            super(itemView);
-//            photoImageView = (ImageView) itemView.findViewById(R.id.photoImageView);
-//            messageTextView = (TextView) itemView.findViewById(R.id.messageTextView);
-//            authorTextView = (TextView) itemView.findViewById(R.id.nameTextView);
-//            timestampView = (TextView) itemView.findViewById(R.id.timestamp);
-//        }
-//    }
 }

@@ -28,11 +28,11 @@ public class UserFirestoreHelper {
     List<Users> usersList;
     static CollectionReference usersCollection = FirebaseFirestore.getInstance().collection("users");
 
+    //constructor to call when want to retrieve data
     public UserFirestoreHelper(Signup r) {
         final Signup reference = r;
 
         usersCollection
-                .orderBy("timestamp", Query.Direction.ASCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
