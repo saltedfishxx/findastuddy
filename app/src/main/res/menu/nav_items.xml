@@ -5,7 +5,6 @@
         android:id="@+id/action_browse"
         android:title="@string/menu_browse"
         android:icon="@drawable/icon_browse"
-
         />
 
     <item
