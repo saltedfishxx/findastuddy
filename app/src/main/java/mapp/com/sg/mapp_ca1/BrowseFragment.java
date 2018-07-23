@@ -24,7 +24,12 @@ public class BrowseFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_browse, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_browse, container, false);
+        //add toolbar
+        android.support.v7.widget.Toolbar myToolbar = (android.support.v7.widget.Toolbar) view.findViewById(R.id.browseToolBar);
+        ((MainActivity) getActivity()).setSupportActionBar(myToolbar);
+        return view;
     }
 
 }

@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         btmNav.enableAnimation(true);
         btmNav.enableShiftingMode(true);
         btmNav.enableItemShiftingMode(true);
+        btmNav.setCurrentItem(1);
 
 
 
