@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/profileimage"
+            android:layout_below="@+id/bprofileimage"
             android:background="@color/cardview_dark_background"/>
 
         <TextView
