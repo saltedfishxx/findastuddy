@@ -17,7 +17,8 @@
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp">
+            android:layout_height="250dp"
+            >
 
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/collapsingBar"
@@ -31,11 +32,14 @@
                 app:expandedTitleTextAppearance="@android:color/transparent"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:collapsedTitleTextAppearance="@color/grey"
-                app:title="Username's profile">
+                app:title="Username's profile"
+                >
 
                 <android.support.v7.widget.Toolbar
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize" />
+                    android:layout_height="?attr/actionBarSize"
+                    app:titleTextAppearance="@style/Toolbar.TitleText"
+                    />
 
                 <ImageView
                     android:id="@+id/imgUser"

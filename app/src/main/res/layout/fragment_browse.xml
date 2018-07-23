@@ -18,7 +18,9 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/main_edit"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:title="Browse Chats" />
+            app:title="Browse Chats"
+            app:titleTextAppearance="@style/Toolbar.TitleText"
+            />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/bRecyclerView"

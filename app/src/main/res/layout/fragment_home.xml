@@ -17,7 +17,9 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/main_edit"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:title="My Chats" />
+            app:title="My Chats"
+            app:titleTextAppearance="@style/Toolbar.TitleText"
+            />
 
     <!-- TODO: Update blank fragment layout -->
     <android.support.v7.widget.RecyclerView
