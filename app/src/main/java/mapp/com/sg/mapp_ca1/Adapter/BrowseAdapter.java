@@ -27,6 +27,7 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.BrowseView
         this.bContext = context;
         this.browseList = new ArrayList<>();
         this.browseList.add("Literature Chat");
+        this.browseList.add("Math Chat");
     }
 
     private Context getbContext() {
@@ -50,9 +51,8 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.BrowseView
         String chat = browseList.get(position);
         // Set contents for each view
         holder.tvChatName.setText(chat);
-        holder.tvChatDesc.setText(chat);
-        holder.tvMembers.setText(chat);
-
+//        holder.tvChatDesc.setText(chat);
+//        holder.tvMembers.setText(chat);
     }
 
     @Override

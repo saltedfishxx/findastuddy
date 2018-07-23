@@ -1,43 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/activity_vertical_margin">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
+    android:layout_marginTop="@dimen/activity_minor_margin"
+    app:cardCornerRadius="5dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_minor_margin"
         android:background="@color/cardview_light_background">
 
-        <ImageView
-            android:id="@+id/bprofileimage"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/bTop"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:src="@drawable/ic_group_black_24dp" />
+            android:gravity="left"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/bchat1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/bprofileimage"
-            android:layout_toEndOf="@+id/bprofileimage"
-            android:text="Literature Chat"
-            android:textColor="@color/text_color"
-            android:textSize="16sp" />
+            <ImageView
+                android:id="@+id/bprofileimage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:src="@drawable/ic_group_black_24dp" />
+
+            <TextView
+                android:id="@+id/bchat1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="Literature Chat"
+                android:textColor="@color/text_color"
+                android:textSize="25sp" />
+        </LinearLayout>
+
 
         <View
             android:id="@+id/viewSep"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="1dp"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/bprofileimage"
-            android:background="@color/cardview_dark_background" />
+            android:layout_below="@+id/bTop"
+            android:background="@color/light_grey" />
 
         <TextView
             android:id="@+id/btxtDesc"
@@ -48,7 +58,8 @@
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_minor_margin"
             android:text="Literature group chat, Sec 3 and 4 are welcome to discuss! "
-            android:textColor="@color/dark_text" />
+            android:textColor="@color/grey"
+            android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/btxtMemCount"
@@ -59,7 +70,9 @@
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_minor_margin"
             android:text="Members : "
-            android:textColor="@color/text_color" />
+            android:textColor="@color/text_color"
+            android:textSize="18sp"
+            />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>
