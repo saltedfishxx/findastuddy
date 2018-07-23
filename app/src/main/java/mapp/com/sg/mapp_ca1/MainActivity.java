@@ -69,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.action_profile:
                         setFragment(profileFragment);
+                        getSupportFragmentManager().beginTransaction().detach(profileFragment).commitNowAllowingStateLoss();
+                        getSupportFragmentManager().beginTransaction().attach(profileFragment).commitAllowingStateLoss();
                         break;
                 }
                 return true;
@@ -77,6 +79,18 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getSupportFragmentManager().beginTransaction().detach(profileFragment).commitNowAllowingStateLoss();
+        getSupportFragmentManager().beginTransaction().attach(profileFragment).commitAllowingStateLoss();
     }
 
     //Change screen based on fragment parsed in

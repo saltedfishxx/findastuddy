@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list  xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <item>
+        <shape
+            android:shape="oval">
+
+            <solid
+                android:color="#74484444"/>
+
+            <size
+                android:width="120dp"
+                android:height="120dp"/>
+        </shape>
+    </item>
+    <item android:drawable="@drawable/ic_camera_alt_black_24dp"
+        android:width="28dp"
+        android:height="28dp"
+        android:viewportWidth="24.0"
+        android:viewportHeight="24.0"
+        android:top="38dp"
+        android:left="45dp"
+        />
+</layer-list>

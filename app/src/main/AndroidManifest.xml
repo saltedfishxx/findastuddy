@@ -30,6 +30,7 @@
         <activity android:name=".ChatRoomActivity"> </activity>
         <activity android:name=".Signup"> </activity>
         <activity android:name=".termsandconditions"> </activity>
+        <activity android:name=".EditProfile"> </activity>
         <activity
             android:name=".WelcomeActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"> </activity>

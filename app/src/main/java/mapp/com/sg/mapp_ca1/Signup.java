@@ -257,7 +257,7 @@ public class Signup extends AppCompatActivity {
                                     //TODO: save user data
                                     //TODO: sign in user and go to home screen --> add auth listener
                                     getRadioSelection();
-                                    Users newUser = new Users(mAuth.getUid(), username.getText().toString(), edu, year, stream);
+                                    Users newUser = new Users(mAuth.getUid(), username.getText().toString(), edu, year, stream, null);
                                     userFirestoreHelper = new UserFirestoreHelper();
                                     userFirestoreHelper.saveData(newUser);
 

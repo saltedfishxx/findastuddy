@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background_color">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:id="@+id/profileView"
+                android:background="@color/main_edit"
+                android:layout_width="match_parent"
+                android:layout_height="250dp">
+
+                <RelativeLayout
+                    android:id="@+id/editButtons"
+                    android:orientation = "horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="12dp">
+                    <TextView
+                        android:id="@+id/cancel"
+                        android:text="Cancel"
+                        android:textColor="@color/color_white"
+                        android:textSize="18dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"/>
+                    <TextView
+                        android:id="@+id/done"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Done"
+                        android:textSize="18dp"
+                        android:textColor="@color/color_white"
+                        android:layout_marginEnd="14dp"
+                        android:layout_alignParentEnd="true"
+                        />
+
+                </RelativeLayout>
+                <ImageView
+                    android:id="@+id/userImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/circle"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/editButtons"/>
+                <ImageView
+                    android:id="@+id/editImage"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/editButtons"
+                    android:background="@drawable/circle_overlay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Edit"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignTop="@+id/userImage"
+                    android:layout_marginTop="60dp"
+                    android:textColor="@color/color_white"
+                    android:textSize="20sp"
+                    android:layout_below="@id/editImage"/>
+                <EditText
+                    android:id="@+id/editName"
+                    android:layout_width="200dp"
+                    android:maxLines="1"
+                    android:backgroundTint="@color/color_white"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/editImage"
+                    android:hint="User name"
+                    android:textSize="24sp"
+                    android:textAlignment="center"
+                    android:layout_marginTop="12dp"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profileView"
+                android:gravity="center|center_horizontal">
+                <!-- education -->
+                <android.support.v7.widget.CardView
+                    android:id="@+id/educationCard"
+                    android:layout_width="310dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/loginCard"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="28dp"
+                    app:cardBackgroundColor="@color/color_white">
+
+
+                    <LinearLayout
+                        android:id="@+id/underInput2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginTop="12dp"
+                            android:text="Education level"
+                            android:textColor="@color/text_color"
+                            android:textSize="20sp" />
+
+                        <RadioGroup
+                            android:id="@+id/RGEducation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="12dp"
+                            android:layout_marginLeft="14dp"
+                            android:layout_marginRight="14dp"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/secondaryRB"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="24dp"
+                                android:layout_marginTop="24dp"
+                                android:text="Secondary" />
+
+                            <RadioButton
+                                android:id="@+id/jcRB"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="24dp"
+                                android:layout_marginRight="40dp"
+                                android:layout_marginTop="24dp"
+                                android:text="JC/MI" />
+                        </RadioGroup>
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <!-- stream secondary -->
+                <android.support.v7.widget.CardView
+                    android:id="@+id/streamCard"
+                    android:layout_width="310dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/educationCard"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="24dp"
+                    app:cardBackgroundColor="@color/color_white">
+
+
+                    <LinearLayout
+                        android:id="@+id/underInput3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginTop="12dp"
+                            android:text="Stream"
+                            android:textColor="@color/text_color"
+                            android:textSize="20sp" />
+
+                        <RadioGroup
+                            android:id="@+id/RGStream"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="14dp"
+                            android:layout_marginRight="14dp"
+                            android:orientation="vertical">
+
+                            <RadioButton
+                                android:id="@+id/expressRB"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="24dp"
+                                android:layout_marginTop="24dp"
+                                android:text="Express" />
+
+                            <RadioButton
+                                android:id="@+id/normalARB"
+                                android:layout_width="108dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="24dp"
+                                android:layout_marginTop="24dp"
+                                android:text="Normal (Academic)" />
+
+                            <RadioButton
+                                android:id="@+id/normalTRB"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="24dp"
+                                android:layout_marginTop="24dp"
+                                android:text="Normal (Technical)" />
+
+
+                        </RadioGroup>
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <!--secondary card-->
+                <android.support.v7.widget.CardView
+                    android:id="@+id/secondaryYearCard"
+                    android:layout_width="310dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/streamCard"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="24dp"
+                    app:cardBackgroundColor="@color/color_white">
+
+                    <LinearLayout
+                        android:id="@+id/underInput4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/streamCard"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginTop="12dp"
+                            android:text="Current Year of Study"
+                            android:textColor="@color/text_color"
+                            android:textSize="20sp" />
+
+                        <RadioGroup
+                            android:id="@+id/RGsecondary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <RadioButton
+                                android:id="@+id/sec1RB"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="24dp"
+                                android:layout_marginTop="24dp"
+                                android:text="Secondary 1" />
+
+                            <RadioButton
+                                android:id="@+id/sec2RB"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="24dp"
+                                android:layout_marginTop="24dp"
+                                android:text="Secondary 2" />
+
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="24dp"
+                                android:layout_marginTop="24dp"
+                                android:text="Secondary 3" />
+
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="24dp"
+                                android:layout_marginTop="24dp"
+                                android:text="Secondary 4" />
+
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="24dp"
+                                android:layout_marginTop="24dp"
+                                android:text="Secondary 5" />
+
+                        </RadioGroup>
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <!-- stream jc -->
+                <android.support.v7.widget.CardView
+                    android:id="@+id/streamJCCard"
+                    android:layout_width="310dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/educationCard"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="24dp"
+                    app:cardBackgroundColor="@color/color_white">
+
+
+                    <LinearLayout
+                        android:id="@+id/underInput33"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginTop="12dp"
+                            android:text="Stream"
+                            android:textColor="@color/text_color"
+                            android:textSize="20sp" />
+
+                        <RadioGroup
+                            android:id="@+id/RGStreamJC"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="14dp"
+                            android:layout_marginRight="14dp"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/artRB"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="24dp"
+                                android:layout_marginTop="24dp"
+                                android:text="Art" />
+
+                            <RadioButton
+                                android:id="@+id/scienceARB"
+                                android:layout_width="108dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="24dp"
+                                android:layout_marginTop="24dp"
+                                android:text="Science" />
+
+
+                        </RadioGroup>
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <!-- jc card-->
+                <android.support.v7.widget.CardView
+                    android:id="@+id/jcYearCard"
+                    android:layout_width="310dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/streamJCCard"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    app:cardBackgroundColor="@color/color_white">
+
+                    <LinearLayout
+                        android:id="@+id/underInput5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginTop="12dp"
+                            android:text="Current Year of Study"
+                            android:textColor="@color/text_color"
+                            android:textSize="20sp" />
+
+                        <RadioGroup
+                            android:id="@+id/RGjc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="24dp"
+                                android:layout_marginTop="24dp"
+                                android:text="Year 1" />
+
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="24dp"
+                                android:layout_marginTop="24dp"
+                                android:text="Year 2" />
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="24dp"
+                                android:layout_marginTop="24dp"
+                                android:text="Year 3" />
+                        </RadioGroup>
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+
+
+</android.support.constraint.ConstraintLayout>

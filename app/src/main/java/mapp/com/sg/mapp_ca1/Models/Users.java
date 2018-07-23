@@ -2,12 +2,13 @@ package mapp.com.sg.mapp_ca1.Models;
 
 public class Users {
 
-    public Users(String uid, String username, String education_lvl, String year, String stream) {
+    public Users(String uid, String username, String education_lvl, String year, String stream, String profileUrl) {
         this.uid = uid;
         this.username = username;
         this.education_lvl = education_lvl;
         this.year = year;
         this.stream = stream;
+        this.profileUrl = profileUrl;
     }
 
     public String getUid() {
@@ -50,9 +51,18 @@ public class Users {
         this.stream = stream;
     }
 
+    public String getProfileUrl() {
+        return profileUrl;
+    }
+
+    public void setProfileUrl(String profileUrl) {
+        this.profileUrl = profileUrl;
+    }
+
     private String uid;
     private String username;
     private String education_lvl;
     private String year;
     private String stream;
+    private String profileUrl;
 }
