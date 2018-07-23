@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    >
+    android:paddingTop="@dimen/activity_vertical_margin">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="@color/cardview_light_background"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
-        >
+        android:background="@color/cardview_light_background">
 
         <ImageView
             android:id="@+id/bprofileimage"
@@ -40,10 +37,10 @@
             android:layout_height="2dp"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/bprofileimage"
-            android:background="@color/cardview_dark_background"/>
+            android:background="@color/cardview_dark_background" />
 
         <TextView
-            android:id="@+id/txtDesc"
+            android:id="@+id/btxtDesc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/viewSep"
@@ -51,23 +48,18 @@
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_minor_margin"
             android:text="Literature group chat, Sec 3 and 4 are welcome to discuss! "
-            android:textColor="@color/dark_text"
-            />
+            android:textColor="@color/dark_text" />
 
         <TextView
-            android:id="@+id/txtMemCount"
+            android:id="@+id/btxtMemCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txtDesc"
+            android:layout_below="@+id/btxtDesc"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_minor_margin"
             android:text="Members : "
-            android:textColor="@color/text_color"
-            />
-
-
-
+            android:textColor="@color/text_color" />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

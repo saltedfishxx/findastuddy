@@ -49,7 +49,9 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.BrowseView
         //chatTextView is defined in the inner class MainViewHolder
         String chat = browseList.get(position);
         // Set contents for each view
-        holder.chatTextView.setText(chat);
+        holder.tvChatName.setText(chat);
+        holder.tvChatDesc.setText(chat);
+        holder.tvMembers.setText(chat);
 
     }
 
@@ -79,7 +81,8 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.BrowseView
             //get needed views from xml file
             tvChatName = (TextView) itemView.findViewById(R.id.bchat1);
             //TODO : Add the rest
-            tvChatDesc = (TextView) itemView.findViewById(R.id.)
+            tvChatDesc = (TextView) itemView.findViewById(R.id.btxtDesc);
+            tvMembers = (TextView) itemView.findViewById(R.id.btxtMemCount);
 
         }
 
