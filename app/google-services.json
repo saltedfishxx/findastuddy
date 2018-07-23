@@ -23,8 +23,12 @@
           }
         },
         {
-          "client_id": "835406601531-j00oljhrv9lkjir0khi2nj4gd1uq2u8q.apps.googleusercontent.com",
-          "client_type": 3
+          "client_id": "835406601531-sb5iiefgn6dugj07jourf0tkqcn74rqn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mapp.com.sg.mapp_ca1",
+            "certificate_hash": "d987aa00444868350982026232f82a684f00bc2d"
+          }
         },
         {
           "client_id": "835406601531-j00oljhrv9lkjir0khi2nj4gd1uq2u8q.apps.googleusercontent.com",
