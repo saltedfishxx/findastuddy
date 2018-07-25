@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
         firebaseAuth = FirebaseAuth.getInstance();
 
         //TODO: add uid to message and use it to compare instead
-        if (message.getName().equals(firebaseAuth.getCurrentUser().getDisplayName())) {
+        if (message.getUid().equals(firebaseAuth.getCurrentUser().getUid())) {
             // If the current user is the sender of the message
             return VIEW_TYPE_MESSAGE_SENT;
         } else {
@@ -154,6 +155,10 @@ public class MessageAdapter extends RecyclerView.Adapter {
             }
             nameText.setText(message.getName());
             timeText.setText(message.getTimestamp());
+            Glide.with(profileImage.getContext())
+                    .load(message.getProfileUrl())
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(profileImage);
 
                   }
     }

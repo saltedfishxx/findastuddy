@@ -89,8 +89,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        getSupportFragmentManager().beginTransaction().detach(profileFragment).commitNowAllowingStateLoss();
-        getSupportFragmentManager().beginTransaction().attach(profileFragment).commitAllowingStateLoss();
     }
 
     //Change screen based on fragment parsed in

@@ -46,16 +46,18 @@ public class FirestoreHelper {
                         if (task.isSuccessful()) {
                             for (DocumentSnapshot document : task.getResult()) {
                                 //for each document retrieved from collection pass it to the variables
+                                String id = document.getString("uid");
                                 String name = document.getString("name");
                                 String text = document.getString("text");
                                 String url = document.getString("photoUrl");
                                 Date t = document.getDate("timestamp");
+                                String profilePic = document.getString("profileUrl");
 
                                 SimpleDateFormat format = new SimpleDateFormat("hh:mm");
                                 String time = format.format(t);
 
                                 //create message object and add to list
-                                Message fm = new Message(text,name,url, time);
+                                Message fm = new Message(id, text,name,url, time, profilePic);
                                 messageList.add(fm);
 
                                 //update adapter based on new list
@@ -87,10 +89,12 @@ public class FirestoreHelper {
             e.printStackTrace();
         }
         Map<String, Object> data = new HashMap<String, Object>();
+        data.put("uid", f.getUid());
         data.put("name", f.getName());
         data.put("text", f.getText());
         data.put("photoUrl", f.getPhotoUrl());
         data.put("timestamp", timestamp);
+        data.put("profileUrl", f.getProfileUrl());
         messagesCollection.document().set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

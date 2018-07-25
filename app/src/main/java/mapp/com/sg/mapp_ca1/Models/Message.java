@@ -3,19 +3,31 @@ package mapp.com.sg.mapp_ca1.Models;
 import java.util.Date;
 
 public class Message {
+    private String uid;
     private String text;
     private String name;
     private String photoUrl;
     private String timestamp;
+    private String profileUrl;
 
     public Message() {
     }
 
-    public Message(String text, String name, String photoUrl, String timestamp) {
+    public Message(String uid, String text, String name, String photoUrl, String timestamp, String profileUrl) {
+        this.uid = uid;
         this.text = text;
         this.name = name;
         this.photoUrl = photoUrl;
         this.timestamp = timestamp;
+        this.profileUrl = profileUrl;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getText() {
@@ -48,5 +60,13 @@ public class Message {
 
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getProfileUrl() {
+        return profileUrl;
+    }
+
+    public void setProfileUrl(String profileUrl) {
+        this.profileUrl = profileUrl;
     }
 }

@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
+import mapp.com.sg.mapp_ca1.ChatRoomActivity;
 import mapp.com.sg.mapp_ca1.Models.Message;
 import mapp.com.sg.mapp_ca1.R;
 
@@ -40,6 +41,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         //creates the content view
         View view = LayoutInflater.from(mContext)
                 .inflate(R.layout.layout_child, parent,false);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+                Intent intent = new Intent(context, ChatRoomActivity.class);
+                context.startActivity(intent);
+            }
+        });
         return new MainViewHolder(view);
     }
 

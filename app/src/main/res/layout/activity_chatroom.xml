@@ -6,11 +6,23 @@
     android:layout_height="match_parent"
     tools:context="mapp.com.sg.mapp_ca1.ChatRoomActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/groupToolBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/main_edit"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:title="My group chat"
+        app:titleTextAppearance="@style/Toolbar.TitleText"
+        />
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewTasks"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="48dp"
+        android:layout_below="@+id/groupToolBar"
         app:stackFromEnd="true"
         android:paddingBottom="8dp"
         android:paddingLeft="@dimen/activity_horizontal_margin"
