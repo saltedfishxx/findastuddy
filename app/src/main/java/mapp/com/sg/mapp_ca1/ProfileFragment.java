@@ -99,7 +99,7 @@ public class ProfileFragment extends Fragment {
         //set content
         if(user!=null) {
 
-            collapsingToolbarLayout.setTitle(user.getUsername());
+            collapsingToolbarLayout.setTitle(user.getUsername() + "'s Profile");
             Glide.with(userPic.getContext())
                     .load(user.getProfileUrl())
                     .apply(RequestOptions.circleCropTransform())

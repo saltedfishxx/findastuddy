@@ -5,9 +5,11 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
@@ -19,11 +21,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
@@ -39,7 +47,11 @@ import java.util.List;
 
 import mapp.com.sg.mapp_ca1.Adapter.MessageAdapter;
 import mapp.com.sg.mapp_ca1.Firestore.FirestoreHelper;
+import mapp.com.sg.mapp_ca1.Firestore.UserFirestoreHelper;
 import mapp.com.sg.mapp_ca1.Models.Message;
+import mapp.com.sg.mapp_ca1.Models.Users;
+
+import static android.content.ContentValues.TAG;
 
 public class ChatRoomActivity extends AppCompatActivity {
     private static final String TAG = "ChatRoom";
@@ -63,10 +75,12 @@ public class ChatRoomActivity extends AppCompatActivity {
 
     //firebase
     private FirestoreHelper firestoreHelper;
+    private UserFirestoreHelper userFirestoreHelper;
     private FirebaseAuth firebaseAuth;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
     ProgressDialog nDialog;
+    Users user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +92,37 @@ public class ChatRoomActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         storageReference = firebaseStorage.getReference().child("chat_photos");
 
+
+        CollectionReference usersCollection = FirebaseFirestore.getInstance().collection("users");
+
+        usersCollection
+                .document(firebaseAuth.getCurrentUser().getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            String id = document.getId();
+                            String username = document.getString("username");
+                            String education_level = document.getString("education_level");
+                            String study_year = document.getString("study_year");
+                            String stream = document.getString("stream");
+                            String profileUrl = document.getString("profileUrl");
+
+                            if(id.equals(firebaseAuth.getCurrentUser().getUid())) {
+                                user = new Users(id, username, education_level, study_year, stream, profileUrl);
+                            }
+
+
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+
+
+                    }
+                });
+
         if(firebaseAuth.getCurrentUser() != null){
             mUsername = firebaseAuth.getCurrentUser().getDisplayName();
             Log.d("Current User : ", mUsername);
@@ -86,6 +131,13 @@ public class ChatRoomActivity extends AppCompatActivity {
         }
 
 
+        //set toolbar
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.groupToolBar);
+        ChatRoomActivity.this.setSupportActionBar(myToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //TODO: when group chat has set up set toolbar title as group name
+        //TODO: add up button
 
         //create progress dialog when sending images
         nDialog = new ProgressDialog(ChatRoomActivity.this);
@@ -159,7 +211,7 @@ public class ChatRoomActivity extends AppCompatActivity {
                 dateFormatter.setLenient(false);
                 Date currentTime = Calendar.getInstance().getTime();
                 String s = dateFormatter.format(currentTime);
-                Message message = new Message(mMessageEditText.getText().toString(),mUsername,null, s);
+                Message message = new Message(user.getUid(),mMessageEditText.getText().toString(),mUsername,null, s, user.getProfileUrl());
                 firestoreHelper.saveData(message);
                 // Clear input box
                 mMessageEditText.setText("");
@@ -185,7 +237,7 @@ public class ChatRoomActivity extends AppCompatActivity {
                     Date currentTime = Calendar.getInstance().getTime();
                     String s = dateFormatter.format(currentTime);
                     Uri downloadUri = taskSnapshot.getDownloadUrl();
-                    Message message = new Message(null, mUsername, downloadUri.toString(), s);
+                    Message message = new Message(user.getUid(), null, mUsername, downloadUri.toString(), s, user.getProfileUrl());
                     firestoreHelper.saveData(message);
                     firestoreHelper = new FirestoreHelper(r);
 

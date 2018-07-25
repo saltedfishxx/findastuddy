@@ -18,7 +18,10 @@ public class termsandconditions extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_termsandconditions);
-
+        //set toolbar
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.tcToolBar);
+        termsandconditions.this.setSupportActionBar(myToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
