@@ -222,8 +222,9 @@ public class EditProfile extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.putExtra("position", 2);
         intent.putExtra("isNewItem", true);
+        intent.putExtra("user", users);
         startActivity(intent);
-        finish();
+        //finish();
     }
 
     //TODO: pass integers based on radio button selection

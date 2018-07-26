@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -51,7 +52,7 @@ public class ProfileFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         //userFirestoreHelper = new UserFirestoreHelper();
         final String userID = firebaseAuth.getCurrentUser().getUid();
-        //user = userFirestoreHelper.getUser(id);
+        //user = userFirestoreHelper.getUser(userID);
         CollectionReference usersCollection = FirebaseFirestore.getInstance().collection("users");
 
         usersCollection
@@ -81,6 +82,9 @@ public class ProfileFragment extends Fragment {
                 });
     }
 
+    public void getUser(Users u){
+      this.user = u;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

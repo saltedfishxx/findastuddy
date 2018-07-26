@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import mapp.com.sg.mapp_ca1.Adapter.MainAdapter;
+import mapp.com.sg.mapp_ca1.Models.Users;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -55,7 +56,17 @@ public class MainActivity extends AppCompatActivity {
         btmNav.enableItemShiftingMode(true);
         btmNav.setCurrentItem(1);
 
+        boolean isNew = getIntent().getBooleanExtra("isNewItem", false);
+        int position = getIntent().getIntExtra("position", 1);
+        Users users = (Users) getIntent().getSerializableExtra("user");
 
+        if(isNew){
+            profileFragment.getUser(users);
+            btmNav.setCurrentItem(position);
+            setFragment(profileFragment);
+            getSupportFragmentManager().beginTransaction().detach(profileFragment).commitNowAllowingStateLoss();
+            getSupportFragmentManager().beginTransaction().attach(profileFragment).commitAllowingStateLoss();
+        }
 
         btmNav.setOnNavigationItemSelectedListener(new BottomNavigationViewEx.OnNavigationItemSelectedListener() {
             @Override

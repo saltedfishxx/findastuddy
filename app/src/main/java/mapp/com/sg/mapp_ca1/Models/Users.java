@@ -1,6 +1,8 @@
 package mapp.com.sg.mapp_ca1.Models;
 
-public class Users {
+import java.io.Serializable;
+
+public class Users implements Serializable {
 
     public Users(String uid, String username, String education_lvl, String year, String stream, String profileUrl) {
         this.uid = uid;
