@@ -85,39 +85,87 @@ public class UserFirestoreHelper {
     }
 
     public void updateData(final Users f) {
-        usersCollection.document(f.getUid())
-                .update("username", f.getUsername(),
-                        "education_level", f.getEducation_lvl(),
-                        "study_year", f.getYear(),
-                        "stream", f.getStream(),
-                        "profileUrl", f.getProfileUrl()
-                ).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(f.getProfileUrl() == null){
+            usersCollection.document(f.getUid())
+                    .update("username", f.getUsername(),
+                            "education_level", f.getEducation_lvl(),
+                            "study_year", f.getYear(),
+                            "stream", f.getStream()
+                    ).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                        .setDisplayName(f.getUsername()).build();
+                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(f.getUsername()).build();
 
-                if (user != null) {
-                    user.updateProfile(profileUpdates);
-                }
-
-                Log.d(TAG, "DocumentSnapshot successfully updated!");
-            }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error updating document", e);
+                    if (user != null) {
+                        user.updateProfile(profileUpdates);
                     }
-                });
+
+                    Log.d(TAG, "DocumentSnapshot successfully updated!");
+                }
+            })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error updating document", e);
+                        }
+                    });
+        }else{
+            usersCollection.document(f.getUid())
+                    .update("username", f.getUsername(),
+                            "education_level", f.getEducation_lvl(),
+                            "study_year", f.getYear(),
+                            "stream", f.getStream(),
+                            "profileUrl", f.getProfileUrl()
+                    ).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(f.getUsername()).build();
+
+                    if (user != null) {
+                        user.updateProfile(profileUpdates);
+                    }
+
+                    Log.d(TAG, "DocumentSnapshot successfully updated!");
+                }
+            })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error updating document", e);
+                        }
+                    });
+
+        }
+
     }
 
     public Users getUser(final String userID) {
         usersCollection
                 .document(userID)
                 .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if(documentSnapshot != null){
+                            String id = documentSnapshot.getId();
+                            String username = documentSnapshot.getString("username");
+                            String education_level = documentSnapshot.getString("education_level");
+                            String study_year = documentSnapshot.getString("study_year");
+                            String stream = documentSnapshot.getString("stream");
+                            String profileUrl = documentSnapshot.getString("profileUrl");
+
+                            if(id.equals(userID)) {
+                                users = new Users(id, username, education_level, study_year, stream, profileUrl);
+                            }
+                        }
+                    }
+                })
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
