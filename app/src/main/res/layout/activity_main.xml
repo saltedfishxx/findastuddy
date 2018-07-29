@@ -14,17 +14,16 @@
         android:name="mapp.com.sg.mapp_ca1.HomeFragment"
         />
 
-    
+
     <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
         android:id="@+id/btmNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
         android:background="@color/grey"
         android:src="@drawable/border"
-        app:menu="@menu/nav_items"
         app:itemIconTint="@color/selector"
         app:itemTextColor="@color/selector"
-
-        />
+        app:menu="@menu/nav_items" />
 </RelativeLayout>

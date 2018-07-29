@@ -28,6 +28,12 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.BrowseView
         this.browseList = new ArrayList<>();
         this.browseList.add("Literature Chat");
         this.browseList.add("Math Chat");
+        this.browseList.add("Literature Chat");
+        this.browseList.add("Math Chat");
+        this.browseList.add("Literature Chat");
+        this.browseList.add("Math Chat");
+        this.browseList.add("Literature Chat");
+        this.browseList.add("Math Chat");
     }
 
     private Context getbContext() {

@@ -6,28 +6,57 @@
     android:layout_height="match_parent"
     android:background="@color/background_color"
     tools:context=".BrowseFragment">
-
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/browseToolBar"
+        <RelativeLayout
+            android:id="@+id/rlMain"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/main_edit"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:title="Browse Chats"
-            app:titleTextAppearance="@style/Toolbar.TitleText"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent="0.8">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/browseToolBar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/main_edit"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:title="Browse Chats"
+                app:titleTextAppearance="@style/Toolbar.TitleText" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/bRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/browseToolBar" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btncreateChat"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/text_color"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="Create Chat"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/home_textsize"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHeight_percent="0.12"
+            app:layout_constraintTop_toBottomOf="@+id/rlMain"
+            android:clickable="true"
             />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/bRecyclerView"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/browseToolBar" />
-
-    </RelativeLayout>
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent="0.08"
+            app:layout_constraintTop_toBottomOf="@+id/btncreateChat"
+            android:background="@color/light_text"
+            />
+    </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>

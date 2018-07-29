@@ -28,7 +28,6 @@
         android:layout_height="603dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/homeToolBar" />
-
 </RelativeLayout>
 
 
