@@ -105,6 +105,20 @@ public class MainActivity extends AppCompatActivity {
     //Change screen based on fragment parsed in
     private void setFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        if(fragment == profileFragment){
+            //slide left
+            fragmentTransaction.setCustomAnimations(R.animator.enter_from_right, R.animator.exit_to_left, R.animator.enter_from_left, R.animator.exit_to_right);
+
+        }else if (fragment == browseFragment){
+            //slide right
+            fragmentTransaction.setCustomAnimations(R.animator.enter_from_left, R.animator.exit_to_right, R.animator.enter_from_right, R.animator.exit_to_left);
+
+        }else if (profileFragment.isVisible()){
+            fragmentTransaction.setCustomAnimations(R.animator.enter_from_left, R.animator.exit_to_right, R.animator.enter_from_right, R.animator.exit_to_left);
+
+        }else if (browseFragment.isVisible()){
+            fragmentTransaction.setCustomAnimations(R.animator.enter_from_right, R.animator.exit_to_left, R.animator.enter_from_left, R.animator.exit_to_right);
+        }
         fragmentTransaction.replace(R.id.main_screen, fragment);
         fragmentTransaction.commit();
     }
