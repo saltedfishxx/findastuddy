@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import mapp.com.sg.mapp_ca1.Firestore.GroupChatFirestoreHelper;
 import mapp.com.sg.mapp_ca1.R;
 
 /**
@@ -26,6 +27,7 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.BrowseView
     public BrowseAdapter(Context context) {
         this.bContext = context;
         this.browseList = new ArrayList<>();
+
         this.browseList.add("Literature Chat");
         this.browseList.add("Math Chat");
         this.browseList.add("Literature Chat");

@@ -13,7 +13,6 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -21,18 +20,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import mapp.com.sg.mapp_ca1.ChatRoomActivity;
-import mapp.com.sg.mapp_ca1.Models.Message;
 import mapp.com.sg.mapp_ca1.Models.Users;
 import mapp.com.sg.mapp_ca1.Signup;
-import okio.Source;
 
 import static android.content.ContentValues.TAG;
 
 public class UserFirestoreHelper {
+    static CollectionReference usersCollection = FirebaseFirestore.getInstance().collection("users");
     List<Users> usersList;
     Users users;
-    static CollectionReference usersCollection = FirebaseFirestore.getInstance().collection("users");
 
     //constructor to call when want to retrieve data
     public UserFirestoreHelper(Signup r) {
@@ -85,7 +81,7 @@ public class UserFirestoreHelper {
     }
 
     public void updateData(final Users f) {
-        if(f.getProfileUrl() == null){
+        if (f.getProfileUrl() == null) {
             usersCollection.document(f.getUid())
                     .update("username", f.getUsername(),
                             "education_level", f.getEducation_lvl(),
@@ -112,7 +108,7 @@ public class UserFirestoreHelper {
                             Log.w(TAG, "Error updating document", e);
                         }
                     });
-        }else{
+        } else {
             usersCollection.document(f.getUid())
                     .update("username", f.getUsername(),
                             "education_level", f.getEducation_lvl(),
@@ -144,58 +140,4 @@ public class UserFirestoreHelper {
         }
 
     }
-
-    public Users getUser(final String userID) {
-        usersCollection
-                .document(userID)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if(documentSnapshot != null){
-                            String id = documentSnapshot.getId();
-                            String username = documentSnapshot.getString("username");
-                            String education_level = documentSnapshot.getString("education_level");
-                            String study_year = documentSnapshot.getString("study_year");
-                            String stream = documentSnapshot.getString("stream");
-                            String profileUrl = documentSnapshot.getString("profileUrl");
-
-                            if(id.equals(userID)) {
-                                users = new Users(id, username, education_level, study_year, stream, profileUrl);
-                            }
-                        }
-                    }
-                })
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                           DocumentSnapshot document = task.getResult();
-                                String id = document.getId();
-                                String username = document.getString("username");
-                                String education_level = document.getString("education_level");
-                                String study_year = document.getString("study_year");
-                                String stream = document.getString("stream");
-                                String profileUrl = document.getString("profileUrl");
-
-                                if(id.equals(userID)) {
-                                    users = new Users(id, username, education_level, study_year, stream, profileUrl);
-                                }
-
-
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-
-
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                e.printStackTrace();
-            }
-        });
-        return users;
-    }
-
 }
