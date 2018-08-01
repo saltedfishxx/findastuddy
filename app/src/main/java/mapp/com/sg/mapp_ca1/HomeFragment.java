@@ -14,7 +14,15 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import mapp.com.sg.mapp_ca1.Adapter.MainAdapter;
+import mapp.com.sg.mapp_ca1.Firestore.GroupChatFirestoreHelper;
+import mapp.com.sg.mapp_ca1.Models.GroupChats;
 
 
 /**
@@ -26,7 +34,10 @@ public class HomeFragment extends Fragment {
     private MainAdapter mAdapter;
 
     //call groupchat firestore
-
+    List<GroupChats> allChats;
+    List<GroupChats> mychats;
+    GroupChatFirestoreHelper groupChatFirestoreHelper;
+    FirebaseAuth firebaseAuth;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -39,6 +50,10 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container,false);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        groupChatFirestoreHelper = new GroupChatFirestoreHelper(this);
+        //allChats = groupChatFirestoreHelper.getGcList();
+
 
         //init recycler view
         mRecyclerView = (RecyclerView) view.findViewById(R.id.mRecyclerView);
@@ -47,7 +62,7 @@ public class HomeFragment extends Fragment {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        mAdapter = new MainAdapter(getContext());
+        mAdapter = new MainAdapter(getContext(), mychats);
         mRecyclerView.setAdapter(mAdapter);
 
         //add toolbar
@@ -56,6 +71,18 @@ public class HomeFragment extends Fragment {
 
 
         return view;
+    }
+
+    public void UpdateList (List<GroupChats> gc) {
+        mAdapter.clearAll();
+        mAdapter.addAllItems(gc);
+
+    }
+
+    public void updateTasks () {
+        mRecyclerView.getRecycledViewPool().clear();
+        mAdapter.notifyDataSetChanged();
+
     }
 
 }

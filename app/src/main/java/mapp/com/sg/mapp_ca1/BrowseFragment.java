@@ -40,20 +40,6 @@ public class BrowseFragment extends Fragment {
 
     public BrowseFragment() {
         // Required empty public constructor
-        groupChatFirestoreHelper = new GroupChatFirestoreHelper(this);
-        allChats = groupChatFirestoreHelper.getGcList();
-        if(allChats != null) {
-            for (GroupChats g : allChats) {
-                for (String memberUid : g.getMembers()) {
-                    if (!memberUid.equals(firebaseAuth.getCurrentUser().getUid())) {
-                        browseChats_Withduplicate.add(g);
-                    }
-                }
-            }
-        }
-
-        Set<GroupChats> browse = new HashSet<>(browseChats_Withduplicate);
-        browsechats.addAll(browse);
 
     }
 
@@ -67,7 +53,7 @@ public class BrowseFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_browse, container,false);
 
         firebaseAuth = FirebaseAuth.getInstance();
-
+        groupChatFirestoreHelper = new GroupChatFirestoreHelper(this);
 
         //init recycler view
         bRecyclerView = (RecyclerView) view.findViewById(R.id.bRecyclerView);
@@ -87,6 +73,12 @@ public class BrowseFragment extends Fragment {
 
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
     }
 
     public void UpdateList (List<GroupChats> gc) {

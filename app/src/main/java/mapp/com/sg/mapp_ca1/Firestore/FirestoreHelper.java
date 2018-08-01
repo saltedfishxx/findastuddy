@@ -29,14 +29,15 @@ import static android.content.ContentValues.TAG;
 
 public class FirestoreHelper {
     List<Message> messageList;
+    String groupid;
     //get the reference for collection in firestore
-    static CollectionReference messagesCollection = FirebaseFirestore.getInstance().collection("messages");
+    static CollectionReference messagesCollection = FirebaseFirestore.getInstance().collection("Messages");
 
     //constructor to call when want to retrieve data
-    public FirestoreHelper(ChatRoomActivity r) {
+    public FirestoreHelper(ChatRoomActivity r, String id) {
         final ChatRoomActivity reference = r;
-
-        messagesCollection
+        groupid = id;
+        messagesCollection.document(groupid).collection("messageList")
                 .orderBy("timestamp", Query.Direction.ASCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -82,7 +83,7 @@ public class FirestoreHelper {
     //called when saving message object
     public void saveData(Message f){
         Date timestamp = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         try {
              timestamp = format.parse(f.getTimestamp());
         } catch (ParseException e) {
@@ -95,7 +96,7 @@ public class FirestoreHelper {
         data.put("photoUrl", f.getPhotoUrl());
         data.put("timestamp", timestamp);
         data.put("profileUrl", f.getProfileUrl());
-        messagesCollection.document().set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+        messagesCollection.document(groupid).collection("messageList").document().set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d("FirestoreHelper", "Document has been saved!");

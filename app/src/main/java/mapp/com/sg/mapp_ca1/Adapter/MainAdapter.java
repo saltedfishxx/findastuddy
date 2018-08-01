@@ -11,11 +11,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import mapp.com.sg.mapp_ca1.ChatRoomActivity;
+import mapp.com.sg.mapp_ca1.Models.GroupChats;
 import mapp.com.sg.mapp_ca1.Models.Message;
 import mapp.com.sg.mapp_ca1.R;
 
@@ -23,14 +26,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     //This class sets the contents of the group chat list
 
 
-    List<String> chatList;
+    List<GroupChats> chatsList;
     Context mContext;
 
     //Constructor when calling the main adapter
-    public MainAdapter(Context context){
+    public MainAdapter(Context context, List<GroupChats> chatsList){
         this.mContext = context;
-        this.chatList = new ArrayList<>();
-        this.chatList.add("Literature Chat");
+        this.chatsList = new ArrayList<>();
     }
 
     private Context getmContext(){return mContext;}
@@ -41,14 +43,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         //creates the content view
         View view = LayoutInflater.from(mContext)
                 .inflate(R.layout.layout_child, parent,false);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Context context = v.getContext();
-                Intent intent = new Intent(context, ChatRoomActivity.class);
-                context.startActivity(intent);
-            }
-        });
+
         return new MainViewHolder(view);
     }
 
@@ -57,8 +52,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
 
         //replaces content of the view (chatTextView) based on chatlist
         //chatTextView is defined in the inner class MainViewHolder
-        String chat = chatList.get(position);
-        holder.chatTextView.setText(chat);
+        GroupChats chat = chatsList.get(position);
+        holder.chatTextView.setText(chat.getChatName());
+        if(chat.getPicURL() != null){
+            Glide.with(holder.groupPic.getContext())
+                    .load(chat.getPicURL())
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(holder.groupPic);
+        }
 
     }
 
@@ -66,10 +67,28 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     public int getItemCount() {
         //returns the number of items in the list
         //chatlist.size = no. of list items shown in recyclerView
-       if(chatList != null){
-           return chatList.size();
+       if(chatsList != null){
+           return chatsList.size();
         }else {
             return 0;
+        }
+    }
+    public void clearAll() {
+        if(chatsList != null) {
+            chatsList.clear();
+        }
+    }
+
+    public void addItem (GroupChats gc) {
+        if(chatsList != null) {
+            chatsList.add(gc);
+            notifyItemChanged(chatsList.size() - 1);
+        }
+    }
+
+    public void addAllItems(List<GroupChats> groupChats) {
+        for ( GroupChats g: groupChats) {
+            addItem(g);
         }
     }
 
@@ -78,6 +97,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
 
         // Class variables for the task description and priority TextViews
         TextView chatTextView;
+        ImageView groupPic;
 
         /**
          * Constructor for the TaskViewHolders.
@@ -88,6 +108,18 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
             super(itemView);
             //get the view from xml file
             chatTextView = (TextView) itemView.findViewById(R.id.chat1);
+            groupPic = (ImageView) itemView.findViewById(R.id.profileimage);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    GroupChats chat = chatsList.get(pos);
+                    Intent intent = new Intent(getmContext(), ChatRoomActivity.class);
+                    intent.putExtra("chat", chat);
+                    getmContext().startActivity(intent);
+                }
+            });
         }
 
     }

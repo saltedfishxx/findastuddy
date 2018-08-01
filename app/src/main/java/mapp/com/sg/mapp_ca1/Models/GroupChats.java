@@ -1,8 +1,9 @@
 package mapp.com.sg.mapp_ca1.Models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class GroupChats {
+public class GroupChats implements Serializable {
     // Chat id in Firebase
     private String chatId;
     // Chat name

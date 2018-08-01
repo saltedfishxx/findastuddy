@@ -48,6 +48,7 @@ import java.util.List;
 import mapp.com.sg.mapp_ca1.Adapter.MessageAdapter;
 import mapp.com.sg.mapp_ca1.Firestore.FirestoreHelper;
 import mapp.com.sg.mapp_ca1.Firestore.UserFirestoreHelper;
+import mapp.com.sg.mapp_ca1.Models.GroupChats;
 import mapp.com.sg.mapp_ca1.Models.Message;
 import mapp.com.sg.mapp_ca1.Models.Users;
 
@@ -81,11 +82,16 @@ public class ChatRoomActivity extends AppCompatActivity {
     private StorageReference storageReference;
     ProgressDialog nDialog;
     Users user;
+    GroupChats selectedChat;
+    String groupId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatroom);
+
+        selectedChat = (GroupChats) getIntent().getSerializableExtra("chat");
+        groupId = selectedChat.getChatId();
 
         //init firebase components
         firebaseStorage = FirebaseStorage.getInstance();
@@ -215,7 +221,7 @@ public class ChatRoomActivity extends AppCompatActivity {
                 firestoreHelper.saveData(message);
                 // Clear input box
                 mMessageEditText.setText("");
-                firestoreHelper = new FirestoreHelper(r);
+                firestoreHelper = new FirestoreHelper(r, groupId);
             }
         });
     }
@@ -239,7 +245,7 @@ public class ChatRoomActivity extends AppCompatActivity {
                     Uri downloadUri = taskSnapshot.getDownloadUrl();
                     Message message = new Message(user.getUid(), null, mUsername, downloadUri.toString(), s, user.getProfileUrl());
                     firestoreHelper.saveData(message);
-                    firestoreHelper = new FirestoreHelper(r);
+                    firestoreHelper = new FirestoreHelper(r, groupId);
 
                 }
 
@@ -252,7 +258,7 @@ public class ChatRoomActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         r = this;
-        firestoreHelper = new FirestoreHelper(r);
+        firestoreHelper = new FirestoreHelper(r, groupId);
         mProgressBar.setVisibility(ProgressBar.GONE);
        // mRecyclerView.getLayoutManager().smoothScrollToPosition(mRecyclerView, new RecyclerView.State(), mRecyclerView.getAdapter().getItemCount());
 
