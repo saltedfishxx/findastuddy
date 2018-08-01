@@ -33,6 +33,11 @@
         <activity
             android:name=".SplashScreen"
             android:theme="@style/Theme.AppCompat.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".Login"
@@ -65,11 +70,7 @@
             android:name=".PickLocation"
             android:label="@string/title_activity_pick_location"
             >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
         </activity>
         <activity android:name=".CreateMeetup"></activity>
     </application>

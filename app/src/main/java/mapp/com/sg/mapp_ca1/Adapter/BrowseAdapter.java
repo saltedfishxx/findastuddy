@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mapp.com.sg.mapp_ca1.Firestore.GroupChatFirestoreHelper;
+import mapp.com.sg.mapp_ca1.Models.GroupChats;
+import mapp.com.sg.mapp_ca1.Models.Message;
 import mapp.com.sg.mapp_ca1.R;
 
 /**
@@ -20,22 +22,13 @@ import mapp.com.sg.mapp_ca1.R;
 
 public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.BrowseViewHolder> {
 
-    List<String> browseList;
+    List<GroupChats> browseList;
     Context bContext;
 
     //Constructor when calling the main adapter
-    public BrowseAdapter(Context context) {
+    public BrowseAdapter(Context context, List<GroupChats> groupChats) {
         this.bContext = context;
-        this.browseList = new ArrayList<>();
-
-        this.browseList.add("Literature Chat");
-        this.browseList.add("Math Chat");
-        this.browseList.add("Literature Chat");
-        this.browseList.add("Math Chat");
-        this.browseList.add("Literature Chat");
-        this.browseList.add("Math Chat");
-        this.browseList.add("Literature Chat");
-        this.browseList.add("Math Chat");
+        this.browseList = groupChats;
     }
 
     private Context getbContext() {
@@ -56,11 +49,11 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.BrowseView
 
         //replaces content of the view (chatTextView) based on chatlist
         //chatTextView is defined in the inner class MainViewHolder
-        String chat = browseList.get(position);
+        GroupChats chat = browseList.get(position);
         // Set contents for each view
-        holder.tvChatName.setText(chat);
-//        holder.tvChatDesc.setText(chat);
-//        holder.tvMembers.setText(chat);
+        holder.tvChatName.setText(chat.getChatName());
+        holder.tvChatDesc.setText(chat.getChatDesc());
+        holder.tvMembers.setText(String.format("%s/5", chat.getMemCount()));
     }
 
     @Override
@@ -70,6 +63,20 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.BrowseView
             return browseList.size();
         } else {
             return 0;
+        }
+    }
+    public void clearAll() {
+        browseList.clear();
+    }
+
+    public void addItem (GroupChats gc) {
+        browseList.add(gc);
+        notifyItemChanged(browseList.size() - 1);
+    }
+
+    public void addAllItems(List<GroupChats> groupChats) {
+        for ( GroupChats g: groupChats) {
+            addItem(g);
         }
     }
 

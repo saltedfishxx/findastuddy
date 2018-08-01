@@ -25,6 +25,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private MainAdapter mAdapter;
 
+    //call groupchat firestore
 
 
     public HomeFragment() {

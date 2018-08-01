@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import mapp.com.sg.mapp_ca1.BrowseFragment;
 import mapp.com.sg.mapp_ca1.Models.GroupChats;
 
 import static android.content.ContentValues.TAG;
@@ -31,8 +32,8 @@ public class GroupChatFirestoreHelper {
     GroupChats gc;
 
     //constructor to call when want to retrieve data
-    public GroupChatFirestoreHelper(GroupChats r) {
-        final GroupChats reference = r;
+    public GroupChatFirestoreHelper(BrowseFragment r) {
+        final BrowseFragment reference = r;
 
         gcCollection
                 .get()
@@ -51,17 +52,25 @@ public class GroupChatFirestoreHelper {
                                 String picUrl = document.getString("picUrl");
 
                                 //update list
-                                GroupChats gc = new GroupChats(chatId, chatName, chatDesc, memCount, members, picUrl);
+                                gc = new GroupChats(chatId, chatName, chatDesc, memCount, members, picUrl);
+                                gcList.add(gc);
                             }
+
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
+                        reference.updateTasks();
+                        reference.UpdateList(gcList);
 
                     }
                 });
     }
 
     public GroupChatFirestoreHelper() {
+    }
+
+    public List<GroupChats> getGcList() {
+        return gcList;
     }
 
     public void saveData(GroupChats f) {
