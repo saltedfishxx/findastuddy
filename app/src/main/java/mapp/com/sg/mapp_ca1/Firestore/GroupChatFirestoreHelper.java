@@ -74,7 +74,7 @@ public class GroupChatFirestoreHelper {
                             }
                             if(gcList != null) {
                                 for (GroupChats g : gcList) {
-                                    if(!g.getMembers().contains(firebaseAuth.getCurrentUser().getUid()) && g.getMemCount() < 6)
+                                    if(!g.getMembers().contains(firebaseAuth.getCurrentUser().getUid()) && g.getMemCount() < 5)
                                     {
                                         browseDuplicate.add(g);
 

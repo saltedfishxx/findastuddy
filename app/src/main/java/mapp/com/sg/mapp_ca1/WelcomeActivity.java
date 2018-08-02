@@ -23,6 +23,12 @@ public class WelcomeActivity extends AppCompatActivity {
         signupbtn.setOnClickListener(clickaction);
 
     }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
+
     View.OnClickListener clickaction = new View.OnClickListener() {
         public void onClick(View v) {
             switch(v.getId()) {

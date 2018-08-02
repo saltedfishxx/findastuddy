@@ -2,6 +2,7 @@ package mapp.com.sg.mapp_ca1;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,13 +19,17 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -70,6 +75,8 @@ public class ChatRoomActivity extends AppCompatActivity {
     private ImageButton mPhotoPickerButton;
     private EditText mMessageEditText;
     private Button mSendButton;
+    private TextView chatTitle;
+    private ImageView chatdp;
 
     private String mUsername;
     List<Message> messageList;
@@ -97,6 +104,28 @@ public class ChatRoomActivity extends AppCompatActivity {
         firebaseStorage = FirebaseStorage.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         storageReference = firebaseStorage.getReference().child("chat_photos");
+
+        chatTitle = (TextView) findViewById(R.id.chatTitle);
+        chatdp = (ImageView) findViewById(R.id.chatdp);
+
+        chatTitle.setText(selectedChat.getChatName());
+
+        if(selectedChat.getPicURL() != null) {
+            Glide.with(chatdp.getContext())
+                    .load(selectedChat.getPicURL())
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(chatdp);
+        }else {
+            Glide.with(chatdp.getContext())
+                    .load(R.drawable.ic_group_black_24dp)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(chatdp);
+        }
+
+        //set toolbar
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.groupToolBar);
+        ChatRoomActivity.this.setSupportActionBar(myToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         CollectionReference usersCollection = FirebaseFirestore.getInstance().collection("users");
@@ -136,11 +165,6 @@ public class ChatRoomActivity extends AppCompatActivity {
             mUsername = ANONYMOUS;
         }
 
-
-        //set toolbar
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.groupToolBar);
-        ChatRoomActivity.this.setSupportActionBar(myToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //TODO: when group chat has set up set toolbar title as group name
         //TODO: add up button
@@ -213,6 +237,14 @@ public class ChatRoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // TODO: Send messages on click
+                InputMethodManager inputManager = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                if (inputManager != null) {
+                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+
                 DateFormat dateFormatter = new SimpleDateFormat("hh:mm:ss");
                 dateFormatter.setLenient(false);
                 Date currentTime = Calendar.getInstance().getTime();

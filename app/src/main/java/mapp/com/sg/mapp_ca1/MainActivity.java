@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
@@ -114,7 +115,8 @@ public class MainActivity extends AppCompatActivity {
                         // continue with adding
                         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                         firebaseAuth.signOut();
-                        finish();
+                        Intent intent = new Intent(getApplicationContext(), Login.class);
+                        startActivity(intent);
 
                     }
                 })

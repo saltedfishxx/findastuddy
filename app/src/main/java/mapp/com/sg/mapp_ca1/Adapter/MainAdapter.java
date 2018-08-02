@@ -59,6 +59,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                     .load(chat.getPicURL())
                     .apply(RequestOptions.circleCropTransform())
                     .into(holder.groupPic);
+        }else{
+            Glide.with(holder.groupPic.getContext())
+                    .load(R.drawable.ic_group_black_24dp)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(holder.groupPic);
         }
 
     }

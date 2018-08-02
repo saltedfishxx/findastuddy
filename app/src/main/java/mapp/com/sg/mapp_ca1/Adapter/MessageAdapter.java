@@ -155,11 +155,19 @@ public class MessageAdapter extends RecyclerView.Adapter {
             }
             nameText.setText(message.getName());
             timeText.setText(message.getTimestamp());
-            Glide.with(profileImage.getContext())
-                    .load(message.getProfileUrl())
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(profileImage);
 
+            if(message.getProfileUrl() != null) {
+                Glide.with(profileImage.getContext())
+                        .load(message.getProfileUrl())
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(profileImage);
+
+            }else{
+                Glide.with(profileImage.getContext())
+                        .load(R.drawable.circleprofile)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(profileImage);
+            }
                   }
     }
 

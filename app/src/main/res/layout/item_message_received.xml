@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:theme="@style/Theme.AppCompat.NoActionBar"
     android:paddingTop="8dp">
 
     <ImageView
@@ -31,6 +32,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="4dp"
         android:textSize="12sp"
+        android:textColor="@color/grey"
         app:layout_constraintLeft_toRightOf="@+id/image_message_profile"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,6 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"
         android:textSize="10sp"
+        android:textColor="@color/grey"
         app:layout_constraintBottom_toBottomOf="@+id/messageTextView"
         app:layout_constraintLeft_toRightOf="@+id/messageTextView" />
 

@@ -37,7 +37,7 @@ public class Signup extends AppCompatActivity {
     LinearLayout layout;
     TextView terms;
     LinearLayout air;
-    EditText email, password, username;
+    EditText email, password, repassword, username;
     RadioGroup streamSec, streamJC, yearSec, yearJC, education;
     CheckBox checkBox;
     String stream, year, edu;
@@ -60,6 +60,7 @@ public class Signup extends AppCompatActivity {
         email = (EditText) findViewById(R.id.editEmail);
         username = (EditText) findViewById(R.id.editUsername);
         password =(EditText) findViewById(R.id.editPass);
+        repassword = (EditText) findViewById(R.id.editPass2);
 
         cv_secondary = (CardView) findViewById(R.id.secondaryYearCard);
         cv_jc = (CardView) findViewById(R.id.jcYearCard);
@@ -152,7 +153,8 @@ public class Signup extends AppCompatActivity {
         if (cv_jc.getVisibility() == View.GONE) {
             if (education.getCheckedRadioButtonId() == -1 || streamSec.getCheckedRadioButtonId() == -1
                     || yearSec.getCheckedRadioButtonId() == -1 || email.getText().toString().isEmpty()
-                    || username.getText().toString().isEmpty() || password.getText().toString().isEmpty()) {
+                    || username.getText().toString().isEmpty() || password.getText().toString().isEmpty()
+                    || repassword.getText().toString().isEmpty()) {
 
                 AlertDialog alertDialog = new AlertDialog.Builder(Signup.this).create();
                 alertDialog.setTitle("Error");
@@ -172,7 +174,8 @@ public class Signup extends AppCompatActivity {
             //user selec jc
             if (education.getCheckedRadioButtonId() == -1 || streamJC.getCheckedRadioButtonId() == -1
                     || yearJC.getCheckedRadioButtonId() == -1 || email.getText().toString().isEmpty()
-                    || username.getText().toString().isEmpty() || password.getText().toString().isEmpty()) {
+                    || username.getText().toString().isEmpty() || password.getText().toString().isEmpty()
+                    || repassword.getText().toString().isEmpty()) {
                 AlertDialog alertDialog = new AlertDialog.Builder(Signup.this).create();
                 alertDialog.setTitle("Error");
                 alertDialog.setMessage("Please key in all the Details");
@@ -184,12 +187,28 @@ public class Signup extends AppCompatActivity {
                         });
                 alertDialog.show();
             } else {
+                validatePassword();
                 termsValidation();
                 createUser();
             }
         }
     }
 
+    public void validatePassword()
+    {
+        if(!repassword.getText().toString().equals(password.getText().toString())){
+            AlertDialog alertDialog = new AlertDialog.Builder(Signup.this).create();
+            alertDialog.setTitle("Error");
+            alertDialog.setMessage("Passwords do not match");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+        }
+    }
 
     //TODO: pass integers based on radio button selection
     public void getRadioSelection() {
