@@ -91,10 +91,19 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         }
     }
 
+    public List<GroupChats> getList (){return this.chatsList;}
+
     public void addAllItems(List<GroupChats> groupChats) {
         for ( GroupChats g: groupChats) {
             addItem(g);
         }
+    }
+    public void removeItem (int position) {
+        GroupChats deleteChat = chatsList.get(position);
+        if (position > -1){
+            chatsList.remove(position);
+        }
+
     }
 
     // Inner class for creating ViewHolders

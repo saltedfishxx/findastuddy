@@ -189,4 +189,29 @@ public class GroupChatFirestoreHelper {
 
         }
     }
+
+    public void removeMember(GroupChats chats) {
+        //TODO: remove member from groupchat then update on firestore
+        List<String> members = chats.getMembers();
+        List<String> updatedmembers = new ArrayList<>();
+        for (String m: members){
+            if(!m.equals(firebaseAuth.getCurrentUser().getUid())){
+                updatedmembers.add(m);
+            }
+        }
+        gcCollection.document(chats.getChatId())
+                .update("members", updatedmembers)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error updating document", e);
+                    }
+                });
+    }
 }

@@ -84,6 +84,8 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:layout_weight="1"
+                android:textColorHint="@color/light_text"
+                android:textColor="@color/grey"
                 android:hint="Message" />
         </LinearLayout>
         <ImageButton
