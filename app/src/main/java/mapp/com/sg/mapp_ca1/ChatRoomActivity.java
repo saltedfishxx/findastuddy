@@ -38,6 +38,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
+import org.w3c.dom.Document;
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -131,15 +133,16 @@ public class ChatRoomActivity extends AppCompatActivity {
 
 
         CollectionReference usersCollection = FirebaseFirestore.getInstance().collection("users");
-
-        usersCollection
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        usersList = new ArrayList<>();
-                        if (task.isSuccessful()) {
-                            for (DocumentSnapshot document : task.getResult()) {
+        usersList = new ArrayList<>();
+        for(String m : selectedChat.getMembers()) {
+            usersCollection
+                    .document(m)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
                                 String id = document.getId();
                                 String username = document.getString("username");
                                 String education_level = document.getString("education_level");
@@ -147,17 +150,17 @@ public class ChatRoomActivity extends AppCompatActivity {
                                 String stream = document.getString("stream");
                                 String profileUrl = document.getString("profileUrl");
 
-                                Users users = new Users(id, username, education_level, study_year, stream, profileUrl);
+                                user = new Users(id, username, education_level, study_year, stream, profileUrl);
                                 //update list
-                                usersList.add(users);
+                                usersList.add(user);
+
+                            } else {
+                                Log.d(TAG, "Error getting documents: ", task.getException());
                             }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+
                         }
-
-                    }
-                });
-
+                    });
+        }
         for(Users m : usersList){
             if(m.getUid().equals(firebaseAuth.getCurrentUser().getUid())){
                 user = m;
@@ -267,8 +270,10 @@ public class ChatRoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ChatDetails.class);
-                intent.putExtra("selectedChat", selectedChat);
-                intent.putExtra("allusers", (Serializable) usersList);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("selectedChat", selectedChat);
+                bundle.putSerializable("allusers", (Serializable) usersList);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });

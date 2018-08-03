@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import mapp.com.sg.mapp_ca1.ChatInfoFragment;
+import mapp.com.sg.mapp_ca1.Models.GroupChats;
 import mapp.com.sg.mapp_ca1.Models.Users;
 import mapp.com.sg.mapp_ca1.Signup;
 
@@ -28,6 +30,7 @@ import static android.content.ContentValues.TAG;
 public class UserFirestoreHelper {
     static CollectionReference usersCollection = FirebaseFirestore.getInstance().collection("users");
     List<Users> usersList;
+    List<Users> members;
     Users users;
 
     //constructor to call when want to retrieve data
@@ -65,7 +68,10 @@ public class UserFirestoreHelper {
 
     }
 
-    public List<Users> getUsers() {
+    public UserFirestoreHelper(ChatInfoFragment r, final GroupChats selectedChat) {
+        members = new ArrayList<>();
+        final ChatInfoFragment reference = r;
+        GroupChats chat = selectedChat;
         usersCollection
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -85,13 +91,31 @@ public class UserFirestoreHelper {
                                 //update list
                                 usersList.add(users);
                             }
+                            for( Users u : usersList){
+                                for(String m : selectedChat.getMembers()){
+                                    if(u.getUid().equals(m)){
+                                        members.add(u);
+                                    }
+                                }
+                            }
+                            reference.updateTasks();
+                            reference.UpdateList(members);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
 
                     }
                 });
-        return  usersList;
+
+
+    }
+
+    public List<Users> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<Users> members) {
+        this.members = members;
     }
 
     public void saveData(Users f) {

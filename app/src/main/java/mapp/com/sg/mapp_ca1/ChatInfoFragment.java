@@ -22,7 +22,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import org.w3c.dom.Text;
@@ -45,6 +47,7 @@ public class ChatInfoFragment extends Fragment {
     String memberName;
     String picUrl;
     List<String> memberList;
+    List<String> membernames;
     List<String> picList;
     GroupChats selectedChat;
     List<Users> allusers;
@@ -55,8 +58,9 @@ public class ChatInfoFragment extends Fragment {
     RecyclerView recyclerView;
     MemberAdapter memberAdapter;
 
-    static CollectionReference usersCollection = FirebaseFirestore.getInstance().collection("users");
+    static CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("groupchat");
     List<Users> usersList;
+    UserFirestoreHelper userFirestoreHelper;
 
 
     public ChatInfoFragment() {
@@ -69,29 +73,19 @@ public class ChatInfoFragment extends Fragment {
             context = getContext();
         }
 
+
         if (getArguments() != null) {
             selectedChat = (GroupChats) getArguments().getSerializable("chat");
         } else {
             Log.d(TAG, "chat not retrieved");
         }
 
+        userFirestoreHelper = new UserFirestoreHelper(this, selectedChat);
+
         view = inflater.inflate(R.layout.chat_info_fragment, container, false);
         tvMember = (TextView) view.findViewById(R.id.memberName);
         memberPic = (ImageView) view.findViewById(R.id.memberPic);
         memberList = selectedChat.getMembers();
-        picList = new ArrayList<>();
-
-        allusers = (List<Users>) getActivity().getIntent().getSerializableExtra("allusers");
-
-        for (Users m : allusers){
-            if(memberList.contains(m.getUid())){
-                if(m.getProfileUrl() == null){
-                    picList.add("");
-                }else {
-                    picList.add(m.getProfileUrl());
-                }
-            }
-        }
 
 
         // Initialize references to views
@@ -104,10 +98,42 @@ public class ChatInfoFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         //initialize adapter and attach to recycler view
-        memberAdapter = new MemberAdapter(context, memberList, picList);
+        memberAdapter = new MemberAdapter(context, allusers);
         recyclerView.setAdapter(memberAdapter);
 
+        final DocumentReference docRef = collectionReference.document(selectedChat.getChatId());
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+                    Log.d(TAG, "Current data: " + snapshot.getData());
+                    updateTasks();
+                    UpdateList(userFirestoreHelper.getMembers());
+                } else {
+                    Log.d(TAG, "Current data: null");
+                }
+            }
+        });
+
         return view;
+    }
+
+    public void UpdateList(List<Users> gc) {
+        memberAdapter.clearAll();
+        memberAdapter.addAllItems(gc);
+
+    }
+
+    public void updateTasks() {
+        recyclerView.getRecycledViewPool().clear();
+        memberAdapter.notifyDataSetChanged();
+
     }
 
 }

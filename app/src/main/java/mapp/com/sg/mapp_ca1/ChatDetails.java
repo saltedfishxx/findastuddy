@@ -19,7 +19,11 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
+import java.io.Serializable;
+import java.util.List;
+
 import mapp.com.sg.mapp_ca1.Models.GroupChats;
+import mapp.com.sg.mapp_ca1.Models.Users;
 
 public class ChatDetails extends AppCompatActivity {
 
@@ -38,13 +42,15 @@ public class ChatDetails extends AppCompatActivity {
      */
     private ViewPager mViewPager;
     GroupChats selectedChat;
-
+    List<Users> allusers;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_details);
 
-        selectedChat = (GroupChats) getIntent().getSerializableExtra("selectedChat");
+        Bundle bundle = getIntent().getExtras();
+        selectedChat = (GroupChats) bundle.getSerializable("selectedChat");
+        allusers = (List<Users>) bundle.getSerializable("allusers");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -85,8 +91,7 @@ public class ChatDetails extends AppCompatActivity {
                     chatInfoFragment.setArguments(bundle);
                     return chatInfoFragment;
                 case 1:
-                    ChatMeetupFragment chatMeetupFragment = new ChatMeetupFragment();
-                    return chatMeetupFragment;
+                    return new ChatMeetupFragment();
                 default:
                     return null;
             }

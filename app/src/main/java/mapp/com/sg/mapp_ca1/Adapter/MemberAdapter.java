@@ -17,20 +17,20 @@ import com.bumptech.glide.request.RequestOptions;
 import java.util.ArrayList;
 import java.util.List;
 
+import mapp.com.sg.mapp_ca1.Firestore.UserFirestoreHelper;
+import mapp.com.sg.mapp_ca1.Models.GroupChats;
+import mapp.com.sg.mapp_ca1.Models.Users;
 import mapp.com.sg.mapp_ca1.R;
 
 public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberViewHolder> {
 
-    List<String> memberList;
-    List<String> picList;
+    List<Users> members;
     Context context;
+    UserFirestoreHelper userFirestoreHelper;
 
-    public MemberAdapter (Context context, List<String> memberList, List<String> picList){
+    public MemberAdapter (Context context, List<Users> memberList){
         this.context = context;
-        this.memberList = new ArrayList<>();
-        this.memberList = memberList;
-        this.picList = new ArrayList<>();
-        this.picList = picList;
+        this.members = new ArrayList<>();
     }
 
     private Context getContext() {
@@ -47,24 +47,45 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
 
     @Override
     public void onBindViewHolder(@NonNull MemberViewHolder holder, int position) {
-        String member = memberList.get(position);
-        holder.memberName.setText(member);
+        Users user = members.get(position);
+        holder.memberName.setText(user.getUsername());
 
-        for(int i =0; i < picList.size(); i++ ){
-            String pic = picList.get(i);
-            if(pic != null){
-                Glide.with(holder.memberPic.getContext())
-                        .load(pic)
-                        .apply(RequestOptions.circleCropTransform())
-                        .into(holder.memberPic);
-            }
+        if(user.getProfileUrl() != null){
+            Glide.with(holder.memberPic.getContext())
+                    .load(user.getProfileUrl())
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(holder.memberPic);
+        }else {
+            Glide.with(holder.memberPic.getContext())
+                    .load(R.drawable.circleprofile)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(holder.memberPic);
         }
 
     }
 
     @Override
     public int getItemCount() {
-        return memberList.size();
+        return members.size();
+    }
+
+    public void clearAll() {
+        if (members != null) {
+            members.clear();
+        }
+    }
+
+    public void addItem(Users gc) {
+        if (members != null) {
+            members.add(gc);
+            notifyItemChanged(members.size() - 1);
+        }
+    }
+
+    public void addAllItems(List<Users> users) {
+        for (Users u : users) {
+            addItem(u);
+        }
     }
 
     class MemberViewHolder  extends RecyclerView.ViewHolder{
