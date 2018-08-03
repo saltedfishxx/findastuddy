@@ -1,7 +1,7 @@
 package mapp.com.sg.mapp_ca1;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,17 +14,17 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -33,14 +33,12 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -52,14 +50,12 @@ import mapp.com.sg.mapp_ca1.Models.GroupChats;
 import mapp.com.sg.mapp_ca1.Models.Message;
 import mapp.com.sg.mapp_ca1.Models.Users;
 
-import static android.content.ContentValues.TAG;
-
 public class ChatRoomActivity extends AppCompatActivity {
     private static final String TAG = "ChatRoom";
 
     public static final String ANONYMOUS = "anonymous";
     public static final int DEFAULT_MSG_LENGTH_LIMIT = 1000;
-    private static final int RC_PHOTO_PICKER =  2;
+    private static final int RC_PHOTO_PICKER = 2;
 
     ChatRoomActivity r;
     //views
@@ -70,6 +66,8 @@ public class ChatRoomActivity extends AppCompatActivity {
     private ImageButton mPhotoPickerButton;
     private EditText mMessageEditText;
     private Button mSendButton;
+    private TextView chatTitle;
+    private ImageView chatdp;
 
     private String mUsername;
     List<Message> messageList;
@@ -98,6 +96,28 @@ public class ChatRoomActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         storageReference = firebaseStorage.getReference().child("chat_photos");
 
+        chatTitle = (TextView) findViewById(R.id.chatTitle);
+        chatdp = (ImageView) findViewById(R.id.chatdp);
+
+        chatTitle.setText(selectedChat.getChatName());
+
+        if (selectedChat.getPicURL() != null) {
+            Glide.with(chatdp.getContext())
+                    .load(selectedChat.getPicURL())
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(chatdp);
+        } else {
+            Glide.with(chatdp.getContext())
+                    .load(R.drawable.ic_group_black_24dp)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(chatdp);
+        }
+
+        //set toolbar
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.groupToolBar);
+        ChatRoomActivity.this.setSupportActionBar(myToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         CollectionReference usersCollection = FirebaseFirestore.getInstance().collection("users");
 
@@ -116,7 +136,7 @@ public class ChatRoomActivity extends AppCompatActivity {
                             String stream = document.getString("stream");
                             String profileUrl = document.getString("profileUrl");
 
-                            if(id.equals(firebaseAuth.getCurrentUser().getUid())) {
+                            if (id.equals(firebaseAuth.getCurrentUser().getUid())) {
                                 user = new Users(id, username, education_level, study_year, stream, profileUrl);
                             }
 
@@ -129,18 +149,13 @@ public class ChatRoomActivity extends AppCompatActivity {
                     }
                 });
 
-        if(firebaseAuth.getCurrentUser() != null){
+        if (firebaseAuth.getCurrentUser() != null) {
             mUsername = firebaseAuth.getCurrentUser().getDisplayName();
             Log.d("Current User : ", mUsername);
-        }else{
+        } else {
             mUsername = ANONYMOUS;
         }
 
-
-        //set toolbar
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.groupToolBar);
-        ChatRoomActivity.this.setSupportActionBar(myToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //TODO: when group chat has set up set toolbar title as group name
         //TODO: add up button
@@ -159,7 +174,7 @@ public class ChatRoomActivity extends AppCompatActivity {
 
         //set layout for recyclerview to be linear layout
         //measures and positions items within the view into a linear list
-        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
 
         //initialize adapter and attach to recycler view
@@ -182,7 +197,7 @@ public class ChatRoomActivity extends AppCompatActivity {
                 // TODO: Fire an intent to show an image picker
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
-                intent.putExtra(Intent.EXTRA_LOCAL_ONLY,true);
+                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
                 startActivityForResult(Intent.createChooser(intent, "Complete action using"), RC_PHOTO_PICKER);
             }
         });
@@ -213,11 +228,19 @@ public class ChatRoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // TODO: Send messages on click
+                InputMethodManager inputManager = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                if (inputManager != null) {
+                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+
                 DateFormat dateFormatter = new SimpleDateFormat("hh:mm:ss");
                 dateFormatter.setLenient(false);
                 Date currentTime = Calendar.getInstance().getTime();
                 String s = dateFormatter.format(currentTime);
-                Message message = new Message(user.getUid(),mMessageEditText.getText().toString(),mUsername,null, s, user.getProfileUrl());
+                Message message = new Message(user.getUid(), mMessageEditText.getText().toString(), mUsername, null, s, user.getProfileUrl());
                 firestoreHelper.saveData(message);
                 // Clear input box
                 mMessageEditText.setText("");
@@ -229,7 +252,7 @@ public class ChatRoomActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == RC_PHOTO_PICKER && resultCode == RESULT_OK){
+        if (requestCode == RC_PHOTO_PICKER && resultCode == RESULT_OK) {
             nDialog.show();
             Uri selectedImageUri = data.getData();
             StorageReference photoRef = storageReference.child(selectedImageUri.getLastPathSegment());
@@ -260,17 +283,17 @@ public class ChatRoomActivity extends AppCompatActivity {
         r = this;
         firestoreHelper = new FirestoreHelper(r, groupId);
         mProgressBar.setVisibility(ProgressBar.GONE);
-       // mRecyclerView.getLayoutManager().smoothScrollToPosition(mRecyclerView, new RecyclerView.State(), mRecyclerView.getAdapter().getItemCount());
+        // mRecyclerView.getLayoutManager().smoothScrollToPosition(mRecyclerView, new RecyclerView.State(), mRecyclerView.getAdapter().getItemCount());
 
     }
 
-    public void UpdateList (List<Message> msg) {
+    public void UpdateList(List<Message> msg) {
         mAdapter.clearAll();
         mAdapter.addAllItems(msg);
 
     }
 
-    public void updateTasks () {
+    public void updateTasks() {
         mRecyclerView.getRecycledViewPool().clear();
         mAdapter.notifyDataSetChanged();
         mRecyclerView.getLayoutManager().smoothScrollToPosition(mRecyclerView, new RecyclerView.State(), mRecyclerView.getAdapter().getItemCount());

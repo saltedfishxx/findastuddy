@@ -1,7 +1,5 @@
 package mapp.com.sg.mapp_ca1.Models;
 
-import java.util.Date;
-
 public class Message {
     private String uid;
     private String text;

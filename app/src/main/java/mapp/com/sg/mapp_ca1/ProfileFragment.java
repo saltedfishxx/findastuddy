@@ -17,15 +17,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import mapp.com.sg.mapp_ca1.Firestore.FirestoreHelper;
 import mapp.com.sg.mapp_ca1.Firestore.UserFirestoreHelper;
 import mapp.com.sg.mapp_ca1.Models.Users;
 
@@ -72,7 +69,6 @@ public class ProfileFragment extends Fragment {
                             user = new Users(id, username, education_level, study_year, stream, profileUrl);
 
 
-
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
@@ -82,8 +78,8 @@ public class ProfileFragment extends Fragment {
                 });
     }
 
-    public void getUser(Users u){
-      this.user = u;
+    public void getUser(Users u) {
+        this.user = u;
     }
 
     @Override
@@ -101,7 +97,7 @@ public class ProfileFragment extends Fragment {
         displayStream = (TextView) view.findViewById(R.id.displayStream);
 
         //set content
-        if(user!=null) {
+        if (user != null) {
 
             collapsingToolbarLayout.setTitle(user.getUsername() + "'s Profile");
             Glide.with(userPic.getContext())
@@ -113,16 +109,16 @@ public class ProfileFragment extends Fragment {
             displayStream.setText(user.getStream());
 
         }
-            editProfile = (Button) view.findViewById(R.id.editProfile);
+        editProfile = (Button) view.findViewById(R.id.editProfile);
 
-            editProfile.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getContext(), EditProfile.class);
-                    intent.putExtra("imageLink", user.getProfileUrl());
-                    startActivity(intent);
-                }
-            });
+        editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), EditProfile.class);
+                intent.putExtra("imageLink", user.getProfileUrl());
+                startActivity(intent);
+            }
+        });
         return view;
     }
 

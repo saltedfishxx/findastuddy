@@ -3,34 +3,17 @@ package mapp.com.sg.mapp_ca1;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ExpandableListView;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
-import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 import com.google.firebase.auth.FirebaseAuth;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import mapp.com.sg.mapp_ca1.Adapter.MainAdapter;
-import mapp.com.sg.mapp_ca1.Firestore.GroupChatFirestoreHelper;
-import mapp.com.sg.mapp_ca1.Models.GroupChats;
 import mapp.com.sg.mapp_ca1.Models.Users;
 
 
@@ -41,13 +24,12 @@ public class MainActivity extends AppCompatActivity {
     private ProfileFragment profileFragment;
 
     private BottomNavigationViewEx btmNav;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
 
 
         //Initialize Fragments
@@ -57,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         btmNav = (BottomNavigationViewEx) findViewById(R.id.btmNav);
         btmNav.setTextSize(15);
-        btmNav.setIconSize(30,30);
+        btmNav.setIconSize(30, 30);
         btmNav.enableAnimation(true);
         btmNav.enableShiftingMode(true);
         btmNav.enableItemShiftingMode(true);
@@ -67,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         int position = getIntent().getIntExtra("position", 1);
         Users users = (Users) getIntent().getSerializableExtra("user");
 
-        if(isNew){
+        if (isNew) {
             profileFragment.getUser(users);
             btmNav.setCurrentItem(position);
             setFragment(profileFragment);
@@ -78,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         btmNav.setOnNavigationItemSelectedListener(new BottomNavigationViewEx.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch(item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.action_browse:
                         setFragment(browseFragment);
                         break;
@@ -94,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
 
 
     }
@@ -114,7 +95,8 @@ public class MainActivity extends AppCompatActivity {
                         // continue with adding
                         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                         firebaseAuth.signOut();
-                        finish();
+                        Intent intent = new Intent(getApplicationContext(), Login.class);
+                        startActivity(intent);
 
                     }
                 })
@@ -125,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .show();
-        }
+    }
 
 
     @Override
@@ -141,18 +123,18 @@ public class MainActivity extends AppCompatActivity {
     //Change screen based on fragment parsed in
     private void setFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        if(fragment == profileFragment){
+        if (fragment == profileFragment) {
             //slide left
             fragmentTransaction.setCustomAnimations(R.animator.enter_from_right, R.animator.exit_to_left, R.animator.enter_from_left, R.animator.exit_to_right);
 
-        }else if (fragment == browseFragment){
+        } else if (fragment == browseFragment) {
             //slide right
             fragmentTransaction.setCustomAnimations(R.animator.enter_from_left, R.animator.exit_to_right, R.animator.enter_from_right, R.animator.exit_to_left);
 
-        }else if (profileFragment.isVisible()){
+        } else if (profileFragment.isVisible()) {
             fragmentTransaction.setCustomAnimations(R.animator.enter_from_left, R.animator.exit_to_right, R.animator.enter_from_right, R.animator.exit_to_left);
 
-        }else if (browseFragment.isVisible()){
+        } else if (browseFragment.isVisible()) {
             fragmentTransaction.setCustomAnimations(R.animator.enter_from_right, R.animator.exit_to_left, R.animator.enter_from_left, R.animator.exit_to_right);
         }
         fragmentTransaction.replace(R.id.main_screen, fragment);

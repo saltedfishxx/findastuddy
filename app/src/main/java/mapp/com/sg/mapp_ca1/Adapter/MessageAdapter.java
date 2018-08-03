@@ -1,7 +1,6 @@
 package mapp.com.sg.mapp_ca1.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,12 +28,16 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
 
     //constructor for adapter when called
-    public MessageAdapter(Context context, List<Message> messageList){
+    public MessageAdapter(Context context, List<Message> messageList) {
         this.mContext = context;
         this.messageList = new ArrayList<>();
     }
 
-    private Context getmContext(){return mContext;};
+    private Context getmContext() {
+        return mContext;
+    }
+
+    ;
 
     // Determines the appropriate ViewType according to the sender of the message.
     @Override
@@ -92,9 +95,9 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        if(messageList != null){
+        if (messageList != null) {
             return messageList.size();
-        }else {
+        } else {
             return 0;
         }
     }
@@ -103,13 +106,13 @@ public class MessageAdapter extends RecyclerView.Adapter {
         messageList.clear();
     }
 
-    public void addItem (Message m) {
+    public void addItem(Message m) {
         messageList.add(m);
         notifyItemChanged(messageList.size() - 1);
     }
 
     public void addAllItems(List<Message> messages) {
-        for ( Message m : messages) {
+        for (Message m : messages) {
             addItem(m);
         }
     }
@@ -118,7 +121,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
         return this.messageList;
     }
 
-    public Message getMessage (int position) {
+    public Message getMessage(int position) {
         Message m = messageList.get(position);
         return m;
     }
@@ -155,12 +158,20 @@ public class MessageAdapter extends RecyclerView.Adapter {
             }
             nameText.setText(message.getName());
             timeText.setText(message.getTimestamp());
-            Glide.with(profileImage.getContext())
-                    .load(message.getProfileUrl())
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(profileImage);
 
-                  }
+            if (message.getProfileUrl() != null) {
+                Glide.with(profileImage.getContext())
+                        .load(message.getProfileUrl())
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(profileImage);
+
+            } else {
+                Glide.with(profileImage.getContext())
+                        .load(R.drawable.circleprofile)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(profileImage);
+            }
+        }
     }
 
     class SentMessageHolder extends RecyclerView.ViewHolder {
@@ -189,6 +200,6 @@ public class MessageAdapter extends RecyclerView.Adapter {
             }
             timeText.setText(message.getTimestamp());
 
-            }
+        }
     }
 }

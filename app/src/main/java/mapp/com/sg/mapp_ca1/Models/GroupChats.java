@@ -37,9 +37,13 @@ public class GroupChats implements Serializable {
         this.chatId = chatId;
     }
 
-    public String getChatName() { return chatName; }
+    public String getChatName() {
+        return chatName;
+    }
 
-    public void setChatName(String chatName) { this.chatName = chatName; }
+    public void setChatName(String chatName) {
+        this.chatName = chatName;
+    }
 
     public String getChatDesc() {
         return chatDesc;
@@ -49,7 +53,9 @@ public class GroupChats implements Serializable {
         this.chatDesc = chatDesc;
     }
 
-    public int getMemCount() { return memCount; }
+    public int getMemCount() {
+        return memCount;
+    }
 
     public void setMemCount(int memCount) {
         this.memCount = memCount;
@@ -59,9 +65,15 @@ public class GroupChats implements Serializable {
         return members;
     }
 
-    public void setMembers(List<String> members) { this.members = members; }
+    public void setMembers(List<String> members) {
+        this.members = members;
+    }
 
-    public String getPicURL() { return picURL; }
+    public String getPicURL() {
+        return picURL;
+    }
 
-    public void setPicURL(String picURL) { this.picURL = picURL; }
+    public void setPicURL(String picURL) {
+        this.picURL = picURL;
+    }
 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -11,7 +10,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/activity_minor_margin"
         android:background="@color/cardview_light_background">
 
@@ -26,11 +25,11 @@
                 android:id="@+id/bprofileimage"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:adjustViewBounds="true"
-                android:scaleType="centerInside"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="@dimen/activity_horizontal_margin"
-                android:background="@drawable/ic_group_black_24dp" />
+                android:adjustViewBounds="true"
+                android:background="@drawable/ic_group_black_24dp"
+                android:scaleType="centerInside" />
 
             <TextView
                 android:id="@+id/bchat1"
@@ -61,7 +60,7 @@
             android:layout_marginTop="@dimen/activity_minor_margin"
             android:text="Literature group chat, Sec 3 and 4 are welcome to discuss! "
             android:textColor="@color/grey"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/btxtMemCount"
@@ -71,10 +70,10 @@
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_minor_margin"
-            android:text="Members : "
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:text="Members : 4"
             android:textColor="@color/text_color"
-            android:textSize="18sp"
-            />
+            android:textSize="18sp" />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

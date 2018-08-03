@@ -1,17 +1,16 @@
 package mapp.com.sg.mapp_ca1;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 public class WelcomeActivity extends AppCompatActivity {
 
     Button loginbtn, signupbtn;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,9 +22,15 @@ public class WelcomeActivity extends AppCompatActivity {
         signupbtn.setOnClickListener(clickaction);
 
     }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
+
     View.OnClickListener clickaction = new View.OnClickListener() {
         public void onClick(View v) {
-            switch(v.getId()) {
+            switch (v.getId()) {
                 case R.id.loginbtn:
                     // it was the first button
                     Intent intent = new Intent(getApplicationContext(), Login.class);
