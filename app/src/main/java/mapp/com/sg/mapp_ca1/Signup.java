@@ -17,14 +17,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -59,7 +57,7 @@ public class Signup extends AppCompatActivity {
 
         email = (EditText) findViewById(R.id.editEmail);
         username = (EditText) findViewById(R.id.editUsername);
-        password =(EditText) findViewById(R.id.editPass);
+        password = (EditText) findViewById(R.id.editPass);
         repassword = (EditText) findViewById(R.id.editPass2);
 
         cv_secondary = (CardView) findViewById(R.id.secondaryYearCard);
@@ -194,9 +192,8 @@ public class Signup extends AppCompatActivity {
         }
     }
 
-    public void validatePassword()
-    {
-        if(!repassword.getText().toString().equals(password.getText().toString())){
+    public void validatePassword() {
+        if (!repassword.getText().toString().equals(password.getText().toString())) {
             AlertDialog alertDialog = new AlertDialog.Builder(Signup.this).create();
             alertDialog.setTitle("Error");
             alertDialog.setMessage("Passwords do not match");

@@ -1,7 +1,6 @@
 package mapp.com.sg.mapp_ca1.Firestore;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -11,9 +10,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -72,17 +69,16 @@ public class GroupChatFirestoreHelper {
                                 gc = new GroupChats(chatId, chatName, chatDesc, memCount, members, picUrl);
                                 gcList.add(gc);
                             }
-                            if(gcList != null) {
+                            if (gcList != null) {
                                 for (GroupChats g : gcList) {
-                                    if(!g.getMembers().contains(firebaseAuth.getCurrentUser().getUid()) && g.getMemCount() < 5)
-                                    {
+                                    if (!g.getMembers().contains(firebaseAuth.getCurrentUser().getUid()) && g.getMemCount() < 5) {
                                         browseDuplicate.add(g);
 
                                     }
                                 }
                             }
-                                Set<GroupChats> browseUnique = new HashSet<>(browseDuplicate);
-                                browse.addAll(browseUnique);
+                            Set<GroupChats> browseUnique = new HashSet<>(browseDuplicate);
+                            browse.addAll(browseUnique);
 
                             reference.updateTasks();
                             reference.UpdateList(browse);
@@ -121,7 +117,7 @@ public class GroupChatFirestoreHelper {
                                 gcList.add(gc);
 
                             }
-                            if(gcList != null) {
+                            if (gcList != null) {
                                 for (GroupChats g : gcList) {
                                     for (String memberUid : g.getMembers()) {
                                         if (memberUid.equals(firebaseAuth.getCurrentUser().getUid())) {

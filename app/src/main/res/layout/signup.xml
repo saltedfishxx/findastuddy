@@ -224,23 +224,23 @@
                     android:layout_marginRight="14dp"
                     android:orientation="vertical">
 
-                        <RadioButton
-                            android:id="@+id/expressRB"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="24dp"
-                            android:layout_marginTop="24dp"
-                            android:text="Express" />
+                    <RadioButton
+                        android:id="@+id/expressRB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_marginTop="24dp"
+                        android:text="Express" />
 
-                        <RadioButton
-                            android:id="@+id/normalARB"
-                            android:layout_width="108dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="24dp"
-                            android:layout_marginTop="24dp"
-                            android:text="Normal (Academic)" />
+                    <RadioButton
+                        android:id="@+id/normalARB"
+                        android:layout_width="108dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_marginTop="24dp"
+                        android:text="Normal (Academic)" />
 
                     <RadioButton
                         android:id="@+id/normalTRB"
@@ -290,39 +290,39 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                        <RadioButton
-                            android:id="@+id/sec1RB"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="24dp"
-                            android:layout_marginTop="24dp"
-                            android:text="Secondary 1" />
+                    <RadioButton
+                        android:id="@+id/sec1RB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_marginTop="24dp"
+                        android:text="Secondary 1" />
 
-                        <RadioButton
-                            android:id="@+id/sec2RB"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="24dp"
-                            android:layout_marginTop="24dp"
-                            android:text="Secondary 2" />
+                    <RadioButton
+                        android:id="@+id/sec2RB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_marginTop="24dp"
+                        android:text="Secondary 2" />
 
-                        <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="24dp"
-                            android:layout_marginTop="24dp"
-                            android:text="Secondary 3" />
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_marginTop="24dp"
+                        android:text="Secondary 3" />
 
-                        <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="24dp"
-                            android:layout_marginTop="24dp"
-                            android:text="Secondary 4" />
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_marginTop="24dp"
+                        android:text="Secondary 4" />
 
                     <RadioButton
                         android:layout_width="wrap_content"
@@ -372,23 +372,23 @@
                     android:layout_marginRight="14dp"
                     android:orientation="horizontal">
 
-                        <RadioButton
-                            android:id="@+id/artRB"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="24dp"
-                            android:layout_marginTop="24dp"
-                            android:text="Art" />
+                    <RadioButton
+                        android:id="@+id/artRB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_marginTop="24dp"
+                        android:text="Art" />
 
-                        <RadioButton
-                            android:id="@+id/scienceARB"
-                            android:layout_width="108dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="24dp"
-                            android:layout_marginTop="24dp"
-                            android:text="Science" />
+                    <RadioButton
+                        android:id="@+id/scienceARB"
+                        android:layout_width="108dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_marginTop="24dp"
+                        android:text="Science" />
 
 
                 </RadioGroup>
@@ -431,21 +431,23 @@
                     android:id="@+id/RGjc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-                        <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="24dp"
-                            android:layout_marginTop="24dp"
-                            android:text="Year 1" />
 
-                        <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="24dp"
-                            android:layout_marginTop="24dp"
-                            android:text="Year 2" />
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_marginTop="24dp"
+                        android:text="Year 1" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_marginTop="24dp"
+                        android:text="Year 2" />
+
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -467,6 +469,7 @@
 
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/termsLayout"
             android:layout_width="match_parent"
@@ -495,6 +498,7 @@
                 android:textColor="@color/text_color" />
 
         </LinearLayout>
+
         <Button
             android:id="@+id/signupbtn"
             android:layout_width="215dp"

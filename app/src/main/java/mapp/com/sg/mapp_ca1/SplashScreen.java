@@ -2,9 +2,9 @@ package mapp.com.sg.mapp_ca1;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.ProgressBar;
 
 import com.felipecsl.gifimageview.library.GifImageView;
@@ -27,16 +27,16 @@ public class SplashScreen extends AppCompatActivity {
         mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.startup);
 
         mediaPlayer.start();
-        gifImageView = (GifImageView)findViewById(R.id.splash);
+        gifImageView = (GifImageView) findViewById(R.id.splash);
 
 
         //Set GifImageView resource
-        try{
+        try {
             InputStream inputStream = getAssets().open("splash.gif");
             byte[] bytes = IOUtils.toByteArray(inputStream);
             gifImageView.setBytes(bytes);
             gifImageView.startAnimation();
-        }catch(IOException ex){
+        } catch (IOException ex) {
 
         }
 
@@ -44,9 +44,9 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                SplashScreen.this.startActivity(new Intent(SplashScreen.this,WelcomeActivity.class));
+                SplashScreen.this.startActivity(new Intent(SplashScreen.this, WelcomeActivity.class));
                 SplashScreen.this.finish();
             }
-        },3200); //3000 = 3 seconds
+        }, 3200); //3000 = 3 seconds
     }
 }

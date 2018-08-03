@@ -14,14 +14,10 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import mapp.com.sg.mapp_ca1.Adapter.MainAdapter;
 import mapp.com.sg.mapp_ca1.Firestore.GroupChatFirestoreHelper;
@@ -51,7 +47,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home, container,false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         firebaseAuth = FirebaseAuth.getInstance();
         groupChatFirestoreHelper = new GroupChatFirestoreHelper(this);
@@ -70,7 +66,7 @@ public class HomeFragment extends Fragment {
 
         //add toolbar
         Toolbar myToolbar = (Toolbar) view.findViewById(R.id.homeToolBar);
-        ((MainActivity)getActivity()).setSupportActionBar(myToolbar);
+        ((MainActivity) getActivity()).setSupportActionBar(myToolbar);
 
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
@@ -117,13 +113,13 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    public void UpdateList (List<GroupChats> gc) {
+    public void UpdateList(List<GroupChats> gc) {
         mAdapter.clearAll();
         mAdapter.addAllItems(gc);
 
     }
 
-    public void updateTasks () {
+    public void updateTasks() {
         mRecyclerView.getRecycledViewPool().clear();
         mAdapter.notifyDataSetChanged();
 

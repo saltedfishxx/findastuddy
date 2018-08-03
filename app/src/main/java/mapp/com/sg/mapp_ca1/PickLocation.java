@@ -38,7 +38,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-public class PickLocation extends AppCompatActivity implements OnMapReadyCallback{
+public class PickLocation extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String TAG = PickLocation.class.getSimpleName();
     private GoogleMap mMap;
@@ -100,7 +100,7 @@ public class PickLocation extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)getFragmentManager()
+        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment) getFragmentManager()
                 .findFragmentById(R.id.place_autocomplete_fragment);
 
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -134,6 +134,7 @@ public class PickLocation extends AppCompatActivity implements OnMapReadyCallbac
 
     /**
      * Sets up the options menu.
+     *
      * @param menu The options menu.
      * @return Boolean.
      */
@@ -145,6 +146,7 @@ public class PickLocation extends AppCompatActivity implements OnMapReadyCallbac
 
     /**
      * Handles a click on the menu option to get a place.
+     *
      * @param item The menu item to handle.
      * @return Boolean.
      */
@@ -232,7 +234,7 @@ public class PickLocation extends AppCompatActivity implements OnMapReadyCallbac
                     }
                 });
             }
-        } catch (SecurityException e)  {
+        } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage());
         }
     }
@@ -290,8 +292,7 @@ public class PickLocation extends AppCompatActivity implements OnMapReadyCallbac
         if (mLocationPermissionGranted) {
             // Get the likely places - that is, the businesses and other points of interest that
             // are the best match for the device's current location.
-            @SuppressWarnings("MissingPermission") final
-            Task<PlaceLikelihoodBufferResponse> placeResult =
+            @SuppressWarnings("MissingPermission") final Task<PlaceLikelihoodBufferResponse> placeResult =
                     mPlaceDetectionClient.getCurrentPlace(null);
             placeResult.addOnCompleteListener
                     (new OnCompleteListener<PlaceLikelihoodBufferResponse>() {
@@ -408,7 +409,7 @@ public class PickLocation extends AppCompatActivity implements OnMapReadyCallbac
                 mLastKnownLocation = null;
                 getLocationPermission();
             }
-        } catch (SecurityException e)  {
+        } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage());
         }
     }

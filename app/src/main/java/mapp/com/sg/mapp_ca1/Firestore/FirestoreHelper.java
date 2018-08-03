@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -22,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 
 import mapp.com.sg.mapp_ca1.ChatRoomActivity;
-import mapp.com.sg.mapp_ca1.MainActivity;
 import mapp.com.sg.mapp_ca1.Models.Message;
 
 import static android.content.ContentValues.TAG;
@@ -58,7 +56,7 @@ public class FirestoreHelper {
                                 String time = format.format(t);
 
                                 //create message object and add to list
-                                Message fm = new Message(id, text,name,url, time, profilePic);
+                                Message fm = new Message(id, text, name, url, time, profilePic);
                                 messageList.add(fm);
 
                                 //update adapter based on new list
@@ -75,17 +73,17 @@ public class FirestoreHelper {
     }
 
     //empty constructor
-    public FirestoreHelper(){
+    public FirestoreHelper() {
 
     }
 
 
     //called when saving message object
-    public void saveData(Message f){
+    public void saveData(Message f) {
         Date timestamp = new Date();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         try {
-             timestamp = format.parse(f.getTimestamp());
+            timestamp = format.parse(f.getTimestamp());
         } catch (ParseException e) {
             e.printStackTrace();
         }

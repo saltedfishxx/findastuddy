@@ -1,6 +1,8 @@
 package mapp.com.sg.mapp_ca1;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,19 +11,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import mapp.com.sg.mapp_ca1.Adapter.BrowseAdapter;
-import mapp.com.sg.mapp_ca1.Adapter.MainAdapter;
 import mapp.com.sg.mapp_ca1.Firestore.GroupChatFirestoreHelper;
 import mapp.com.sg.mapp_ca1.Models.GroupChats;
-import mapp.com.sg.mapp_ca1.Models.Message;
 
 
 /**
@@ -29,6 +27,7 @@ import mapp.com.sg.mapp_ca1.Models.Message;
  */
 public class BrowseFragment extends Fragment {
 
+    Button btnCreateChat;
     private RecyclerView bRecyclerView;
     private BrowseAdapter bAdapter;
     List<GroupChats> allChats;
@@ -50,7 +49,7 @@ public class BrowseFragment extends Fragment {
 
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_browse, container,false);
+        View view = inflater.inflate(R.layout.fragment_browse, container, false);
 
         firebaseAuth = FirebaseAuth.getInstance();
         groupChatFirestoreHelper = new GroupChatFirestoreHelper(this);
@@ -63,16 +62,23 @@ public class BrowseFragment extends Fragment {
         bRecyclerView.setLayoutManager(layoutManager);
 
 
-
         bAdapter = new BrowseAdapter(getContext(), browsechats);
         bRecyclerView.setAdapter(bAdapter);
 
         //add toolbar
         Toolbar myToolbar = (Toolbar) view.findViewById(R.id.browseToolBar);
-        ((MainActivity)getActivity()).setSupportActionBar(myToolbar);
+        ((MainActivity) getActivity()).setSupportActionBar(myToolbar);
 
+        btnCreateChat = view.findViewById(R.id.btncreateChat);
+
+        btnCreateChat.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent startCreate = new Intent(getContext(), CreateChatActivity.class);
+                startActivity(startCreate);
+            }});
 
         return view;
+
     }
 
     @Override
@@ -81,17 +87,19 @@ public class BrowseFragment extends Fragment {
 
     }
 
-    public void UpdateList (List<GroupChats> gc) {
+    public void UpdateList(List<GroupChats> gc) {
         bAdapter.clearAll();
         bAdapter.addAllItems(gc);
 
     }
 
-    public void updateTasks () {
+    public void updateTasks() {
         bRecyclerView.getRecycledViewPool().clear();
         bAdapter.notifyDataSetChanged();
 
     }
+
+
 
 
 }

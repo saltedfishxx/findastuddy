@@ -22,7 +22,7 @@
             android:layout_width="42dp"
             android:layout_height="42dp"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:background="@android:color/transparent"/>
+            android:background="@android:color/transparent" />
 
         <TextView
             android:id="@+id/chatTitle"
@@ -88,6 +88,7 @@
                 android:textColor="@color/grey"
                 android:hint="Message" />
         </LinearLayout>
+
         <ImageButton
             android:id="@+id/photoPickerButton"
             android:layout_width="28dp"

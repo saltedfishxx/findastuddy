@@ -18,9 +18,9 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/splashscreen25"
+        android:label=""
         android:roundIcon="@drawable/splashscreen25"
         android:supportsRtl="true"
-        android:label=""
         android:theme="@style/Theme.AppCompat.NoActionBar"
         tools:replace="android:label">
         <meta-data
@@ -68,11 +68,9 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".PickLocation"
-            android:label="@string/title_activity_pick_location"
-            >
-
-        </activity>
-        <activity android:name=".CreateMeetup"></activity>
+            android:label="@string/title_activity_pick_location"/>
+        <activity android:name=".CreateMeetup" />
+        <activity android:name=".CreateChatActivity"/>
     </application>
 
 </manifest>

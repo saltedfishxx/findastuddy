@@ -20,11 +20,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 import java.util.List;
 
-import mapp.com.sg.mapp_ca1.BrowseFragment;
 import mapp.com.sg.mapp_ca1.ChatRoomActivity;
 import mapp.com.sg.mapp_ca1.Firestore.GroupChatFirestoreHelper;
 import mapp.com.sg.mapp_ca1.Models.GroupChats;
-import mapp.com.sg.mapp_ca1.Models.Message;
 import mapp.com.sg.mapp_ca1.R;
 
 /**
@@ -67,7 +65,7 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.BrowseView
         holder.tvChatName.setText(chat.getChatName());
         holder.tvChatDesc.setText(chat.getChatDesc());
         holder.tvMembers.setText(String.format("%s/5", chat.getMemCount()));
-        if(chat.getPicURL() != null){
+        if (chat.getPicURL() != null) {
             Glide.with(holder.chatPic.getContext())
                     .load(chat.getPicURL())
                     .apply(RequestOptions.circleCropTransform())
@@ -84,21 +82,22 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.BrowseView
             return 0;
         }
     }
+
     public void clearAll() {
-        if(browseList != null) {
+        if (browseList != null) {
             browseList.clear();
         }
     }
 
-    public void addItem (GroupChats gc) {
-        if(browseList != null) {
+    public void addItem(GroupChats gc) {
+        if (browseList != null) {
             browseList.add(gc);
             notifyItemChanged(browseList.size() - 1);
         }
     }
 
     public void addAllItems(List<GroupChats> groupChats) {
-        for ( GroupChats g: groupChats) {
+        for (GroupChats g : groupChats) {
             addItem(g);
         }
     }
@@ -150,7 +149,7 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.BrowseView
 
                                     //TODO: update memberlist to firestore
                                     GroupChats updatedGC = new GroupChats(groupChats.getChatId(), groupChats.getChatName()
-                                    , groupChats.getChatDesc(), groupChats.getMemCount(), members, groupChats.getPicURL());
+                                            , groupChats.getChatDesc(), groupChats.getMemCount(), members, groupChats.getPicURL());
                                     groupChatFirestoreHelper = new GroupChatFirestoreHelper();
 
                                     groupChatFirestoreHelper.updateData(updatedGC);

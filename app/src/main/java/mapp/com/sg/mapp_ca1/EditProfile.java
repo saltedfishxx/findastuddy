@@ -9,12 +9,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -28,21 +26,12 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
-import org.w3c.dom.Text;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
-import mapp.com.sg.mapp_ca1.Firestore.FirestoreHelper;
 import mapp.com.sg.mapp_ca1.Firestore.UserFirestoreHelper;
-import mapp.com.sg.mapp_ca1.Models.Message;
 import mapp.com.sg.mapp_ca1.Models.Users;
 
 public class EditProfile extends AppCompatActivity {
 
-    private static final int RC_PHOTO_PICKER =  2;
+    private static final int RC_PHOTO_PICKER = 2;
     CardView cv_secondary, cv_jc, cv_secondaryStream, cv_jcStream;
     EditText username;
     RadioGroup streamSec, streamJC, yearSec, yearJC, education;
@@ -102,7 +91,7 @@ public class EditProfile extends AppCompatActivity {
         cancel.setOnClickListener(clickaction);
 
         photoUrl = getIntent().getStringExtra("imageLink");
-        if(photoUrl != null){
+        if (photoUrl != null) {
             Glide.with(userImage.getContext())
                     .load(photoUrl)
                     .apply(RequestOptions.circleCropTransform())
@@ -137,7 +126,7 @@ public class EditProfile extends AppCompatActivity {
                 // TODO: Fire an intent to show an image picker
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
-                intent.putExtra(Intent.EXTRA_LOCAL_ONLY,true);
+                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
                 startActivityForResult(Intent.createChooser(intent, "Complete action using"), RC_PHOTO_PICKER);
             }
         });
@@ -146,14 +135,13 @@ public class EditProfile extends AppCompatActivity {
     }
 
 
-
     //TODO: add validation for user input
     public void validation() {
         //user select secondary
         if (cv_jc.getVisibility() == View.GONE) {
             if (education.getCheckedRadioButtonId() == -1 || streamSec.getCheckedRadioButtonId() == -1
                     || yearSec.getCheckedRadioButtonId() == -1
-                    || username.getText().toString().isEmpty() ) {
+                    || username.getText().toString().isEmpty()) {
 
                 AlertDialog alertDialog = new AlertDialog.Builder(EditProfile.this).create();
                 alertDialog.setTitle("Error");
@@ -168,12 +156,12 @@ public class EditProfile extends AppCompatActivity {
             } else {
                 getRadioSelection();
 
-                if(downloadUri == null){
+                if (downloadUri == null) {
                     profileUrl = null;
-                }else {
+                } else {
                     profileUrl = downloadUri.toString();
                 }
-                Users users = new Users(uid, username.getText().toString(), edu,year,stream,profileUrl);
+                Users users = new Users(uid, username.getText().toString(), edu, year, stream, profileUrl);
                 updateUser(users);
             }
         } else {
@@ -193,16 +181,17 @@ public class EditProfile extends AppCompatActivity {
                 alertDialog.show();
             } else {
                 getRadioSelection();
-                if(downloadUri == null){
+                if (downloadUri == null) {
                     profileUrl = photoUrl;
-                }else {
+                } else {
                     profileUrl = downloadUri.toString();
                 }
-                Users users = new Users(uid, username.getText().toString(), edu,year,stream,profileUrl);
+                Users users = new Users(uid, username.getText().toString(), edu, year, stream, profileUrl);
                 updateUser(users);
             }
         }
     }
+
     View.OnClickListener clickaction = new View.OnClickListener() {
         public void onClick(View v) {
             switch (v.getId()) {
@@ -216,7 +205,7 @@ public class EditProfile extends AppCompatActivity {
         }
     };
 
-    public void updateUser(Users users){
+    public void updateUser(Users users) {
         UserFirestoreHelper firestoreHelper = new UserFirestoreHelper();
         firestoreHelper.updateData(users);
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -261,7 +250,7 @@ public class EditProfile extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == RC_PHOTO_PICKER && resultCode == RESULT_OK){
+        if (requestCode == RC_PHOTO_PICKER && resultCode == RESULT_OK) {
             Uri selectedImageUri = data.getData();
             StorageReference photoRef = storageReference.child(selectedImageUri.getLastPathSegment());
 

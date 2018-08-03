@@ -11,8 +11,7 @@
     <fragment
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:name="mapp.com.sg.mapp_ca1.HomeFragment"
-        />
+        android:name="mapp.com.sg.mapp_ca1.HomeFragment" />
 
 
     <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
