@@ -2,5 +2,12 @@
 <resources>
     <string-array name="spinnerItems">
         <item>English</item>
+        <item>Elementary Math</item>
+        <item>Additional Math</item>
+        <item>Literature</item>
+        <item>Chinese</item>
+        <item>History</item>
+        <item>Geography</item>
+        <item>Further Mathematics</item>
     </string-array>
 </resources>

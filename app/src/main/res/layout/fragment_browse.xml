@@ -50,7 +50,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintHeight_percent="0.12"
             app:layout_constraintTop_toBottomOf="@+id/rlMain"
-            android:onClick="onCreateChatClick" />
+            />
 
         <View
             android:layout_width="match_parent"
