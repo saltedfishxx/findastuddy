@@ -65,6 +65,35 @@ public class UserFirestoreHelper {
 
     }
 
+    public List<Users> getUsers() {
+        usersCollection
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        usersList = new ArrayList<>();
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot document : task.getResult()) {
+                                String id = document.getId();
+                                String username = document.getString("username");
+                                String education_level = document.getString("education_level");
+                                String study_year = document.getString("study_year");
+                                String stream = document.getString("stream");
+                                String profileUrl = document.getString("profileUrl");
+
+                                Users users = new Users(id, username, education_level, study_year, stream, profileUrl);
+                                //update list
+                                usersList.add(users);
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+
+                    }
+                });
+        return  usersList;
+    }
+
     public void saveData(Users f) {
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("username", f.getUsername());

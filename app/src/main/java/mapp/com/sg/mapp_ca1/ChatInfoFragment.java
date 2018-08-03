@@ -23,6 +23,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.w3c.dom.Text;
 
@@ -31,6 +32,7 @@ import java.util.List;
 
 import mapp.com.sg.mapp_ca1.Adapter.MemberAdapter;
 import mapp.com.sg.mapp_ca1.Adapter.MessageAdapter;
+import mapp.com.sg.mapp_ca1.Firestore.UserFirestoreHelper;
 import mapp.com.sg.mapp_ca1.Models.GroupChats;
 import mapp.com.sg.mapp_ca1.Models.Users;
 
@@ -45,6 +47,7 @@ public class ChatInfoFragment extends Fragment {
     List<String> memberList;
     List<String> picList;
     GroupChats selectedChat;
+    List<Users> allusers;
 
     TextView tvMember;
     ImageView memberPic;
@@ -56,7 +59,7 @@ public class ChatInfoFragment extends Fragment {
     List<Users> usersList;
 
 
-    public ChatInfoFragment(){
+    public ChatInfoFragment() {
     }
 
     @Nullable
@@ -68,7 +71,7 @@ public class ChatInfoFragment extends Fragment {
 
         if (getArguments() != null) {
             selectedChat = (GroupChats) getArguments().getSerializable("chat");
-        }else{
+        } else {
             Log.d(TAG, "chat not retrieved");
         }
 
@@ -76,8 +79,20 @@ public class ChatInfoFragment extends Fragment {
         tvMember = (TextView) view.findViewById(R.id.memberName);
         memberPic = (ImageView) view.findViewById(R.id.memberPic);
         memberList = selectedChat.getMembers();
+        picList = new ArrayList<>();
 
-        getPics();
+        allusers = (List<Users>) getActivity().getIntent().getSerializableExtra("allusers");
+
+        for (Users m : allusers){
+            if(memberList.contains(m.getUid())){
+                if(m.getProfileUrl() == null){
+                    picList.add("");
+                }else {
+                    picList.add(m.getProfileUrl());
+                }
+            }
+        }
+
 
         // Initialize references to views
         //set recycler view to its coressponding view
@@ -95,33 +110,4 @@ public class ChatInfoFragment extends Fragment {
         return view;
     }
 
-    private void getPics() {
-        picList = new ArrayList<>();
-        for(String m : memberList) {
-            usersCollection.document(m)
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if(task.isSuccessful()){
-                                DocumentSnapshot documentSnapshot = task.getResult();
-                                if(documentSnapshot != null){
-                                    Log.d("Data : ", String.valueOf(documentSnapshot.getData()));
-                                    if( documentSnapshot.getString("profileUrl") ==null){
-                                        picList.add(null);
-                                    }
-                                    else {
-                                        String photo = documentSnapshot.getString("profileUrl");
-                                        picList.add(photo);
-                                        Log.d(TAG, String.valueOf(picList));
-                                    }
-                                }
-                            }else {
-                                Log.d("Data: ", "No such doc");
-                            }
-                        }
-                    });
-        }
-
-    }
 }

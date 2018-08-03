@@ -32,13 +32,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -49,6 +52,8 @@ import mapp.com.sg.mapp_ca1.Firestore.UserFirestoreHelper;
 import mapp.com.sg.mapp_ca1.Models.GroupChats;
 import mapp.com.sg.mapp_ca1.Models.Message;
 import mapp.com.sg.mapp_ca1.Models.Users;
+
+import static android.content.ContentValues.TAG;
 
 public class ChatRoomActivity extends AppCompatActivity {
     private static final String TAG = "ChatRoom";
@@ -81,6 +86,7 @@ public class ChatRoomActivity extends AppCompatActivity {
     private StorageReference storageReference;
     ProgressDialog nDialog;
     Users user;
+    List<Users> usersList;
     GroupChats selectedChat;
     String groupId;
 
@@ -104,6 +110,8 @@ public class ChatRoomActivity extends AppCompatActivity {
 
         chatTitle.setText(selectedChat.getChatName());
 
+        usersList = new ArrayList<>();
+
         if (selectedChat.getPicURL() != null) {
             Glide.with(chatdp.getContext())
                     .load(selectedChat.getPicURL())
@@ -125,32 +133,36 @@ public class ChatRoomActivity extends AppCompatActivity {
         CollectionReference usersCollection = FirebaseFirestore.getInstance().collection("users");
 
         usersCollection
-                .document(firebaseAuth.getCurrentUser().getUid())
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        usersList = new ArrayList<>();
                         if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            String id = document.getId();
-                            String username = document.getString("username");
-                            String education_level = document.getString("education_level");
-                            String study_year = document.getString("study_year");
-                            String stream = document.getString("stream");
-                            String profileUrl = document.getString("profileUrl");
+                            for (DocumentSnapshot document : task.getResult()) {
+                                String id = document.getId();
+                                String username = document.getString("username");
+                                String education_level = document.getString("education_level");
+                                String study_year = document.getString("study_year");
+                                String stream = document.getString("stream");
+                                String profileUrl = document.getString("profileUrl");
 
-                            if (id.equals(firebaseAuth.getCurrentUser().getUid())) {
-                                user = new Users(id, username, education_level, study_year, stream, profileUrl);
+                                Users users = new Users(id, username, education_level, study_year, stream, profileUrl);
+                                //update list
+                                usersList.add(users);
                             }
-
-
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
 
-
                     }
                 });
+
+        for(Users m : usersList){
+            if(m.getUid().equals(firebaseAuth.getCurrentUser().getUid())){
+                user = m;
+            }
+        }
 
         if (firebaseAuth.getCurrentUser() != null) {
             mUsername = firebaseAuth.getCurrentUser().getDisplayName();
@@ -256,6 +268,7 @@ public class ChatRoomActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ChatDetails.class);
                 intent.putExtra("selectedChat", selectedChat);
+                intent.putExtra("allusers", (Serializable) usersList);
                 startActivity(intent);
             }
         });

@@ -49,12 +49,15 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
     public void onBindViewHolder(@NonNull MemberViewHolder holder, int position) {
         String member = memberList.get(position);
         holder.memberName.setText(member);
-        String pic = picList.get(position);
-        if(pic != null){
-            Glide.with(holder.memberPic.getContext())
-                    .load(pic)
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(holder.memberPic);
+
+        for(int i =0; i < picList.size(); i++ ){
+            String pic = picList.get(i);
+            if(pic != null){
+                Glide.with(holder.memberPic.getContext())
+                        .load(pic)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(holder.memberPic);
+            }
         }
 
     }
