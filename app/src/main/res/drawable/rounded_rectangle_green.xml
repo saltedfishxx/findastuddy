@@ -6,11 +6,8 @@
     <solid android:color="@color/main_edit"></solid>
 
     <!-- The radius makes the corners rounded -->
-<<<<<<< HEAD
     <corners
         android:radius="7dp">
     </corners>
-=======
     <corners android:radius="10dp"></corners>
->>>>>>> master
 </shape>

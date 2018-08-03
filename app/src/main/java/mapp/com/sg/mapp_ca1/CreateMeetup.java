@@ -23,28 +23,28 @@ public class CreateMeetup extends AppCompatActivity{
         createMeetup = (Button) findViewById(R.id.btnCreateMeetup);
     }
 
-    View.OnClickListener clickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch(v.getId()){
-                //TODO: code methods for each buttons' onclick
-                case(R.id.btnMeetupDateTime):
-
-                    break;
-
-                case(R.id.btnMeetupLocation):
-
-                    break;
-
-                case(R.id.btnCreateMeetup):
-                    AddMeetUp();
-
-
-            }
-        }
-    };
-
-    private Object AddMeetUp() {
-
-    }
+//    View.OnClickListener clickListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View v) {
+//            switch(v.getId()){
+//                //TODO: code methods for each buttons' onclick
+//                case(R.id.btnMeetupDateTime):
+//
+//                    break;
+//
+//                case(R.id.btnMeetupLocation):
+//
+//                    break;
+//
+//                case(R.id.btnCreateMeetup):
+//                    AddMeetUp();
+//
+//
+//            }
+//        }
+//    };
+//
+//    private Object AddMeetUp() {
+//
+//    }
 }
