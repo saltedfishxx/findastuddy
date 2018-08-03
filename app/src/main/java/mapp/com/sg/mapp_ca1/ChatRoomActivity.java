@@ -68,6 +68,7 @@ public class ChatRoomActivity extends AppCompatActivity {
     private Button mSendButton;
     private TextView chatTitle;
     private ImageView chatdp;
+    private ImageButton info;
 
     private String mUsername;
     List<Message> messageList;
@@ -95,6 +96,8 @@ public class ChatRoomActivity extends AppCompatActivity {
         firebaseStorage = FirebaseStorage.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         storageReference = firebaseStorage.getReference().child("chat_photos");
+
+        info = (ImageButton) findViewById(R.id.infoButton);
 
         chatTitle = (TextView) findViewById(R.id.chatTitle);
         chatdp = (ImageView) findViewById(R.id.chatdp);
@@ -245,6 +248,15 @@ public class ChatRoomActivity extends AppCompatActivity {
                 // Clear input box
                 mMessageEditText.setText("");
                 firestoreHelper = new FirestoreHelper(r, groupId);
+            }
+        });
+
+        info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ChatDetails.class);
+                intent.putExtra("selectedChat", selectedChat);
+                startActivity(intent);
             }
         });
     }

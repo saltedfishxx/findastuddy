@@ -141,6 +141,7 @@ public class  GroupChatFirestoreHelper {
     public GroupChatFirestoreHelper() {
     }
 
+
     public List<GroupChats> getGcList() {
         return gcList;
     }
