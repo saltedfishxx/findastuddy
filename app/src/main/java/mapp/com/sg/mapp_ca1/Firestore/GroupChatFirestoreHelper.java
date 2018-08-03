@@ -34,7 +34,7 @@ import static android.content.ContentValues.TAG;
  * Created by Lewis on 30/7/2018.
  */
 
-public class GroupChatFirestoreHelper {
+public class  GroupChatFirestoreHelper {
     static CollectionReference gcCollection = FirebaseFirestore.getInstance().collection("groupchat");
     List<GroupChats> gcList;
     List<GroupChats> mychats;

@@ -96,7 +96,7 @@
         </android.support.v7.widget.CardView>
 
         <Button
-            android:id="@+id/meetupBtn"
+            android:id="@+id/btnCreateMeetup"
             android:layout_width="125dp"
             android:layout_height="wrap_content"
             android:background="@color/text_color"
