@@ -16,7 +16,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-        android:debuggable="true"
         android:allowBackup="true"
         android:icon="@drawable/splashscreen25"
         android:label=""
@@ -33,13 +32,7 @@
 
         <activity
             android:name=".SplashScreen"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
         <activity
             android:name=".Login"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
@@ -70,15 +63,22 @@
         <activity
             android:name=".PickLocation"
             android:label="@string/title_activity_pick_location" />
-        <activity android:name=".CreateMeetup" />
+        <activity android:name=".CreateMeetup">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ChatDetails"
             android:label="@string/title_activity_chat_details"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
-        <activity android:name=".ChatMeetupFragment"></activity>
-            android:label="@string/title_activity_pick_location"/>
-        <activity android:name=".CreateMeetup" />
-        <activity android:name=".CreateChatActivity"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".CreateChatActivity" />
+
+        <activity android:name=".PickDateTime">
+
+        </activity>
     </application>
 
 </manifest>
