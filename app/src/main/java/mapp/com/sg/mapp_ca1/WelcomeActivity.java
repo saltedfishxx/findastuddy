@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class WelcomeActivity extends AppCompatActivity {
 
-    Button loginbtn, signupbtn;
+    private Button loginbtn, signupbtn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

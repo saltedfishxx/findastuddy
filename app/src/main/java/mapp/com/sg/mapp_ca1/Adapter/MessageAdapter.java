@@ -22,8 +22,8 @@ import mapp.com.sg.mapp_ca1.R;
 public class MessageAdapter extends RecyclerView.Adapter {
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
-    List<Message> messageList;
-    Context mContext;
+    private List<Message> messageList;
+    private Context mContext;
     private FirebaseAuth firebaseAuth;
 
 
@@ -33,11 +33,11 @@ public class MessageAdapter extends RecyclerView.Adapter {
         this.messageList = new ArrayList<>();
     }
 
+    //gets context
     private Context getmContext() {
         return mContext;
     }
 
-    ;
 
     // Determines the appropriate ViewType according to the sender of the message.
     @Override
@@ -102,6 +102,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
         }
     }
 
+    //clearall, additem, and addallitems are methods used to update the list in the adapter
     public void clearAll() {
         messageList.clear();
     }

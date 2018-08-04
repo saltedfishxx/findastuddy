@@ -152,7 +152,7 @@ public class  GroupChatFirestoreHelper {
         data.put("chatdesc", f.getChatDesc());
         data.put("members", f.getMembers());
         data.put("picUrl", f.getPicURL());
-        gcCollection.document(f.getChatId()).set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+        gcCollection.document().set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d("FirestoreHelper", "Document has been saved!");
@@ -191,6 +191,7 @@ public class  GroupChatFirestoreHelper {
         //TODO: remove member from groupchat then update on firestore
         List<String> members = chats.getMembers();
         List<String> updatedmembers = new ArrayList<>();
+        firebaseAuth = FirebaseAuth.getInstance();
         for (String m: members){
             if(!m.equals(firebaseAuth.getCurrentUser().getUid())){
                 updatedmembers.add(m);

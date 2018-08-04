@@ -21,11 +21,10 @@ import mapp.com.sg.mapp_ca1.Models.GroupChats;
 import mapp.com.sg.mapp_ca1.R;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder> {
-    //This class sets the contents of the group chat list
+    //This class sets the contents of the group chat list in home fragment
 
-
-    List<GroupChats> chatsList;
-    Context mContext;
+    private List<GroupChats> chatsList;
+    private Context mContext;
 
     //Constructor when calling the main adapter
     public MainAdapter(Context context, List<GroupChats> chatsList) {
@@ -68,6 +67,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
 
     }
 
+
+    //clearall, additem, and addallitems are methods used to update the list in the adapter
     @Override
     public int getItemCount() {
         //returns the number of items in the list
@@ -110,21 +111,17 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     // Inner class for creating ViewHolders
     class MainViewHolder extends RecyclerView.ViewHolder {
 
-        // Class variables for the task description and priority TextViews
+        // Class variables
         TextView chatTextView;
         ImageView groupPic;
 
-        /**
-         * Constructor for the TaskViewHolders.
-         *
-         * @param itemView The view inflated in onCreateViewHolder
-         */
         public MainViewHolder(View itemView) {
             super(itemView);
             //get the view from xml file
             chatTextView = (TextView) itemView.findViewById(R.id.chat1);
             groupPic = (ImageView) itemView.findViewById(R.id.profileimage);
 
+            //gets list position --> directs to selected chat based on user's clicked item
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

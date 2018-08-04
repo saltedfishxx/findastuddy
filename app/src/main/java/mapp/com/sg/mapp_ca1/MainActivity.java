@@ -88,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             builder = new AlertDialog.Builder(this);
         }
-        builder.setTitle("Sign out")
-                .setMessage("Do you wish to sign out?")
+        builder.setTitle("Log out")
+                .setMessage("Do you wish to Log out?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // continue with adding

@@ -32,30 +32,27 @@ import mapp.com.sg.mapp_ca1.Models.Users;
 public class EditProfile extends AppCompatActivity {
 
     private static final int RC_PHOTO_PICKER = 2;
-    CardView cv_secondary, cv_jc, cv_secondaryStream, cv_jcStream;
-    EditText username;
-    RadioGroup streamSec, streamJC, yearSec, yearJC, education;
-    CheckBox checkBox;
-    String stream, year, edu, uid, profileUrl;
-    Button signup;
-    TextView cancel, done;
-    ImageView editImage, userImage;
+    private CardView cv_secondary, cv_jc, cv_secondaryStream, cv_jcStream;
+    private EditText username;
+    private RadioGroup streamSec, streamJC, yearSec, yearJC, education;
+    private String stream, year, edu, uid, profileUrl;
+    private TextView cancel, done;
+    private ImageView editImage, userImage;
+    private String photoUrl;
+    private Uri downloadUri;
 
-    FirebaseStorage firebaseStorage;
-    StorageReference storageReference;
-    FirebaseAuth firebaseAuth;
-    String photoUrl;
+    //firebase components
+    private FirebaseStorage firebaseStorage;
+    private StorageReference storageReference;
+    private FirebaseAuth firebaseAuth;
 
-    Uri downloadUri;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_profile);
 
-        //TODO: add username view and set it to username
-        //TODO: add logic to get profile image
-
+        //init firebase components
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference().child("user_profile_pics");
 
@@ -135,7 +132,7 @@ public class EditProfile extends AppCompatActivity {
     }
 
 
-    //TODO: add validation for user input
+    //validation for user input
     public void validation() {
         //user select secondary
         if (cv_jc.getVisibility() == View.GONE) {
@@ -165,7 +162,7 @@ public class EditProfile extends AppCompatActivity {
                 updateUser(users);
             }
         } else {
-            //user selec jc
+            //user selects jc
             if (education.getCheckedRadioButtonId() == -1 || streamJC.getCheckedRadioButtonId() == -1
                     || yearJC.getCheckedRadioButtonId() == -1
                     || username.getText().toString().isEmpty()) {
@@ -192,6 +189,7 @@ public class EditProfile extends AppCompatActivity {
         }
     }
 
+    //check if user clicks done or cancel
     View.OnClickListener clickaction = new View.OnClickListener() {
         public void onClick(View v) {
             switch (v.getId()) {
@@ -205,6 +203,7 @@ public class EditProfile extends AppCompatActivity {
         }
     };
 
+    //updates user data to firestore
     public void updateUser(Users users) {
         UserFirestoreHelper firestoreHelper = new UserFirestoreHelper();
         firestoreHelper.updateData(users);
@@ -216,7 +215,6 @@ public class EditProfile extends AppCompatActivity {
         //finish();
     }
 
-    //TODO: pass integers based on radio button selection
     public void getRadioSelection() {
         //get education
         int selectedEdu = education.getCheckedRadioButtonId();

@@ -18,15 +18,17 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
-    EditText emailInput, passwordInput;
-    TextView errortxt;
-    Button eye;
+    private EditText emailInput, passwordInput;
+    private TextView errortxt;
+    private Button eye;
     private FirebaseAuth auth;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+
+        //set views
         emailInput = (EditText) findViewById(R.id.editEmail);
         passwordInput = (EditText) findViewById(R.id.editPass);
         errortxt = (TextView) findViewById(R.id.errortxt);
@@ -40,6 +42,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             startActivity(new Intent(Login.this, MainActivity.class));
         }
 
+        //toggles password view
         eye.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
 
@@ -67,6 +70,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         loginUser(emailInput.getText().toString(), passwordInput.getText().toString());
     }
 
+    //logs in user
     private void loginUser(String email, String pass) {
         auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override

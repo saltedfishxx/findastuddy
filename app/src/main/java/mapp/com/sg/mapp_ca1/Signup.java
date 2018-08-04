@@ -31,25 +31,27 @@ import mapp.com.sg.mapp_ca1.Firestore.UserFirestoreHelper;
 import mapp.com.sg.mapp_ca1.Models.Users;
 
 public class Signup extends AppCompatActivity {
-    CardView cv_secondary, cv_jc, cv_secondaryStream, cv_jcStream;
-    LinearLayout layout;
-    TextView terms;
-    LinearLayout air;
-    EditText email, password, repassword, username;
-    RadioGroup streamSec, streamJC, yearSec, yearJC, education;
-    CheckBox checkBox;
-    String stream, year, edu;
-    Button signup;
+    private CardView cv_secondary, cv_jc, cv_secondaryStream, cv_jcStream;
+    private LinearLayout layout;
+    private TextView terms;
+    private LinearLayout air;
+    private EditText email, password, repassword, username;
+    private RadioGroup streamSec, streamJC, yearSec, yearJC, education;
+    private CheckBox checkBox;
+    private String stream, year, edu;
+    private Button signup;
 
-    FirebaseAuth mAuth;
-    FirebaseAuth.AuthStateListener mAuthListener;
-    UserFirestoreHelper userFirestoreHelper;
+    //firebase components
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private UserFirestoreHelper userFirestoreHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup);
 
+        //set views
         air = (LinearLayout) findViewById(R.id.space);
         layout = (LinearLayout) findViewById(R.id.termsLayout);
         checkBox = (CheckBox) findViewById(R.id.cbTerms);
@@ -112,6 +114,7 @@ public class Signup extends AppCompatActivity {
     }
 
 
+    //if user clicks on T&Cs
     View.OnClickListener clickaction = new View.OnClickListener() {
         public void onClick(View v) {
             switch (v.getId()) {
@@ -128,7 +131,7 @@ public class Signup extends AppCompatActivity {
         }
     };
 
-    //TODO: add checkbox validation
+    //checkbox validation
     public void termsValidation() {
         if (!checkBox.isChecked()) {
             AlertDialog alertDialog = new AlertDialog.Builder(Signup.this).create();
@@ -145,7 +148,7 @@ public class Signup extends AppCompatActivity {
 
     }
 
-    //TODO: add validation for user input
+    //validation for user input
     public void validation() {
         //user select secondary
         if (cv_jc.getVisibility() == View.GONE) {
@@ -207,7 +210,6 @@ public class Signup extends AppCompatActivity {
         }
     }
 
-    //TODO: pass integers based on radio button selection
     public void getRadioSelection() {
         //get education
         int selectedEdu = education.getCheckedRadioButtonId();
@@ -239,7 +241,7 @@ public class Signup extends AppCompatActivity {
     }
 
     public void createUser() {
-        //TODO: check if email exists
+        //check if email exists
         final String TAG = "FirebaseAuth";
         // one of the radio buttons is checked
         mAuth = FirebaseAuth.getInstance();
@@ -270,8 +272,8 @@ public class Signup extends AppCompatActivity {
                                         Log.d(TAG, "onComplete: " + e.getMessage());
                                     }
                                 } else {
-                                    //TODO: save user data
-                                    //TODO: sign in user and go to home screen --> add auth listener
+                                    //save user data
+                                    //sign in user and go to home screen
                                     getRadioSelection();
                                     Users newUser = new Users(mAuth.getUid(), username.getText().toString(), edu, year, stream, null);
                                     userFirestoreHelper = new UserFirestoreHelper();

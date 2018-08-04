@@ -18,8 +18,8 @@ import mapp.com.sg.mapp_ca1.Models.GroupChats;
 
 
 public class ChatMeetupFragment extends Fragment{
-    View view;
-    Context context;
+    private View view;
+    private Context context;
 
     @Nullable
     @Override

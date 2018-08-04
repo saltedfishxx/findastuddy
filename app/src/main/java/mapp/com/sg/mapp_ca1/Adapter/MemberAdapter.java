@@ -24,11 +24,10 @@ import mapp.com.sg.mapp_ca1.R;
 
 public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberViewHolder> {
 
-    List<Users> members;
-    Context context;
-    UserFirestoreHelper userFirestoreHelper;
+    private List<Users> members;
+    private Context context;
 
-    public MemberAdapter (Context context, List<Users> memberList){
+    public MemberAdapter(Context context, List<Users> memberList) {
         this.context = context;
         this.members = new ArrayList<>();
     }
@@ -50,12 +49,12 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
         Users user = members.get(position);
         holder.memberName.setText(user.getUsername());
 
-        if(user.getProfileUrl() != null){
+        if (user.getProfileUrl() != null) {
             Glide.with(holder.memberPic.getContext())
                     .load(user.getProfileUrl())
                     .apply(RequestOptions.circleCropTransform())
                     .into(holder.memberPic);
-        }else {
+        } else {
             Glide.with(holder.memberPic.getContext())
                     .load(R.drawable.circleprofile)
                     .apply(RequestOptions.circleCropTransform())
@@ -64,6 +63,7 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
 
     }
 
+    //clearall, additem, and addallitems are methods used to update the list in the adapter
     @Override
     public int getItemCount() {
         return members.size();
@@ -88,14 +88,16 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
         }
     }
 
-    class MemberViewHolder  extends RecyclerView.ViewHolder{
+    class MemberViewHolder extends RecyclerView.ViewHolder {
 
+        //class vairables
         TextView memberName;
         ImageView memberPic;
 
 
         public MemberViewHolder(View itemView) {
             super(itemView);
+            //gets the view from xml file
             memberName = (TextView) itemView.findViewById(R.id.memberName);
             memberPic = (ImageView) itemView.findViewById(R.id.memberPic);
 

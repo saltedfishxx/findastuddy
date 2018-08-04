@@ -3,7 +3,14 @@ package mapp.com.sg.mapp_ca1.Models;
 import java.io.Serializable;
 
 public class Users implements Serializable {
+    private String uid;
+    private String username;
+    private String education_lvl;
+    private String year;
+    private String stream;
+    private String profileUrl;
 
+    //Constructor
     public Users(String uid, String username, String education_lvl, String year, String stream, String profileUrl) {
         this.uid = uid;
         this.username = username;
@@ -13,6 +20,8 @@ public class Users implements Serializable {
         this.profileUrl = profileUrl;
     }
 
+
+    // Getters() and Setters()
     public String getUid() {
         return uid;
     }
@@ -61,10 +70,4 @@ public class Users implements Serializable {
         this.profileUrl = profileUrl;
     }
 
-    private String uid;
-    private String username;
-    private String education_lvl;
-    private String year;
-    private String stream;
-    private String profileUrl;
 }

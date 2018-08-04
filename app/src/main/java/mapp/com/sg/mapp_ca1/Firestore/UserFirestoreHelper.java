@@ -27,11 +27,15 @@ import mapp.com.sg.mapp_ca1.Signup;
 
 import static android.content.ContentValues.TAG;
 
+/**
+ * This firestorehelper is used to read, write and update users and chat members
+ */
+
 public class UserFirestoreHelper {
     static CollectionReference usersCollection = FirebaseFirestore.getInstance().collection("users");
-    List<Users> usersList;
-    List<Users> members;
-    Users users;
+    private List<Users> usersList;
+    private List<Users> members;
+
 
     //constructor to call when want to retrieve data
     public UserFirestoreHelper(Signup r) {
@@ -91,9 +95,9 @@ public class UserFirestoreHelper {
                                 //update list
                                 usersList.add(users);
                             }
-                            for( Users u : usersList){
-                                for(String m : selectedChat.getMembers()){
-                                    if(u.getUid().equals(m)){
+                            for (Users u : usersList) {
+                                for (String m : selectedChat.getMembers()) {
+                                    if (u.getUid().equals(m)) {
                                         members.add(u);
                                     }
                                 }
@@ -112,10 +116,6 @@ public class UserFirestoreHelper {
 
     public List<Users> getMembers() {
         return members;
-    }
-
-    public void setMembers(List<Users> members) {
-        this.members = members;
     }
 
     public void saveData(Users f) {
