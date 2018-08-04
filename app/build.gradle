@@ -43,8 +43,12 @@ dependencies {
     implementation "com.google.firebase:firebase-firestore:15.0.0"
     implementation "com.google.firebase:firebase-messaging:15.0.2"
     implementation "com.google.firebase:firebase-storage:15.0.2"
+    //Bottom nav bar
     implementation 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
+    //Location
     implementation 'com.google.android.gms:play-services-places:15.0.1'
     implementation 'com.google.android.gms:play-services-location:15.0.1'
+    //Material Design
+    implementation 'com.wdullaer:materialdatetimepicker:3.6.3'
 }
 apply plugin: 'com.google.gms.google-services'
