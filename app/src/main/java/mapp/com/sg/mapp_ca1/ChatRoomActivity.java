@@ -32,13 +32,18 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
+import org.w3c.dom.Document;
+
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -49,6 +54,8 @@ import mapp.com.sg.mapp_ca1.Firestore.UserFirestoreHelper;
 import mapp.com.sg.mapp_ca1.Models.GroupChats;
 import mapp.com.sg.mapp_ca1.Models.Message;
 import mapp.com.sg.mapp_ca1.Models.Users;
+
+import static android.content.ContentValues.TAG;
 
 public class ChatRoomActivity extends AppCompatActivity {
     private static final String TAG = "ChatRoom";
@@ -68,6 +75,7 @@ public class ChatRoomActivity extends AppCompatActivity {
     private Button mSendButton;
     private TextView chatTitle;
     private ImageView chatdp;
+    private ImageButton info;
 
     private String mUsername;
     List<Message> messageList;
@@ -80,6 +88,7 @@ public class ChatRoomActivity extends AppCompatActivity {
     private StorageReference storageReference;
     ProgressDialog nDialog;
     Users user;
+    List<Users> usersList;
     GroupChats selectedChat;
     String groupId;
 
@@ -96,10 +105,14 @@ public class ChatRoomActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         storageReference = firebaseStorage.getReference().child("chat_photos");
 
+        info = (ImageButton) findViewById(R.id.infoButton);
+
         chatTitle = (TextView) findViewById(R.id.chatTitle);
         chatdp = (ImageView) findViewById(R.id.chatdp);
 
         chatTitle.setText(selectedChat.getChatName());
+
+        usersList = new ArrayList<>();
 
         if (selectedChat.getPicURL() != null) {
             Glide.with(chatdp.getContext())
@@ -120,34 +133,39 @@ public class ChatRoomActivity extends AppCompatActivity {
 
 
         CollectionReference usersCollection = FirebaseFirestore.getInstance().collection("users");
+        usersList = new ArrayList<>();
+        for(String m : selectedChat.getMembers()) {
+            usersCollection
+                    .document(m)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                String id = document.getId();
+                                String username = document.getString("username");
+                                String education_level = document.getString("education_level");
+                                String study_year = document.getString("study_year");
+                                String stream = document.getString("stream");
+                                String profileUrl = document.getString("profileUrl");
 
-        usersCollection
-                .document(firebaseAuth.getCurrentUser().getUid())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            String id = document.getId();
-                            String username = document.getString("username");
-                            String education_level = document.getString("education_level");
-                            String study_year = document.getString("study_year");
-                            String stream = document.getString("stream");
-                            String profileUrl = document.getString("profileUrl");
-
-                            if (id.equals(firebaseAuth.getCurrentUser().getUid())) {
                                 user = new Users(id, username, education_level, study_year, stream, profileUrl);
+                                //update list
+                                usersList.add(user);
+
+                            } else {
+                                Log.d(TAG, "Error getting documents: ", task.getException());
                             }
 
-
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
                         }
-
-
-                    }
-                });
+                    });
+        }
+        for(Users m : usersList){
+            if(m.getUid().equals(firebaseAuth.getCurrentUser().getUid())){
+                user = m;
+            }
+        }
 
         if (firebaseAuth.getCurrentUser() != null) {
             mUsername = firebaseAuth.getCurrentUser().getDisplayName();
@@ -245,6 +263,18 @@ public class ChatRoomActivity extends AppCompatActivity {
                 // Clear input box
                 mMessageEditText.setText("");
                 firestoreHelper = new FirestoreHelper(r, groupId);
+            }
+        });
+
+        info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ChatDetails.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("selectedChat", selectedChat);
+                bundle.putSerializable("allusers", (Serializable) usersList);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
     }

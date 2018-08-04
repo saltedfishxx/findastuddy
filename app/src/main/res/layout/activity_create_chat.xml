@@ -20,127 +20,151 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cvCreate"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/chatToolbar"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="@dimen/activity_vertical_margin"
-        android:background="@color/color_white">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/chatToolbar">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/activity_vertical_margin">
+            android:background="@color/background_color"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtCreateChat"
+            <android.support.v7.widget.CardView
+                android:id="@+id/cvCreate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/activity_minor_margin"
-                android:text="Chat Profile Picture"
-                android:textAlignment="center"
-                android:textColor="@color/text_color"
-                android:textSize="@dimen/home_textsize" />
+                android:layout_below="@id/chatToolbar"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="@dimen/activity_vertical_margin"
+                android:background="@color/color_white">
 
-            <ImageView
-                android:id="@+id/chatImage"
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/activity_vertical_margin">
+
+                    <TextView
+                        android:id="@+id/txtCreateChat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/activity_minor_margin"
+                        android:text="Chat Profile Picture"
+                        android:textAlignment="center"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/home_textsize" />
+
+                    <ImageView
+                        android:id="@+id/chatImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtCreateChat"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/circle" />
+
+                    <ImageView
+                        android:id="@+id/editImageC"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtCreateChat"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:background="@drawable/circle_overlay" />
+
+                    <TextView
+                        android:id="@+id/txtEditImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/chatImage"
+                        android:layout_below="@id/editImageC"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="60dp"
+                        android:text="Edit"
+                        android:textColor="@color/color_white"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/tvChatName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/editImageC"
+                        android:text="Chat Name"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/home_textsize" />
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/editChatName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvChatName"
+                        android:hint="@string/chatname_example"
+                        android:singleLine="true"
+                        android:textColor="@color/grey"
+                        android:textColorHint="@color/light_text"
+                        android:theme="@style/EditTextTheme" />
+
+                    <TextView
+                        android:id="@+id/tvChatDesc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/editChatName"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:text="Chat Description"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/home_textsize" />
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/editChatDesc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvChatDesc"
+                        android:hint="E.g Mostly asked topics are diversity etc."
+                        android:textColor="@color/grey"
+                        android:textColorHint="@color/light_text"
+                        android:theme="@style/EditTextTheme" />
+
+                    <TextView
+                        android:id="@+id/tvChatSub"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/editChatDesc"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:text="Chat Subject"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/home_textsize" />
+
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/spinnerSubjects"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvChatSub"
+                        android:backgroundTint="@color/light_grey"
+                        android:entries="@array/spinnerItems" />
+
+                    <TextView
+                        android:id="@+id/tvError"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="ERROR MOFO"
+                        android:layout_below="@id/spinnerSubjects"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:textColor="@android:color/holo_red_light"/>
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtCreateChat"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/circle" />
-
-            <ImageView
-                android:id="@+id/editImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/txtCreateChat"
-                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:background="@color/text_color"
+                android:padding="@dimen/activity_vertical_margin"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:background="@drawable/circle_overlay" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/chatImage"
-                android:layout_below="@id/editImage"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="60dp"
-                android:text="Edit"
-                android:textColor="@color/color_white"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/tvChatName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/editImage"
-                android:text="Chat Name"
-                android:textColor="@color/text_color"
-                android:textSize="@dimen/home_textsize" />
-
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/editChatName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvChatName"
-                android:hint="@string/chatname_example"
-                android:textColor="@color/grey"
-                android:textColorHint="@color/light_text"
-                android:theme="@style/EditTextTheme" />
-
-            <TextView
-                android:id="@+id/tvChatDesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/editChatName"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:text="Chat Description"
-                android:textColor="@color/text_color"
-                android:textSize="@dimen/home_textsize" />
-
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/editChatDesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvChatDesc"
-                android:hint="E.g Mostly asked topics are diversity etc."
-                android:textColor="@color/grey"
-                android:textColorHint="@color/light_text"
-                android:theme="@style/EditTextTheme" />
-
-            <TextView
-                android:id="@+id/tvChatSub"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/editChatDesc"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:text="Chat Subject"
-                android:textColor="@color/text_color"
-                android:textSize="@dimen/home_textsize" />
-
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/spinnerSubjects"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvChatSub"
-                android:entries="@array/spinnerItems"
-                style="@style/spinner_style"
-                />
-        </RelativeLayout>
-
-    </android.support.v7.widget.CardView>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/cvCreate"
-        android:layout_centerHorizontal="true"
-        android:background="@color/text_color"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:text="Create Chat"
-        android:textColor="@color/color_white" />
-
+                android:text="Create Chat"
+                android:onClick="OnClick"
+                android:textColor="@color/color_white" />
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>
