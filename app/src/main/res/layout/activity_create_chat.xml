@@ -70,6 +70,7 @@
                         android:layout_below="@+id/txtCreateChat"
                         android:layout_centerHorizontal="true"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:onClick="onClickEdit"
                         android:background="@drawable/circle_overlay" />
 
                     <TextView
@@ -146,7 +147,7 @@
                         android:id="@+id/tvError"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="ERROR MOFO"
+                        android:text=""
                         android:layout_below="@id/spinnerSubjects"
                         android:layout_marginTop="@dimen/activity_vertical_margin"
                         android:textColor="@android:color/holo_red_light"/>
