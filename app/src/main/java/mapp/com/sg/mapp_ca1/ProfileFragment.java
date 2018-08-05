@@ -1,11 +1,14 @@
 package mapp.com.sg.mapp_ca1;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,22 +37,20 @@ import static android.content.ContentValues.TAG;
  */
 public class ProfileFragment extends Fragment {
 
-    Button editProfile, logout;
-    CollapsingToolbarLayout collapsingToolbarLayout;
-    ImageView userPic;
-    TextView displayEducation, displayYear, displayStream;
+    private Button editProfile, logout;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
+    private ImageView userPic;
+    private TextView displayEducation, displayYear, displayStream;
 
     //firebase components
-    UserFirestoreHelper userFirestoreHelper;
-    FirebaseAuth firebaseAuth;
-    Users user;
+    private UserFirestoreHelper userFirestoreHelper;
+    private FirebaseAuth firebaseAuth;
+    private Users user;
 
     public ProfileFragment() {
-        // Required empty public constructor
         firebaseAuth = FirebaseAuth.getInstance();
-        //userFirestoreHelper = new UserFirestoreHelper();
         final String userID = firebaseAuth.getCurrentUser().getUid();
-        //user = userFirestoreHelper.getUser(userID);
+
         CollectionReference usersCollection = FirebaseFirestore.getInstance().collection("users");
 
         usersCollection
@@ -95,6 +96,7 @@ public class ProfileFragment extends Fragment {
         displayEducation = (TextView) view.findViewById(R.id.displayEducation);
         displayYear = (TextView) view.findViewById(R.id.displayYear);
         displayStream = (TextView) view.findViewById(R.id.displayStream);
+        logout = (Button) view.findViewById(R.id.logoutBtn);
 
         //set content
         if (user != null) {
@@ -111,6 +113,39 @@ public class ProfileFragment extends Fragment {
         }
         editProfile = (Button) view.findViewById(R.id.editProfile);
 
+        //if user clicks log out --> logs out user
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    builder = new AlertDialog.Builder(getContext());
+                } else {
+                    builder = new AlertDialog.Builder(getContext());
+                }
+                builder.setTitle("Log out")
+                        .setMessage("Do you wish to Log out?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with adding
+                                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                                firebaseAuth.signOut();
+                                Intent intent = new Intent(getContext(), Login.class);
+                                startActivity(intent);
+
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                                dialog.cancel();
+                            }
+                        })
+                        .show();
+            }
+        });
+
+        //if user wants to edit profile
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

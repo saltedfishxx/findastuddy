@@ -74,7 +74,6 @@
         </activity>
         <activity
             android:name=".ChatDetails"
-            android:label="@string/title_activity_chat_details"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".CreateChatActivity" />
 

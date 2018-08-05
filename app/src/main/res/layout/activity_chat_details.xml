@@ -10,42 +10,104 @@
     tools:context=".ChatDetails">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
+        android:id="@+id/appbarChat"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/appbar_padding_top"
+        android:layout_height="300dp"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsingBarChat"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_weight="1"
-            android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/PopupOverlay"
-            app:title="@string/app_name">
+            android:layout_height="match_parent"
+            android:background="@color/main_edit"
+            android:fitsSystemWindows="true"
+            android:theme="@style/AppTheme.NoActionBar"
+            app:contentScrim="@color/main_edit"
+            app:expandedTitleGravity="bottom|center_horizontal"
+            app:expandedTitleTextAppearance="@android:color/transparent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleEnabled="false"
+            app:collapsedTitleTextAppearance="@color/grey">
 
-        </android.support.v7.widget.Toolbar>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/detailToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/PopupOverlay"
+                app:title=""
+                app:titleTextAppearance="@style/Toolbar.TitleText" />
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <android.support.design.widget.TabItem
-                android:id="@+id/tabItem"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tab_text_1" />
+                >
+                <ImageButton
+                    android:id="@+id/back"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:background="@drawable/backbutton"
+                    android:onClick="onClickBtn"/>
+                <ImageView
+                    android:id="@+id/imgChat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="32dp"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/circleprofile"
+                    android:scaleType="centerInside" />
 
-            <android.support.design.widget.TabItem
-                android:id="@+id/tabItem2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tab_text_2" />
+                <TextView
+                    android:id="@+id/chatName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Group Chat Name"
+                    android:textColor="@color/color_white"
+                    android:textSize="32sp"
+                    android:textAlignment="center"
+                    android:layout_below="@+id/imgChat"
+                    android:layout_marginTop="12dp"
+                    />
+                <TextView
+                    android:id="@+id/chatDesc"
+                    android:layout_below="@+id/chatName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Chat desc desc desc"
+                    android:textAlignment="center"
+                    android:textSize="18sp"
+                    android:textColor="@color/color_white" />
 
-        </android.support.design.widget.TabLayout>
+            </RelativeLayout>
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs"
+                app:tabIndicatorColor="@color/color_white"
+                android:background="@color/main_edit"
+                app:tabTextColor="@color/light_grey"
+                app:tabSelectedTextColor="@color/color_white"
+                android:layout_gravity="bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TabItem
+                    android:id="@+id/tabItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tab_text_1" />
+
+                <android.support.design.widget.TabItem
+                    android:id="@+id/tabItem2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tab_text_2" />
+
+            </android.support.design.widget.TabLayout>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager

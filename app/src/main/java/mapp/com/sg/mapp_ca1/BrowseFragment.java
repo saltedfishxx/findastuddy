@@ -15,6 +15,7 @@ import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import mapp.com.sg.mapp_ca1.Adapter.BrowseAdapter;
@@ -24,33 +25,32 @@ import mapp.com.sg.mapp_ca1.Models.GroupChats;
 
 /**
  * A simple {@link Fragment} subclass.
+ * Browse chat screen
  */
 public class BrowseFragment extends Fragment {
 
-    Button btnCreateChat;
+    private Button btnCreateChat;
     private RecyclerView bRecyclerView;
     private BrowseAdapter bAdapter;
-    List<GroupChats> allChats;
-    List<GroupChats> browseChats_Withduplicate;
-    List<GroupChats> browsechats;
+    private List<GroupChats> browsechats;
 
-    GroupChatFirestoreHelper groupChatFirestoreHelper;
-    FirebaseAuth firebaseAuth;
+    //firebase components
+    private GroupChatFirestoreHelper groupChatFirestoreHelper;
+    private FirebaseAuth firebaseAuth;
 
     public BrowseFragment() {
         // Required empty public constructor
 
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_browse, container, false);
 
+        //init firebase components
         firebaseAuth = FirebaseAuth.getInstance();
         groupChatFirestoreHelper = new GroupChatFirestoreHelper(this);
 
@@ -62,6 +62,8 @@ public class BrowseFragment extends Fragment {
         bRecyclerView.setLayoutManager(layoutManager);
 
 
+        //init adapter
+        browsechats = new ArrayList<>();
         bAdapter = new BrowseAdapter(getContext(), browsechats);
         bRecyclerView.setAdapter(bAdapter);
 
@@ -71,6 +73,7 @@ public class BrowseFragment extends Fragment {
 
         btnCreateChat = view.findViewById(R.id.btncreateChat);
 
+        //create chat event
         btnCreateChat.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent startCreate = new Intent(getContext(), CreateChatActivity.class);
@@ -87,6 +90,7 @@ public class BrowseFragment extends Fragment {
 
     }
 
+    //updates adapter list
     public void UpdateList(List<GroupChats> gc) {
         bAdapter.clearAll();
         bAdapter.addAllItems(gc);

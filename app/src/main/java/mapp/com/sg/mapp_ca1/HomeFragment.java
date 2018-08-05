@@ -32,11 +32,12 @@ public class HomeFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private MainAdapter mAdapter;
 
-    //call groupchat firestore
-    List<GroupChats> allChats;
-    List<GroupChats> mychats;
-    GroupChatFirestoreHelper groupChatFirestoreHelper;
-    FirebaseAuth firebaseAuth;
+    private List<GroupChats> allChats;
+    private List<GroupChats> mychats;
+
+    //firebase componenets
+    private GroupChatFirestoreHelper groupChatFirestoreHelper;
+    private FirebaseAuth firebaseAuth;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -49,10 +50,9 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        //init firebase components
         firebaseAuth = FirebaseAuth.getInstance();
         groupChatFirestoreHelper = new GroupChatFirestoreHelper(this);
-        //allChats = groupChatFirestoreHelper.getGcList();
-
 
         //init recycler view
         mRecyclerView = (RecyclerView) view.findViewById(R.id.mRecyclerView);
@@ -68,6 +68,7 @@ public class HomeFragment extends Fragment {
         Toolbar myToolbar = (Toolbar) view.findViewById(R.id.homeToolBar);
         ((MainActivity) getActivity()).setSupportActionBar(myToolbar);
 
+        //deletes chat when user swipes left for chat list item
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -81,15 +82,15 @@ public class HomeFragment extends Fragment {
                 if (direction == ItemTouchHelper.LEFT) {    //if swipe left
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext()); //alert for confirm to delete
-                    builder.setMessage("Are you sure to delete chat?");    //set message
+                    builder.setMessage("Are you sure to delete and leave chat?");    //set message
 
-                    builder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() { //when click on DELETE
+                    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() { //when click on DELETE
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
                             mAdapter.notifyItemRemoved(position);    //item removed from recylcerview
-                            GroupChats chats = mAdapter.getList().get(position); //get deleted task
-                            mAdapter.removeItem(position); //remove deleted task from list
+                            GroupChats chats = mAdapter.getList().get(position); //get deleted chat
+                            mAdapter.removeItem(position); //remove deleted chat from list
                             groupChatFirestoreHelper.removeMember(chats); //delete data
 
                             return;
@@ -113,6 +114,7 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    //updates list
     public void UpdateList(List<GroupChats> gc) {
         mAdapter.clearAll();
         mAdapter.addAllItems(gc);

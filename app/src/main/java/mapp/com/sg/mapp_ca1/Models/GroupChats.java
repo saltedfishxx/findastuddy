@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class GroupChats implements Serializable {
-    // Chat id in Firebase
+    // Chat id in Firestore
     private String chatId;
     // Chat name
     private String chatName;

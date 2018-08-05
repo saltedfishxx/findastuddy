@@ -64,10 +64,10 @@ public class ChatRoomActivity extends AppCompatActivity {
     public static final int DEFAULT_MSG_LENGTH_LIMIT = 1000;
     private static final int RC_PHOTO_PICKER = 2;
 
-    ChatRoomActivity r;
+    private ChatRoomActivity r;
     //views
-    MessageAdapter mAdapter;
-    RecyclerView mRecyclerView;
+    private MessageAdapter mAdapter;
+    private RecyclerView mRecyclerView;
 
     private ProgressBar mProgressBar;
     private ImageButton mPhotoPickerButton;
@@ -78,42 +78,42 @@ public class ChatRoomActivity extends AppCompatActivity {
     private ImageButton info;
 
     private String mUsername;
-    List<Message> messageList;
+    private List<Message> messageList;
 
-    //firebase
+    //firebase components
     private FirestoreHelper firestoreHelper;
-    private UserFirestoreHelper userFirestoreHelper;
     private FirebaseAuth firebaseAuth;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
-    ProgressDialog nDialog;
-    Users user;
-    List<Users> usersList;
-    GroupChats selectedChat;
-    String groupId;
+
+    private ProgressDialog nDialog;
+    private Users user;
+    private List<Users> usersList;
+    private GroupChats selectedChat;
+    private String groupId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatroom);
 
+        //set views
         selectedChat = (GroupChats) getIntent().getSerializableExtra("chat");
         groupId = selectedChat.getChatId();
+        info = (ImageButton) findViewById(R.id.infoButton);
+        chatTitle = (TextView) findViewById(R.id.chatTitle);
+        chatdp = (ImageView) findViewById(R.id.chatdp);
 
         //init firebase components
         firebaseStorage = FirebaseStorage.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         storageReference = firebaseStorage.getReference().child("chat_photos");
 
-        info = (ImageButton) findViewById(R.id.infoButton);
-
-        chatTitle = (TextView) findViewById(R.id.chatTitle);
-        chatdp = (ImageView) findViewById(R.id.chatdp);
-
         chatTitle.setText(selectedChat.getChatName());
 
         usersList = new ArrayList<>();
 
+        //set groupchat pic
         if (selectedChat.getPicURL() != null) {
             Glide.with(chatdp.getContext())
                     .load(selectedChat.getPicURL())
@@ -132,9 +132,10 @@ public class ChatRoomActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+        //get all users
         CollectionReference usersCollection = FirebaseFirestore.getInstance().collection("users");
         usersList = new ArrayList<>();
-        for(String m : selectedChat.getMembers()) {
+        for (String m : selectedChat.getMembers()) {
             usersCollection
                     .document(m)
                     .get()
@@ -161,8 +162,10 @@ public class ChatRoomActivity extends AppCompatActivity {
                         }
                     });
         }
-        for(Users m : usersList){
-            if(m.getUid().equals(firebaseAuth.getCurrentUser().getUid())){
+
+        //get current user data
+        for (Users m : usersList) {
+            if (m.getUid().equals(firebaseAuth.getCurrentUser().getUid())) {
                 user = m;
             }
         }
@@ -173,10 +176,6 @@ public class ChatRoomActivity extends AppCompatActivity {
         } else {
             mUsername = ANONYMOUS;
         }
-
-
-        //TODO: when group chat has set up set toolbar title as group name
-        //TODO: add up button
 
         //create progress dialog when sending images
         nDialog = new ProgressDialog(ChatRoomActivity.this);
@@ -266,6 +265,7 @@ public class ChatRoomActivity extends AppCompatActivity {
             }
         });
 
+        //when user click on chat info
         info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -308,6 +308,12 @@ public class ChatRoomActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         r = this;
@@ -317,6 +323,7 @@ public class ChatRoomActivity extends AppCompatActivity {
 
     }
 
+    //updates list
     public void UpdateList(List<Message> msg) {
         mAdapter.clearAll();
         mAdapter.addAllItems(msg);

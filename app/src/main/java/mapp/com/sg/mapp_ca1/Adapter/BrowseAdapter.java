@@ -31,10 +31,10 @@ import mapp.com.sg.mapp_ca1.R;
 
 public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.BrowseViewHolder> {
 
-    List<GroupChats> browseList;
-    Context bContext;
-    FirebaseAuth firebaseAuth;
-    GroupChatFirestoreHelper groupChatFirestoreHelper;
+    private List<GroupChats> browseList;
+    private Context bContext;
+    private FirebaseAuth firebaseAuth;
+    private GroupChatFirestoreHelper groupChatFirestoreHelper;
 
     //Constructor when calling the main adapter
     public BrowseAdapter(Context context, List<GroupChats> groupChats) {
@@ -42,6 +42,7 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.BrowseView
         this.browseList = new ArrayList<>();
     }
 
+    //gets context
     private Context getbContext() {
         return bContext;
     }
@@ -59,12 +60,14 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.BrowseView
     public void onBindViewHolder(@NonNull BrowseAdapter.BrowseViewHolder holder, int position) {
 
         //replaces content of the view (chatTextView) based on chatlist
-        //chatTextView is defined in the inner class MainViewHolder
+        //views are defined in the inner class MainViewHolder
         GroupChats chat = browseList.get(position);
+
         // Set contents for each view
         holder.tvChatName.setText(chat.getChatName());
         holder.tvChatDesc.setText(chat.getChatDesc());
         holder.tvMembers.setText(String.format("%s/5", chat.getMemCount()));
+        //checks if pic url is null
         if (chat.getPicURL() != null) {
             Glide.with(holder.chatPic.getContext())
                     .load(chat.getPicURL())
@@ -83,6 +86,7 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.BrowseView
         }
     }
 
+    //clearall, additem, and addallitems are methods used to update the list in the adapter
     public void clearAll() {
         if (browseList != null) {
             browseList.clear();
@@ -105,15 +109,10 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.BrowseView
     // Inner class for creating ViewHolders
     class BrowseViewHolder extends RecyclerView.ViewHolder {
 
-        // Class variables for the task description and priority TextViews
+        // Class variables
         TextView tvChatName, tvChatDesc, tvMembers;
         ImageView chatPic;
 
-        /**
-         * Constructor for the TaskViewHolders.
-         *
-         * @param itemView The view inflated in onCreateViewHolder
-         */
         public BrowseViewHolder(View itemView) {
             super(itemView);
             //get needed views from xml file
@@ -123,6 +122,7 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.BrowseView
             tvMembers = (TextView) itemView.findViewById(R.id.btxtMemCount);
             chatPic = (ImageView) itemView.findViewById(R.id.bprofileimage);
 
+            //if user wants to join the chat, get list position
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -142,12 +142,12 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.BrowseView
                                     // continue with adding
                                     firebaseAuth = FirebaseAuth.getInstance();
 
-                                    //TODO: add member to group chat then save to firestore
+                                    //add member to group chat then save to firestore
                                     String currentm = firebaseAuth.getCurrentUser().getUid();
                                     List<String> members = groupChats.getMembers();
                                     members.add(currentm);
 
-                                    //TODO: update memberlist to firestore
+                                    //update memberlist to firestore
                                     GroupChats updatedGC = new GroupChats(groupChats.getChatId(), groupChats.getChatName()
                                             , groupChats.getChatDesc(), groupChats.getMemCount(), members, groupChats.getPicURL());
                                     groupChatFirestoreHelper = new GroupChatFirestoreHelper();

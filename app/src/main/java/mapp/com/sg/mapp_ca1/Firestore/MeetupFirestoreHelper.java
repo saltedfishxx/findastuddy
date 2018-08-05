@@ -24,12 +24,18 @@ import mapp.com.sg.mapp_ca1.Models.Meetup;
 
 import static android.support.constraint.Constraints.TAG;
 
-public class MeetupFirestoreHelper {
-    static CollectionReference meetupCollection = FirebaseFirestore.getInstance().collection("Meetup");
-    List<Meetup> listMeetup;
-    Meetup meetup;
+/**
+ * This firestorehelper is used to read, write and update meetups
+ */
 
-    public MeetupFirestoreHelper(CreateMeetup cm){
+public class MeetupFirestoreHelper {
+
+    static CollectionReference meetupCollection = FirebaseFirestore.getInstance().collection("Meetup");
+    private List<Meetup> listMeetup;
+    private Meetup meetup;
+
+    //constructor to read data from meetup collection
+    public MeetupFirestoreHelper(CreateMeetup cm) {
         final CreateMeetup createMeetup = cm;
 
         meetupCollection
@@ -38,8 +44,8 @@ public class MeetupFirestoreHelper {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         listMeetup = new ArrayList<>();
-                        if(task.isSuccessful()){
-                            for(DocumentSnapshot document : task.getResult()){
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot document : task.getResult()) {
                                 String meetId = document.getId();
                                 Date date = document.getDate("date");
                                 String groupChatId = document.getString("groupChatID");
@@ -47,35 +53,36 @@ public class MeetupFirestoreHelper {
                                 String meetupName = document.getString("meetupName");
                                 int noPpl = (int) document.get("noPpl");
 
-                                Meetup meetup = new Meetup(meetId,date,groupChatId,location,meetupName,noPpl);
+                                Meetup meetup = new Meetup(meetId, date, groupChatId, location, meetupName, noPpl);
                             }
-                        }else{
-                            Log.d(TAG,"Error getting documents: ", task.getException());
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
     }
 
-    public MeetupFirestoreHelper(){
+    //empty constructor
+    public MeetupFirestoreHelper() {
 
     }
 
-    public void saveData(Meetup m){
-        Map<String,Object> data = new HashMap<>();
+    public void saveData(Meetup m) {
+        Map<String, Object> data = new HashMap<>();
         data.put("date", m.getDateTime());
-        data.put("groupChatId",m.getGroupChatID());
-        data.put("location",m.getLocation());
-        data.put("meetupName",m.getMeetupName());
-        data.put("noPpl",m.getNoPpl());
+        data.put("groupChatId", m.getGroupChatID());
+        data.put("location", m.getLocation());
+        data.put("meetupName", m.getMeetupName());
+        data.put("noPpl", m.getNoPpl());
         meetupCollection.document(m.getMeetId()).set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.d("FirestoreHelper","Document has been saved");
+                Log.d("FirestoreHelper", "Document has been saved");
             }
         });
     }
 
-    public void deleteMeetup(Meetup m){
+    public void deleteMeetup(Meetup m) {
         meetupCollection.document(m.getMeetId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

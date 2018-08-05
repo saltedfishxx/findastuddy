@@ -11,6 +11,7 @@ public class Message {
     public Message() {
     }
 
+    //Construtor
     public Message(String uid, String text, String name, String photoUrl, String timestamp, String profileUrl) {
         this.uid = uid;
         this.text = text;
@@ -20,6 +21,7 @@ public class Message {
         this.profileUrl = profileUrl;
     }
 
+    // Getters() and Setters()
     public String getUid() {
         return uid;
     }

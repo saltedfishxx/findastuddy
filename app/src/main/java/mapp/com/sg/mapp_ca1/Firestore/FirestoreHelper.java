@@ -25,16 +25,23 @@ import mapp.com.sg.mapp_ca1.Models.Message;
 
 import static android.content.ContentValues.TAG;
 
+/**
+ * This firestorehelper is used to read and write chat messages
+ */
+
 public class FirestoreHelper {
-    List<Message> messageList;
-    String groupid;
+    private List<Message> messageList;
+    private String groupid;
+
     //get the reference for collection in firestore
     static CollectionReference messagesCollection = FirebaseFirestore.getInstance().collection("Messages");
 
-    //constructor to call when want to retrieve data
+    //constructor to call when want to retrieve data --> gets activity reference so can update lists
     public FirestoreHelper(ChatRoomActivity r, String id) {
+
         final ChatRoomActivity reference = r;
         groupid = id;
+
         messagesCollection.document(groupid).collection("messageList")
                 .orderBy("timestamp", Query.Direction.ASCENDING)
                 .get()

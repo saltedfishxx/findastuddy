@@ -34,22 +34,22 @@ public class CreateChatActivity extends AppCompatActivity {
     private static final int RC_PHOTO_PICKER = 2;
 
     // Variables for Views
-    TextView errorMsg;
-    EditText etChatName, etChatDesc;
-    Button createChat;
-    ImageView editImageC, chatImage;
+    private TextView errorMsg;
+    private EditText etChatName, etChatDesc;
+    private Button createChat;
+    private ImageView editImageC, chatImage;
 
     // Variables for firebase related
-    GroupChatFirestoreHelper gc;
-    FirebaseStorage firebaseStorage;
-    StorageReference storageReference;
-    FirebaseAuth firebaseAuth;
-    String photoUrl;
-    Uri downloadUri;
+    private GroupChatFirestoreHelper gc;
+    private FirebaseStorage firebaseStorage;
+    private StorageReference storageReference;
+    private FirebaseAuth firebaseAuth;
+    private String photoUrl;
+    private Uri downloadUri;
 
     // Variables to store stuff
-    String chatName, chatDesc, uid;
-    GroupChats groupChats;
+    private String chatName, chatDesc, uid, subjects;
+    private GroupChats groupChats;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,13 +106,24 @@ public class CreateChatActivity extends AppCompatActivity {
             errorMsg.setText("Please fill up required fields");
         } else {
             // Add code to add Group Chats to firebase
-            //TODO DEBUG THIS GAY SHIT TYVM
+            //TODO DEBUG THIS GAY SHIT TYVM - doneeeeee
+
+            gc = new GroupChatFirestoreHelper();
             List<String> members = new ArrayList<String>();
             members.add(uid);
-            // downloadUri is null
-            groupChats = new GroupChats(null, chatName, chatDesc, members.size(), members, downloadUri.toString());
+
+            // check if photo is null
+            if (photoUrl != null) {
+                groupChats = new GroupChats("", chatName, chatDesc, members.size(), members, photoUrl);
+            } else {
+                groupChats = new GroupChats("", chatName, chatDesc, members.size(), members, null);
+            }
+
+            //create groupchat in firestore
             gc.saveData(groupChats);
         }
+
+        finish();
     }
 
 
@@ -128,6 +139,7 @@ public class CreateChatActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     downloadUri = taskSnapshot.getDownloadUrl();
+                    photoUrl = downloadUri.toString();
                     Glide.with(chatImage.getContext())
                             .load(downloadUri)
                             .apply(RequestOptions.circleCropTransform())

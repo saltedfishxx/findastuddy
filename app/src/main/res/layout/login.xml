@@ -107,7 +107,7 @@
         android:layout_below="@id/loginCard"
         android:layout_centerInParent="true"
         android:layout_marginTop="24dp"
-        android:background="#ff9b9b"
+        android:background="@color/text_color"
         android:onClick="onClick"
         android:text="Login"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
