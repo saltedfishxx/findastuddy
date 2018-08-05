@@ -32,7 +32,9 @@
 
         <activity
             android:name=".SplashScreen"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+
+        </activity>
         <activity
             android:name=".Login"
             android:theme="@style/Theme.AppCompat.NoActionBar" />

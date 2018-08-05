@@ -2,6 +2,7 @@ package mapp.com.sg.mapp_ca1;
 
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -17,7 +18,11 @@ import android.widget.TimePicker;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.Timepoint;
 
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +32,7 @@ public class TimePickerFragment extends Fragment implements TimePickerDialog.OnT
     private TextView timeTextView;
     private CheckBox mode24Hours;
     private TimePickerDialog tpd;
+    private TimePickerDialog.OnTimeSetListener callbackListener;
 
     public TimePickerFragment() {
         // Required empty public constructor
@@ -98,5 +104,7 @@ public class TimePickerFragment extends Fragment implements TimePickerDialog.OnT
         String secondString = second < 10 ? "0"+second : ""+second;
         String time = "You picked the following time: "+hourString+"h"+minuteString+"m"+secondString+"s";
         timeTextView.setText(time);
+
     }
+
 }

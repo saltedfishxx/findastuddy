@@ -69,6 +69,7 @@
                 android:text="Pick Date and Time"
                 android:textColor="@color/color_white"
                 android:textAllCaps="false"
+                android:onClick="onClickDate"
                 />
 
             <TextView
@@ -89,7 +90,9 @@
                 android:text="Pick Location"
                 android:textAllCaps="false"
                 android:textColor="@color/color_white"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"
+                android:onClick="onClickLocation"
+                />
 
 
 
@@ -106,6 +109,7 @@
         android:text="Create Meetup"
         android:textColor="@color/color_white"
         android:layout_marginTop="20dp"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:onClick="onClickCreateMeet"/>
 
 </LinearLayout>
