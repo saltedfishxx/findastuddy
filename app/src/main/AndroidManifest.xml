@@ -35,6 +35,7 @@
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
+
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
@@ -68,12 +69,21 @@
         <activity
             android:name=".PickLocation"
             android:label="@string/title_activity_pick_location" />
-        <activity android:name=".CreateMeetup"></activity>
+        <activity android:name=".CreateMeetup" />
         <activity
             android:name=".ChatDetails"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".CreateChatActivity" />
-        <activity android:name=".PickDateTime"></activity>
+        <activity android:name=".PickDateTime" />
+        <activity
+            android:name=".HelpScreen"
+            android:parentActivityName=".MainActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
     </application>
 
 </manifest>
