@@ -17,6 +17,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,10 +64,10 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.BrowseView
         //replaces content of the view (chatTextView) based on chatlist
         //views are defined in the inner class MainViewHolder
         GroupChats chat = browseList.get(position);
-
         // Set contents for each view
         holder.tvChatName.setText(chat.getChatName());
         holder.tvChatDesc.setText(chat.getChatDesc());
+        holder.tvSubject.setText(String.format("Subject: %s", chat.getChatSubject()));
         holder.tvMembers.setText(String.format("Members: %s/5", chat.getMemCount()));
         //checks if pic url is null
         if (chat.getPicURL() != null) {
@@ -115,7 +117,7 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.BrowseView
     class BrowseViewHolder extends RecyclerView.ViewHolder {
 
         // Class variables
-        TextView tvChatName, tvChatDesc, tvMembers;
+        TextView tvChatName, tvChatDesc, tvMembers, tvSubject;
         ImageView chatPic;
 
         public BrowseViewHolder(View itemView) {
@@ -123,6 +125,7 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.BrowseView
             //get needed views from xml file
             tvChatName = (TextView) itemView.findViewById(R.id.bchat1);
             //TODO : Add the rest
+            tvSubject = (TextView) itemView.findViewById(R.id.subject);
             tvChatDesc = (TextView) itemView.findViewById(R.id.btxtDesc);
             tvMembers = (TextView) itemView.findViewById(R.id.btxtMemCount);
             chatPic = (ImageView) itemView.findViewById(R.id.bprofileimage);

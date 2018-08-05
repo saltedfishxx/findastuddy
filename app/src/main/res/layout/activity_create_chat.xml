@@ -70,8 +70,8 @@
                         android:layout_below="@+id/txtCreateChat"
                         android:layout_centerHorizontal="true"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:onClick="onClickEdit"
-                        android:background="@drawable/circle_overlay" />
+                        android:background="@drawable/circle_overlay"
+                        android:onClick="onClickEdit" />
 
                     <TextView
                         android:id="@+id/txtEditImage"
@@ -100,12 +100,11 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tvChatName"
                         android:hint="@string/chatname_example"
+                        android:maxLength="25"
                         android:singleLine="true"
                         android:textColor="@color/grey"
                         android:textColorHint="@color/light_text"
-                        android:theme="@style/EditTextTheme"
-                        android:maxLength="25"
-                        />
+                        android:theme="@style/EditTextTheme" />
 
                     <TextView
                         android:id="@+id/tvChatDesc"
@@ -123,12 +122,11 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tvChatDesc"
                         android:hint="E.g Mostly asked topics are diversity etc."
-                        android:textColor="@color/grey"
-                        android:singleLine="true"
-                        android:textColorHint="@color/light_text"
-                        android:theme="@style/EditTextTheme"
                         android:maxLength="50"
-                        />
+                        android:singleLine="true"
+                        android:textColor="@color/grey"
+                        android:textColorHint="@color/light_text"
+                        android:theme="@style/EditTextTheme" />
 
                     <TextView
                         android:id="@+id/tvChatSub"
@@ -153,10 +151,10 @@
                         android:id="@+id/tvError"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text=""
                         android:layout_below="@id/spinnerSubjects"
                         android:layout_marginTop="@dimen/activity_vertical_margin"
-                        android:textColor="@android:color/holo_red_light"/>
+                        android:text=""
+                        android:textColor="@android:color/holo_red_light" />
 
                 </RelativeLayout>
 
@@ -166,11 +164,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@color/text_color"
-                android:padding="@dimen/activity_vertical_margin"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:text="Create Chat"
+                android:background="@color/text_color"
                 android:onClick="OnClick"
+                android:padding="@dimen/activity_vertical_margin"
+                android:text="Create Chat"
                 android:textColor="@color/color_white" />
         </LinearLayout>
     </ScrollView>
