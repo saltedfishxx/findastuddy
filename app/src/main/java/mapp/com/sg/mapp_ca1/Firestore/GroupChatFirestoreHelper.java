@@ -60,13 +60,14 @@ public class  GroupChatFirestoreHelper {
                                 String chatId = document.getId();
                                 String chatName = document.getString("chatname");
                                 String chatDesc = document.getString("chatdesc");
+                                String chatSub = document.getString("subject");
                                 // Need to find out how to get
                                 List<String> members = (List<String>) document.get("members");
                                 int memCount = members.size();
                                 String picUrl = document.getString("picUrl");
 
                                 //update list
-                                gc = new GroupChats(chatId, chatName, chatDesc, memCount, members, picUrl);
+                                gc = new GroupChats(chatId, chatName, chatDesc, chatSub, memCount, members, picUrl);
                                 gcList.add(gc);
                             }
                             if (gcList != null) {
@@ -107,13 +108,14 @@ public class  GroupChatFirestoreHelper {
                                 String chatId = document.getId();
                                 String chatName = document.getString("chatname");
                                 String chatDesc = document.getString("chatdesc");
+                                String chatSub = document.getString("subject");
                                 // Need to find out how to get
                                 List<String> members = (List<String>) document.get("members");
                                 int memCount = members.size();
                                 String picUrl = document.getString("picUrl");
 
                                 //update list
-                                gc = new GroupChats(chatId, chatName, chatDesc, memCount, members, picUrl);
+                                gc = new GroupChats(chatId, chatName, chatDesc, chatSub, memCount, members, picUrl);
                                 gcList.add(gc);
 
                             }
@@ -150,6 +152,7 @@ public class  GroupChatFirestoreHelper {
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("chatname", f.getChatName());
         data.put("chatdesc", f.getChatDesc());
+        data.put("subject", f.getChatSubject());
         data.put("members", f.getMembers());
         data.put("picUrl", f.getPicURL());
         gcCollection.document().set(data).addOnSuccessListener(new OnSuccessListener<Void>() {

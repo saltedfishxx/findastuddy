@@ -33,7 +33,10 @@
         <activity
             android:name=".SplashScreen"
             android:theme="@style/Theme.AppCompat.NoActionBar">
-
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".Login"
@@ -65,21 +68,12 @@
         <activity
             android:name=".PickLocation"
             android:label="@string/title_activity_pick_location" />
-        <activity android:name=".CreateMeetup">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".CreateMeetup"></activity>
         <activity
             android:name=".ChatDetails"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".CreateChatActivity" />
-
-        <activity android:name=".PickDateTime">
-
-        </activity>
+        <activity android:name=".PickDateTime"></activity>
     </application>
 
 </manifest>

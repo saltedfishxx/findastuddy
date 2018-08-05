@@ -36,8 +36,9 @@ public class CreateChatActivity extends AppCompatActivity {
     // Variables for Views
     private TextView errorMsg;
     private EditText etChatName, etChatDesc;
-    private Button createChat;
-    private ImageView editImageC, chatImage;
+    private ImageView chatImage;
+    //set Spinner
+    private Spinner spinner;
 
     // Variables for firebase related
     private GroupChatFirestoreHelper gc;
@@ -48,7 +49,7 @@ public class CreateChatActivity extends AppCompatActivity {
     private Uri downloadUri;
 
     // Variables to store stuff
-    private String chatName, chatDesc, uid, subjects;
+    private String chatName, chatDesc, uid, chatSub;
     private GroupChats groupChats;
 
     @Override
@@ -58,10 +59,8 @@ public class CreateChatActivity extends AppCompatActivity {
 
         // Getting views
         errorMsg = (TextView) findViewById(R.id.tvError);
-        createChat = (Button) findViewById(R.id.btncreateChat);
         etChatName = (EditText) findViewById(R.id.editChatName);
         etChatDesc = (EditText) findViewById(R.id.editChatDesc);
-        editImageC = (ImageView) findViewById(R.id.editImage);
         chatImage = (ImageView) findViewById(R.id.chatImage);
 
         // Setting variables
@@ -77,9 +76,8 @@ public class CreateChatActivity extends AppCompatActivity {
         CreateChatActivity.this.setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //set Spinner
-        Spinner spinner = (Spinner) findViewById(R.id.spinnerSubjects);
         // Create an ArrayAdapter using the string array and a default spinner
+        spinner = (Spinner) findViewById(R.id.spinnerSubjects);
         ArrayAdapter<CharSequence> spinAdapter = ArrayAdapter.createFromResource(getApplicationContext(),
                 R.array.spinnerItems, android.R.layout.simple_spinner_dropdown_item);
         // Specify layout to use when the list of choices appears
@@ -102,27 +100,22 @@ public class CreateChatActivity extends AppCompatActivity {
         chatName = chatName.trim();
         chatDesc = etChatDesc.getText().toString();
         chatDesc = chatDesc.trim();
+        chatSub = spinner.getSelectedItem().toString();
         if (chatName.matches("") || chatDesc.matches("")) {
             errorMsg.setText("Please fill up required fields");
         } else {
-            // Add code to add Group Chats to firebase
-            //TODO DEBUG THIS GAY SHIT TYVM - doneeeeee
-
             gc = new GroupChatFirestoreHelper();
-            List<String> members = new ArrayList<String>();
+            List<String> members = new ArrayList<>();
             members.add(uid);
-
             // check if photo is null
             if (photoUrl != null) {
-                groupChats = new GroupChats("", chatName, chatDesc, members.size(), members, photoUrl);
+                groupChats = new GroupChats("", chatName, chatDesc, chatSub, members.size(), members, photoUrl);
             } else {
-                groupChats = new GroupChats("", chatName, chatDesc, members.size(), members, null);
+                groupChats = new GroupChats("", chatName, chatDesc, chatSub, members.size(), members, null);
             }
-
             //create groupchat in firestore
             gc.saveData(groupChats);
         }
-
         finish();
     }
 
@@ -145,7 +138,6 @@ public class CreateChatActivity extends AppCompatActivity {
                             .apply(RequestOptions.circleCropTransform())
                             .into(chatImage);
                 }
-
             });
         }
     }

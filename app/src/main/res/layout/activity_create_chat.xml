@@ -103,7 +103,9 @@
                         android:singleLine="true"
                         android:textColor="@color/grey"
                         android:textColorHint="@color/light_text"
-                        android:theme="@style/EditTextTheme" />
+                        android:theme="@style/EditTextTheme"
+                        android:maxLength="25"
+                        />
 
                     <TextView
                         android:id="@+id/tvChatDesc"
@@ -122,8 +124,11 @@
                         android:layout_below="@id/tvChatDesc"
                         android:hint="E.g Mostly asked topics are diversity etc."
                         android:textColor="@color/grey"
+                        android:singleLine="true"
                         android:textColorHint="@color/light_text"
-                        android:theme="@style/EditTextTheme" />
+                        android:theme="@style/EditTextTheme"
+                        android:maxLength="50"
+                        />
 
                     <TextView
                         android:id="@+id/tvChatSub"

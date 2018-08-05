@@ -66,7 +66,7 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.BrowseView
         // Set contents for each view
         holder.tvChatName.setText(chat.getChatName());
         holder.tvChatDesc.setText(chat.getChatDesc());
-        holder.tvMembers.setText(String.format("%s/5", chat.getMemCount()));
+        holder.tvMembers.setText(String.format("Members: %s/5", chat.getMemCount()));
         //checks if pic url is null
         if (chat.getPicURL() != null) {
             Glide.with(holder.chatPic.getContext())
@@ -149,7 +149,7 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.BrowseView
 
                                     //update memberlist to firestore
                                     GroupChats updatedGC = new GroupChats(groupChats.getChatId(), groupChats.getChatName()
-                                            , groupChats.getChatDesc(), groupChats.getMemCount(), members, groupChats.getPicURL());
+                                            , groupChats.getChatDesc(), groupChats.getChatSubject(), groupChats.getMemCount(), members, groupChats.getPicURL());
                                     groupChatFirestoreHelper = new GroupChatFirestoreHelper();
 
                                     groupChatFirestoreHelper.updateData(updatedGC);

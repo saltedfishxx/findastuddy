@@ -10,6 +10,8 @@ public class GroupChats implements Serializable {
     private String chatName;
     // Description of chat
     private String chatDesc;
+    // Subject
+    private String chatSubject;
     // count members list to get
     private int memCount;
     // Stores member ids
@@ -19,10 +21,11 @@ public class GroupChats implements Serializable {
     private String picURL;
 
     // Constructor
-    public GroupChats(String chatId, String chatName, String chatDesc, int memCount, List<String> members, String picURL) {
+    public GroupChats(String chatId, String chatName, String chatDesc, String chatSubject, int memCount, List<String> members, String picURL) {
         this.chatId = chatId;
         this.chatName = chatName;
         this.chatDesc = chatDesc;
+        this.chatSubject = chatSubject;
         this.memCount = memCount;
         this.members = members;
         this.picURL = picURL;
@@ -52,6 +55,10 @@ public class GroupChats implements Serializable {
     public void setChatDesc(String chatDesc) {
         this.chatDesc = chatDesc;
     }
+
+    public String getChatSubject() {return chatSubject;}
+
+    public void setChatSubject(String chatSubject) {this.chatSubject = chatSubject;}
 
     public int getMemCount() {
         return memCount;
