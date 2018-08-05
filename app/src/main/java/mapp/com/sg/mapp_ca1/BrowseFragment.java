@@ -36,7 +36,8 @@ public class BrowseFragment extends Fragment {
 
     //firebase components
     private GroupChatFirestoreHelper groupChatFirestoreHelper;
-    private FirebaseAuth firebaseAuth;
+    //private FirebaseAuth firebaseAuth;
+    private static String UserUid;
 
     public BrowseFragment() {
         // Required empty public constructor
@@ -51,7 +52,8 @@ public class BrowseFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_browse, container, false);
 
         //init firebase components
-        firebaseAuth = FirebaseAuth.getInstance();
+        //firebaseAuth = FirebaseAuth.getInstance();
+        UserUid = getActivity().getIntent().getStringExtra("UserUid");
         groupChatFirestoreHelper = new GroupChatFirestoreHelper(this);
 
         //init recycler view

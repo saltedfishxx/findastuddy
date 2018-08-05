@@ -28,7 +28,6 @@
                 android:layout_gravity="center_vertical"
                 android:layout_margin="@dimen/activity_horizontal_margin"
                 android:adjustViewBounds="true"
-                android:background="@drawable/ic_group_black_24dp"
                 android:scaleType="centerInside" />
 
             <TextView

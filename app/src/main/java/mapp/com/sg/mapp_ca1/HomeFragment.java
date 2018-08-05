@@ -4,24 +4,32 @@ package mapp.com.sg.mapp_ca1;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.List;
 
 import mapp.com.sg.mapp_ca1.Adapter.MainAdapter;
 import mapp.com.sg.mapp_ca1.Firestore.GroupChatFirestoreHelper;
 import mapp.com.sg.mapp_ca1.Models.GroupChats;
+
+import static android.content.ContentValues.TAG;
 
 
 /**
@@ -40,6 +48,7 @@ public class HomeFragment extends Fragment {
     //firebase componenets
     private GroupChatFirestoreHelper groupChatFirestoreHelper;
     private FirebaseAuth firebaseAuth;
+    private FirebaseMessaging firebaseMessaging;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -55,6 +64,7 @@ public class HomeFragment extends Fragment {
         //init firebase components
         firebaseAuth = FirebaseAuth.getInstance();
         groupChatFirestoreHelper = new GroupChatFirestoreHelper(this);
+        firebaseMessaging = FirebaseMessaging.getInstance();
 
         //when user presses help icon
         helpBtn = (ImageButton) view.findViewById(R.id.helpButton);
@@ -78,6 +88,7 @@ public class HomeFragment extends Fragment {
         //add toolbar
         Toolbar myToolbar = (Toolbar) view.findViewById(R.id.homeToolBar);
         ((MainActivity) getActivity()).setSupportActionBar(myToolbar);
+
 
         //deletes chat when user swipes left for chat list item
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
@@ -103,6 +114,7 @@ public class HomeFragment extends Fragment {
                             GroupChats chats = mAdapter.getList().get(position); //get deleted chat
                             mAdapter.removeItem(position); //remove deleted chat from list
                             groupChatFirestoreHelper.removeMember(chats); //delete data
+                            firebaseMessaging.unsubscribeFromTopic(chats.getChatId());
 
                             return;
                         }
@@ -121,14 +133,25 @@ public class HomeFragment extends Fragment {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(mRecyclerView); //set swipe to recylcerview
 
-
+        
         return view;
     }
+    
 
     //updates list
     public void UpdateList(List<GroupChats> gc) {
         mAdapter.clearAll();
         mAdapter.addAllItems(gc);
+        mychats = gc;
+        try {
+            for(GroupChats group : mychats) {
+                firebaseMessaging.subscribeToTopic(group.getChatId());
+            }
+            Toast.makeText(getContext(), "notif set up", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(getContext(), "notif set up failed", Toast.LENGTH_SHORT).show();
+        }
 
     }
 

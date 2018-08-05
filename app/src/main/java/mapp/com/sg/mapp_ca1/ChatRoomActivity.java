@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,8 +31,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -56,6 +61,7 @@ import mapp.com.sg.mapp_ca1.Models.Message;
 import mapp.com.sg.mapp_ca1.Models.Users;
 
 import static android.content.ContentValues.TAG;
+import static mapp.com.sg.mapp_ca1.ChatInfoFragment.collectionReference;
 
 public class ChatRoomActivity extends AppCompatActivity {
     private static final String TAG = "ChatRoom";
@@ -78,6 +84,7 @@ public class ChatRoomActivity extends AppCompatActivity {
     private ImageButton info;
 
     private String mUsername;
+    private static String UserUid;
     private List<Message> messageList;
 
     //firebase components
@@ -85,6 +92,7 @@ public class ChatRoomActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
+    private CollectionReference collectionReference;
 
     private ProgressDialog nDialog;
     private Users user;
@@ -107,6 +115,7 @@ public class ChatRoomActivity extends AppCompatActivity {
         //init firebase components
         firebaseStorage = FirebaseStorage.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
+        UserUid = getIntent().getStringExtra("UserUid");
         storageReference = firebaseStorage.getReference().child("chat_photos");
 
         chatTitle.setText(selectedChat.getChatName());
@@ -121,7 +130,7 @@ public class ChatRoomActivity extends AppCompatActivity {
                     .into(chatdp);
         } else {
             Glide.with(chatdp.getContext())
-                    .load(R.drawable.ic_group_black_24dp)
+                    .load(R.drawable.circleprofile)
                     .apply(RequestOptions.circleCropTransform())
                     .into(chatdp);
         }
@@ -170,7 +179,7 @@ public class ChatRoomActivity extends AppCompatActivity {
             }
         }
 
-        if (firebaseAuth.getCurrentUser() != null) {
+        if (firebaseAuth.getCurrentUser().getUid() != null) {
             mUsername = firebaseAuth.getCurrentUser().getDisplayName();
             Log.d("Current User : ", mUsername);
         } else {
@@ -257,7 +266,7 @@ public class ChatRoomActivity extends AppCompatActivity {
                 dateFormatter.setLenient(false);
                 Date currentTime = Calendar.getInstance().getTime();
                 String s = dateFormatter.format(currentTime);
-                Message message = new Message(user.getUid(), mMessageEditText.getText().toString(), mUsername, null, s, user.getProfileUrl());
+                Message message = new Message(user.getUid(), mMessageEditText.getText().toString(), mUsername, null, s, user.getProfileUrl(), selectedChat.getChatId(), selectedChat.getChatName());
                 firestoreHelper.saveData(message);
                 // Clear input box
                 mMessageEditText.setText("");
@@ -273,8 +282,48 @@ public class ChatRoomActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("selectedChat", selectedChat);
                 bundle.putSerializable("allusers", (Serializable) usersList);
+                bundle.putString("UserUid", UserUid);
                 intent.putExtras(bundle);
                 startActivity(intent);
+            }
+        });
+
+        collectionReference = FirebaseFirestore.getInstance().collection("Messages").document(selectedChat.getChatId()).collection("messageList");
+        //update messages
+        collectionReference
+                .orderBy("timestamp", Query.Direction.ASCENDING)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+
+
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    System.err.println("Listen failed:" + e);
+                    return;
+                }
+
+                messageList = new ArrayList<>();
+                for (DocumentSnapshot document : queryDocumentSnapshots) {
+                    if (document.getData() != null) {
+                        String id = document.getString("uid");
+                        String name = document.getString("name");
+                        String text = document.getString("text");
+                        String url = document.getString("photoUrl");
+                        Date t = document.getDate("timestamp");
+                        String profilePic = document.getString("profileUrl");
+                        String chatid = document.getString("chatid");
+                        String chatname = document.getString("chatname");
+
+                        SimpleDateFormat format = new SimpleDateFormat("hh:mm");
+                        String time = format.format(t);
+
+                        //create message object and add to list
+                        Message fm = new Message(id, text, name, url, time, profilePic, chatid, chatname);
+                        messageList.add(fm);
+                        updateTasks();
+                        UpdateList(messageList);
+                    }
+                }
             }
         });
     }
@@ -284,7 +333,7 @@ public class ChatRoomActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_PHOTO_PICKER && resultCode == RESULT_OK) {
             nDialog.show();
-            Uri selectedImageUri = data.getData();
+            final Uri selectedImageUri = data.getData();
             StorageReference photoRef = storageReference.child(selectedImageUri.getLastPathSegment());
 
             //save photo
@@ -296,7 +345,7 @@ public class ChatRoomActivity extends AppCompatActivity {
                     Date currentTime = Calendar.getInstance().getTime();
                     String s = dateFormatter.format(currentTime);
                     Uri downloadUri = taskSnapshot.getDownloadUrl();
-                    Message message = new Message(user.getUid(), null, mUsername, downloadUri.toString(), s, user.getProfileUrl());
+                    Message message = new Message(user.getUid(), null, mUsername, downloadUri.toString(), s, user.getProfileUrl(), selectedChat.getChatId(),selectedChat.getChatName());
                     firestoreHelper.saveData(message);
                     firestoreHelper = new FirestoreHelper(r, groupId);
 
@@ -320,6 +369,7 @@ public class ChatRoomActivity extends AppCompatActivity {
         firestoreHelper = new FirestoreHelper(r, groupId);
         mProgressBar.setVisibility(ProgressBar.GONE);
         // mRecyclerView.getLayoutManager().smoothScrollToPosition(mRecyclerView, new RecyclerView.State(), mRecyclerView.getAdapter().getItemCount());
+
 
     }
 

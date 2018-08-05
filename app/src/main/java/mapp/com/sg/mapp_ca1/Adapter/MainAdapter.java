@@ -60,7 +60,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                     .into(holder.groupPic);
         } else {
             Glide.with(holder.groupPic.getContext())
-                    .load(R.drawable.ic_group_black_24dp)
+                    .load(R.drawable.circleprofile)
                     .apply(RequestOptions.circleCropTransform())
                     .into(holder.groupPic);
         }

@@ -6,6 +6,7 @@ import android.util.Log;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -32,7 +33,7 @@ import static android.content.ContentValues.TAG;
 public class FirestoreHelper {
     private List<Message> messageList;
     private String groupid;
-
+    private FirebaseAuth firebaseAuth;
     //get the reference for collection in firestore
     static CollectionReference messagesCollection = FirebaseFirestore.getInstance().collection("Messages");
 
@@ -58,12 +59,14 @@ public class FirestoreHelper {
                                 String url = document.getString("photoUrl");
                                 Date t = document.getDate("timestamp");
                                 String profilePic = document.getString("profileUrl");
+                                String chatid = document.getString("chatid");
+                                String chatname = document.getString("chatname");
 
                                 SimpleDateFormat format = new SimpleDateFormat("hh:mm");
                                 String time = format.format(t);
 
                                 //create message object and add to list
-                                Message fm = new Message(id, text, name, url, time, profilePic);
+                                Message fm = new Message(id, text, name, url, time, profilePic,chatid, chatname);
                                 messageList.add(fm);
 
                                 //update adapter based on new list
@@ -84,9 +87,17 @@ public class FirestoreHelper {
 
     }
 
+    public List<Message> getMessageList() {
+        return messageList;
+    }
+
+    public void setMessageList(List<Message> messageList) {
+        this.messageList = messageList;
+    }
 
     //called when saving message object
     public void saveData(Message f) {
+        firebaseAuth = FirebaseAuth.getInstance();
         Date timestamp = new Date();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         try {
@@ -95,12 +106,14 @@ public class FirestoreHelper {
             e.printStackTrace();
         }
         Map<String, Object> data = new HashMap<String, Object>();
-        data.put("uid", f.getUid());
+        data.put("uid", firebaseAuth.getCurrentUser().getUid());
         data.put("name", f.getName());
         data.put("text", f.getText());
         data.put("photoUrl", f.getPhotoUrl());
         data.put("timestamp", timestamp);
         data.put("profileUrl", f.getProfileUrl());
+        data.put("chatid", f.getChatid());
+        data.put("chatname", f.getChatName());
         messagesCollection.document(groupid).collection("messageList").document().set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
