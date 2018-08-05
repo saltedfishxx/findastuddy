@@ -33,6 +33,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
         this.messageList = new ArrayList<>();
     }
 
+
     //gets context
     private Context getmContext() {
         return mContext;

@@ -2,6 +2,7 @@ package mapp.com.sg.mapp_ca1.Firestore;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -13,6 +14,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +25,9 @@ import java.util.Set;
 
 import mapp.com.sg.mapp_ca1.BrowseFragment;
 import mapp.com.sg.mapp_ca1.HomeFragment;
+import mapp.com.sg.mapp_ca1.MainActivity;
 import mapp.com.sg.mapp_ca1.Models.GroupChats;
+import mapp.com.sg.mapp_ca1.R;
 
 import static android.content.ContentValues.TAG;
 

@@ -73,6 +73,11 @@ public class BrowseAdapter extends RecyclerView.Adapter<BrowseAdapter.BrowseView
                     .load(chat.getPicURL())
                     .apply(RequestOptions.circleCropTransform())
                     .into(holder.chatPic);
+        }else{
+            Glide.with(holder.chatPic.getContext())
+                    .load(R.drawable.circleprofile)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(holder.chatPic);
         }
     }
 

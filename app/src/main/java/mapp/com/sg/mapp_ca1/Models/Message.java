@@ -7,18 +7,23 @@ public class Message {
     private String photoUrl;
     private String timestamp;
     private String profileUrl;
+    private String chatid;
+    private String chatName;
 
     public Message() {
     }
 
     //Construtor
-    public Message(String uid, String text, String name, String photoUrl, String timestamp, String profileUrl) {
+
+    public Message(String uid, String text, String name, String photoUrl, String timestamp, String profileUrl, String chatid, String chatName) {
         this.uid = uid;
         this.text = text;
         this.name = name;
         this.photoUrl = photoUrl;
         this.timestamp = timestamp;
         this.profileUrl = profileUrl;
+        this.chatid = chatid;
+        this.chatName = chatName;
     }
 
     // Getters() and Setters()
@@ -68,5 +73,21 @@ public class Message {
 
     public void setProfileUrl(String profileUrl) {
         this.profileUrl = profileUrl;
+    }
+
+    public String getChatid() {
+        return chatid;
+    }
+
+    public void setChatid(String chatid) {
+        this.chatid = chatid;
+    }
+
+    public String getChatName() {
+        return chatName;
+    }
+
+    public void setChatName(String chatName) {
+        this.chatName = chatName;
     }
 }

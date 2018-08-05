@@ -32,6 +32,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.w3c.dom.Text;
 
@@ -52,8 +53,8 @@ public class ChatInfoFragment extends Fragment {
     private Context context;
     private List<String> memberList;
     private GroupChats selectedChat;
+    private List<GroupChats> allChats;
     private List<Users> allusers;
-    private List<Users> usersList;
 
     private TextView tvMember;
     private ImageView memberPic;
@@ -66,6 +67,7 @@ public class ChatInfoFragment extends Fragment {
     static CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("groupchat");
     private UserFirestoreHelper userFirestoreHelper;
     private GroupChatFirestoreHelper groupChatFirestoreHelper;
+    private FirebaseMessaging firebaseMessaging;
 
 
     public ChatInfoFragment() {
@@ -88,6 +90,7 @@ public class ChatInfoFragment extends Fragment {
         //init firestorehelper
         userFirestoreHelper = new UserFirestoreHelper(this, selectedChat);
         groupChatFirestoreHelper = new GroupChatFirestoreHelper();
+        firebaseMessaging = FirebaseMessaging.getInstance();
 
         //set views
         view = inflater.inflate(R.layout.chat_info_fragment, container, false);
@@ -123,6 +126,7 @@ public class ChatInfoFragment extends Fragment {
 
                         //remove member from selected group chat
                         groupChatFirestoreHelper.removeMember(selectedChat);
+                        firebaseMessaging.unsubscribeFromTopic(selectedChat.getChatId());
                         Intent intent = new Intent(getContext(), MainActivity.class);
                         startActivity(intent);
 
@@ -138,7 +142,9 @@ public class ChatInfoFragment extends Fragment {
         });
 
         //update member list if member is removed/added
+        collectionReference = FirebaseFirestore.getInstance().collection("groupchat");
         final DocumentReference docRef = collectionReference.document(selectedChat.getChatId());
+        allChats = new ArrayList<>();
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot snapshot,
@@ -150,6 +156,18 @@ public class ChatInfoFragment extends Fragment {
 
                 if (snapshot != null && snapshot.exists()) {
                     Log.d(TAG, "Current data: " + snapshot.getData());
+                    String chatId = snapshot.getId();
+                    String chatName = snapshot.getString("chatname");
+                    String chatDesc = snapshot.getString("chatdesc");
+                    String chatSub = snapshot.getString("subject");
+                    // Need to find out how to get
+                    List<String> members = (List<String>) snapshot.get("members");
+                    int memCount = members.size();
+                    String picUrl = snapshot.getString("picUrl");
+
+                    //update list
+                    GroupChats gc = new GroupChats(chatId, chatName, chatDesc,chatSub, memCount, members, picUrl);
+                    userFirestoreHelper = new UserFirestoreHelper(ChatInfoFragment.this,gc);
                     updateTasks();
                     UpdateList(userFirestoreHelper.getMembers());
                 } else {

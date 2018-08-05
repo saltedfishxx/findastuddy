@@ -23,6 +23,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         tools:replace="android:label">
+        <service
+            android:name=".MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -34,8 +40,9 @@
             android:name=".SplashScreen"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
                 <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
@@ -68,7 +75,9 @@
         <activity
             android:name=".PickLocation"
             android:label="@string/title_activity_pick_location" />
-        <activity android:name=".CreateMeetup"></activity>
+        <activity android:name=".CreateMeetup">
+
+        </activity>
         <activity
             android:name=".ChatDetails"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
