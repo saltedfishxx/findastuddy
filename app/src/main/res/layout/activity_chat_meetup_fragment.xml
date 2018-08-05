@@ -1,9 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_color"
+    android:theme="@style/Theme.AppCompat.Light.NoActionBar"
     tools:context=".ChatMeetupFragment">
 
-</android.support.constraint.ConstraintLayout>
+    <!--<android.support.v7.widget.RecyclerView-->
+    <!--android:id="@+id/meetupList"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="@dimen/activity_vertical_margin"-->
+    <!--android:clipToPadding="false"-->
+    <!--android:paddingBottom="@dimen/activity_vertical_margin">-->
+
+    <!--</android.support.v7.widget.RecyclerView>-->
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/meetupList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Meetup is empty" />
+
+    <Button
+        android:id="@+id/CreateMeetup"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:background="@color/text_color"
+        android:elevation="4dp"
+        android:text="Create Meetup"
+        android:textColor="@color/color_white"
+        android:textSize="18sp" />
+
+</RelativeLayout>
+
+
+
+</android.support.v4.widget.NestedScrollView>

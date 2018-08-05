@@ -147,10 +147,10 @@ public class HomeFragment extends Fragment {
             for(GroupChats group : mychats) {
                 firebaseMessaging.subscribeToTopic(group.getChatId());
             }
-            Toast.makeText(getContext(), "notif set up", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "notif set up");
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(getContext(), "notif set up failed", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "notif set up failed");
         }
 
     }
