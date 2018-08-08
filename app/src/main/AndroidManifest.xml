@@ -34,7 +34,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyD4792pPT5gCc8C_zwuQscp5TFMCu2YeYE" />
+            android:value="AIzaSyDhugKm6EOYzONY-FngowIvBr35_n_akOA" />
 
         <activity
             android:name=".SplashScreen"
@@ -44,6 +44,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".Login"
@@ -82,7 +83,6 @@
             android:name=".ChatDetails"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".CreateChatActivity" />
-        <activity android:name=".PickDateTime"></activity>
     </application>
 
 </manifest>
