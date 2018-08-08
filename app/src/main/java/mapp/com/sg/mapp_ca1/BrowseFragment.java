@@ -63,7 +63,6 @@ public class BrowseFragment extends Fragment {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         bRecyclerView.setLayoutManager(layoutManager);
 
-
         //init adapter
         browsechats = new ArrayList<>();
         bAdapter = new BrowseAdapter(getContext(), browsechats);

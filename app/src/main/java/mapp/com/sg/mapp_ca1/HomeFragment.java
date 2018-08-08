@@ -2,12 +2,11 @@ package mapp.com.sg.mapp_ca1;
 
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,6 +36,8 @@ import static android.content.ContentValues.TAG;
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends Fragment {
+
+    private ImageButton helpBtn;
 
     private RecyclerView mRecyclerView;
     private MainAdapter mAdapter;
@@ -64,6 +66,14 @@ public class HomeFragment extends Fragment {
         groupChatFirestoreHelper = new GroupChatFirestoreHelper(this);
         firebaseMessaging = FirebaseMessaging.getInstance();
 
+        //when user presses help icon
+        helpBtn = (ImageButton) view.findViewById(R.id.helpButton);
+        //open help event
+        helpBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent startHelp= new Intent(getContext(), HelpScreen.class);
+                startActivity(startHelp);
+            }});
 
         //init recycler view
         mRecyclerView = (RecyclerView) view.findViewById(R.id.mRecyclerView);
@@ -137,10 +147,10 @@ public class HomeFragment extends Fragment {
             for(GroupChats group : mychats) {
                 firebaseMessaging.subscribeToTopic(group.getChatId());
             }
-            Toast.makeText(getContext(), "notif set up", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "notif set up");
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(getContext(), "notif set up failed", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "notif set up failed");
         }
 
     }
@@ -150,7 +160,6 @@ public class HomeFragment extends Fragment {
         mAdapter.notifyDataSetChanged();
 
     }
-
 
 
 }

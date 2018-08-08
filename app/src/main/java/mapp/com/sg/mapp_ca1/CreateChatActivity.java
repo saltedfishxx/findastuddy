@@ -116,7 +116,8 @@ public class CreateChatActivity extends AppCompatActivity {
             //create groupchat in firestore
             gc.saveData(groupChats);
         }
-        finish();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
 
 

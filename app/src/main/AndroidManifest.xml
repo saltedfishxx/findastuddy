@@ -18,7 +18,7 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/splashscreen25"
-        android:label=""
+        android:label="FindAStuddy"
         android:roundIcon="@drawable/splashscreen25"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
@@ -43,6 +43,8 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.intent.action.MAIN" />
             </intent-filter>
 
         </activity>
@@ -76,13 +78,24 @@
         <activity
             android:name=".PickLocation"
             android:label="@string/title_activity_pick_location" />
-        <activity android:name=".CreateMeetup">
-
-        </activity>
+        <activity android:name=".CreateMeetup" />
         <activity
             android:name=".ChatDetails"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".CreateChatActivity" />
+<<<<<<< HEAD
+=======
+        <activity android:name=".PickDateTime" />
+        <activity
+            android:name=".HelpScreen"
+            android:parentActivityName=".MainActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+>>>>>>> master
     </application>
 
 </manifest>

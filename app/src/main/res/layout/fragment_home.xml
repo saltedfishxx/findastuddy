@@ -18,8 +18,35 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/main_edit"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:title="My Chats"
-            app:titleTextAppearance="@style/Toolbar.TitleText" />
+            >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/chatTitle"
+                    android:layout_toEndOf="@+id/chatdp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="My Chats"
+                    android:textAppearance="@style/Toolbar.TitleText"
+                    android:textColor="@color/color_white"
+                    android:textSize="24sp" />
+
+                <ImageButton
+                    android:id="@+id/helpButton"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:background="@drawable/ic_help_white_24dp" />
+            </RelativeLayout>
+
+        </android.support.v7.widget.Toolbar>
 
         <!-- TODO: Update blank fragment layout -->
         <android.support.v7.widget.RecyclerView

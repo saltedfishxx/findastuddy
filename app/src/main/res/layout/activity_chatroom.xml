@@ -31,10 +31,10 @@
 
             <TextView
                 android:id="@+id/chatTitle"
-                android:layout_toEndOf="@+id/chatdp"
-                android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/chatdp"
                 android:gravity="center_vertical"
                 android:text="yooo"
                 android:textColor="@color/color_white"
@@ -42,10 +42,10 @@
 
             <ImageButton
                 android:id="@+id/infoButton"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:background="@drawable/ic_info_black_24dp" />
 
@@ -58,13 +58,13 @@
         android:id="@+id/recyclerViewTasks"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="48dp"
         android:layout_below="@+id/groupToolBar"
-        app:stackFromEnd="true"
+        android:layout_marginBottom="48dp"
         android:paddingBottom="8dp"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin">
+        android:paddingTop="@dimen/activity_vertical_margin"
+        app:stackFromEnd="true">
 
     </android.support.v7.widget.RecyclerView>
 
@@ -89,10 +89,10 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_toEndOf="@+id/photoPickerButton"
-            android:layout_toStartOf="@+id/send"
             android:layout_height="44dp"
             android:layout_centerInParent="true"
+            android:layout_toEndOf="@+id/photoPickerButton"
+            android:layout_toStartOf="@+id/send"
             android:background="@color/color_white">
 
             <EditText
@@ -102,9 +102,10 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:layout_weight="1"
-                android:textColorHint="@color/light_text"
+                android:hint="Message"
+                android:singleLine="true"
                 android:textColor="@color/grey"
-                android:hint="Message" />
+                android:textColorHint="@color/light_text" />
         </LinearLayout>
 
         <ImageButton
@@ -143,7 +144,7 @@
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
-        android:indeterminate="true"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        android:indeterminate="true" />
 </RelativeLayout>
