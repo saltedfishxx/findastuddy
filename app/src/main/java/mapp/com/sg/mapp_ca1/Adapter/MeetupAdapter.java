@@ -1,0 +1,106 @@
+package mapp.com.sg.mapp_ca1.Adapter;
+
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.List;
+
+import co.ceryle.segmentedbutton.SegmentedButtonGroup;
+import mapp.com.sg.mapp_ca1.Firestore.MeetupFirestoreHelper;
+import mapp.com.sg.mapp_ca1.Models.Meetup;
+import mapp.com.sg.mapp_ca1.R;
+
+public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MeetupViewHolder>{
+    private List<Meetup> meetupList;
+    private Context mContext;
+    private MeetupFirestoreHelper meetupFirestoreHelper;
+
+
+    public MeetupAdapter(Context context, List<Meetup> meetupList){
+        this.mContext = context;
+        this.meetupList = meetupList;
+    }
+
+    public Context getmContext() {
+        return mContext;
+    }
+
+    @NonNull
+    @Override
+    public MeetupAdapter.MeetupViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(mContext)
+                .inflate(R.layout.layout_meetup, parent, false);
+        return new MeetupAdapter.MeetupViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MeetupAdapter.MeetupViewHolder holder, int position) {
+        Meetup meetup = meetupList.get(position);
+        //Setting content for each view
+        holder.txtMeetupName.setText(meetup.getMeetupName());
+        holder.txtDateTime.setText(meetup.getDateTime().toString());
+        holder.txtNoPpl.setText(meetup.getNoPpl());
+        holder.txtLocation.setText(meetup.getLocation().toString());
+    }
+
+    @Override
+    public int getItemCount() {
+        //returns the number of items in the list
+        if (meetupList != null) {
+            return meetupList.size();
+        } else {
+            return 0;
+        }
+    }
+
+    //clearall, additem, and addallitems are methods used to update the list in the adapter
+    public void clearAll() {
+        if (meetupList != null) {
+            meetupList.clear();
+        }
+    }
+
+    public void addItem(Meetup m) {
+        if (meetupList != null) {
+            meetupList.add(m);
+            notifyItemChanged(meetupList.size() - 1);
+        }
+    }
+
+    public void addAllItems(List<Meetup> meetUps) {
+        for (Meetup m : meetUps) {
+            addItem(m);
+        }
+    }
+
+    public class MeetupViewHolder extends RecyclerView.ViewHolder {
+
+        TextView txtMeetupName, txtNoPpl, txtDateTime, txtLocation;
+        SegmentedButtonGroup sbg;
+
+        public MeetupViewHolder(View itemView) {
+            super(itemView);
+            txtMeetupName = (TextView)itemView.findViewById(R.id.tvMeetupName);
+            txtNoPpl = (TextView)itemView.findViewById(R.id.tvNoPpl);
+            txtDateTime = (TextView)itemView.findViewById(R.id.tvDateTime);
+            txtLocation = (TextView)itemView.findViewById(R.id.tvLocation);
+            sbg = (SegmentedButtonGroup)itemView.findViewById(R.id.btnGrp);
+            sbg.setOnClickedButtonPosition(new SegmentedButtonGroup.OnClickedButtonPosition() {
+                @Override
+                public void onClickedButtonPosition(int position) {
+                    //not going decrease 1 from noPpl
+                    if(position == 0){
+                        int pos = getAdapterPosition();
+                        final Meetup meetup = meetupList.get(pos);
+                        
+                    }
+                }
+            });
+        }
+    }
+}

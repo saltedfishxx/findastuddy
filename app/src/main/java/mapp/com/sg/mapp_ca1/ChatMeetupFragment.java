@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import mapp.com.sg.mapp_ca1.Adapter.MemberAdapter;
+import mapp.com.sg.mapp_ca1.Firestore.MeetupFirestoreHelper;
 import mapp.com.sg.mapp_ca1.Models.GroupChats;
 
 
@@ -23,6 +24,10 @@ public class ChatMeetupFragment extends Fragment{
     private View view;
     private Context context;
     private Button createMeetup;
+    private RecyclerView mRecyclerView;
+
+    private MeetupFirestoreHelper meetupFirestoreHelper;
+
 
     @Nullable
     @Override

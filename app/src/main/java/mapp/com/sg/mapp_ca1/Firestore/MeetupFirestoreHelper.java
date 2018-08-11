@@ -99,5 +99,22 @@ public class MeetupFirestoreHelper {
 
     }
 
+    public void updateData(Meetup m){
+        meetupCollection.document(m.getMeetId())
+                .update("noPpl",m.getNoPpl()
+                ).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG,"DocumentSnapshot successfully updated");
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG,"Error updating document");
+                    }
+                });
+    }
+
 
 }

@@ -49,5 +49,7 @@ dependencies {
     //Location
     implementation 'com.google.android.gms:play-services-places:15.0.1'
     implementation 'com.google.android.gms:play-services-location:15.0.1'
+    //Button Group
+    implementation 'com.github.ceryle:SegmentedButton:v1.0'
 }
 apply plugin: 'com.google.gms.google-services'

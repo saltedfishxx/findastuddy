@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginTop="@dimen/activity_minor_margin"
+    app:cardCornerRadius="5dp"  
+    >
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/activity_minor_margin"
+        android:background="@color/cardview_light_background">
+
+        <LinearLayout
+            android:id="@+id/mTop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="left"
+            android:padding="23dp">
+
+            <TextView
+                android:id="@+id/tvMeetupName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Study Meetup"
+                android:textColor="@color/text_color"
+                android:textSize="25sp"
+
+                />
+
+            <TextView
+                android:id="@+id/tvNoPpl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:text="3 are going"
+                android:textColor="@color/light_grey"/>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/viewSep"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/mTop"
+            android:background="@color/light_grey" />
+
+        <TextView
+            android:id="@+id/tvDateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Friday, 18/05/2018\n3.30PM to 5.30PM"
+            android:textColor="@color/grey"
+            android:layout_below="@+id/viewSep"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_minor_margin"
+            android:textSize="18sp"
+            android:drawableStart="@drawable/clock"
+            android:drawablePadding="2dp"
+            />
+
+        <TextView
+            android:id="@+id/tvLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/pink_location"
+            android:text="10 Lorong Mambong, Coffee Bean"
+            android:textColor="@color/grey"
+            android:layout_below="@id/tvDateTime"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:textSize="18sp"
+            android:drawablePadding="2dp"/>
+
+        <co.ceryle.segmentedbutton.SegmentedButtonGroup
+            android:id="@+id/btnGrp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvLocation"
+            android:layout_margin="10dp"
+            app:sbg_animateSelector="bounce"
+            app:sbg_animateSelectorDuration="500"
+            app:sbg_backgroundColor="@color/light_grey"
+            app:sbg_dividerColor="@color/main_edit"
+            app:sbg_dividerPadding="10dp"
+            app:sbg_dividerSize="1dp"
+            app:sbg_position="1"
+            app:sbg_radius="2dp"
+            app:sbg_ripple="true"
+            app:sbg_rippleColor="@color/main_edit"
+            app:sbg_selectorColor="@color/main_edit"
+            app:sbg_selectorTextColor="@color/color_white"
+            app:sbg_shadow="true"
+            app:sbg_shadowElevation="3dp"
+            app:sbg_shadowMargin="4dp">
+
+
+
+            <Button
+                android:id="@+id/btnNotGoing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="10dp"
+                android:text="Not Going"
+                android:textAllCaps="false"
+                android:drawableLeft="@drawable/cancel"/>
+
+            <Button
+                android:id="@+id/btnGoing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="10dp"
+                android:text="Going"
+                android:drawableLeft="@drawable/tick"
+                android:textAllCaps="false"/>
+
+        </co.ceryle.segmentedbutton.SegmentedButtonGroup>
+
+        
+        
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

@@ -83,9 +83,6 @@
             android:name=".ChatDetails"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".CreateChatActivity" />
-<<<<<<< HEAD
-=======
-        <activity android:name=".PickDateTime" />
         <activity
             android:name=".HelpScreen"
             android:parentActivityName=".MainActivity">
@@ -95,7 +92,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
->>>>>>> master
     </application>
 
 </manifest>
