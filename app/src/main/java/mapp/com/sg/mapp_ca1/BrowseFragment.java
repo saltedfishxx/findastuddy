@@ -103,10 +103,4 @@ public class BrowseFragment extends Fragment {
         bAdapter.notifyDataSetChanged();
 
     }
-
-
-
-
-
-
 }

@@ -15,10 +15,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
+import mapp.com.sg.mapp_ca1.Adapter.BrowseAdapter;
 import mapp.com.sg.mapp_ca1.Adapter.MeetupAdapter;
 import mapp.com.sg.mapp_ca1.Adapter.MemberAdapter;
 import mapp.com.sg.mapp_ca1.Firestore.MeetupFirestoreHelper;
 import mapp.com.sg.mapp_ca1.Models.GroupChats;
+import mapp.com.sg.mapp_ca1.Models.Meetup;
 
 
 public class ChatMeetupFragment extends Fragment{
@@ -26,9 +32,10 @@ public class ChatMeetupFragment extends Fragment{
     private Context context;
     private Button createMeetup;
     private RecyclerView mRecyclerView;
+    private MeetupAdapter meetupAdapter;
+    private ArrayList<Meetup> browseMeetups;
 
     private MeetupFirestoreHelper meetupFirestoreHelper;
-    private MeetupAdapter meetupAdapter;
 
 
     @Nullable
@@ -47,7 +54,25 @@ public class ChatMeetupFragment extends Fragment{
                 startActivity(intent);
             }
         });
+
+        // Create recycler view
+        browseMeetups = new ArrayList<>();
+        meetupAdapter = new MeetupAdapter(getContext(), browseMeetups);
+        mRecyclerView.setAdapter(meetupAdapter);
+
         return view;
+    }
+
+    //updates adapter list
+    public void UpdateList(List<Meetup> meetups) {
+        meetupAdapter.clearAll();
+        meetupAdapter.addAllItems(meetups);
+
+    }
+
+    public void updateTasks() {
+        mRecyclerView.getRecycledViewPool().clear();
+        meetupAdapter.notifyDataSetChanged();
     }
 
 }

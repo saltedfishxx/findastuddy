@@ -171,7 +171,6 @@ public class CreateMeetup extends AppCompatActivity implements DatePickerDialog.
         }
     }
 
-
     public void onClickCreateMeet(View view) {
         AddMeetUp();
     }

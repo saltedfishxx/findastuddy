@@ -65,7 +65,6 @@ public class  GroupChatFirestoreHelper {
                                 String chatName = document.getString("chatname");
                                 String chatDesc = document.getString("chatdesc");
                                 String chatSub = document.getString("subject");
-                                // Need to find out how to get
                                 List<String> members = (List<String>) document.get("members");
                                 int memCount = members.size();
                                 String picUrl = document.getString("picUrl");
