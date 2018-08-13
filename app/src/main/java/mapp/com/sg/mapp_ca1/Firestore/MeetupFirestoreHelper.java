@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import mapp.com.sg.mapp_ca1.ChatMeetupFragment;
 import mapp.com.sg.mapp_ca1.CreateMeetup;
 import mapp.com.sg.mapp_ca1.Models.Meetup;
 
@@ -35,8 +36,8 @@ public class MeetupFirestoreHelper {
     private Meetup meetup;
 
     //constructor to read data from meetup collection
-    public MeetupFirestoreHelper(CreateMeetup cm) {
-        final CreateMeetup createMeetup = cm;
+    public MeetupFirestoreHelper(ChatMeetupFragment cm) {
+        final ChatMeetupFragment createMeetupFragment = cm;
 
         meetupCollection
                 .get()
@@ -53,7 +54,10 @@ public class MeetupFirestoreHelper {
                                 String meetupName = document.getString("meetupName");
                                 List<String> peopleGoing = (List<String>) document.get("peopleGoing");
                                 Meetup meetup = new Meetup(null, meetupName, date, groupChatId, location, peopleGoing.size(), peopleGoing);
+                                listMeetup.add(meetup);
                             }
+                            createMeetupFragment.UpdateList(listMeetup);
+                            createMeetupFragment.updateTasks();
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
@@ -100,24 +104,9 @@ public class MeetupFirestoreHelper {
     }
 
     public void updateData(Meetup m) {
-        // update who is going
+        // update who is going & number
         meetupCollection.document(m.getMeetId())
-                .update("peopleGoing", m.getUserids()
-                ).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG, "DocumentSnapshot successfully updated");
-            }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error updating document");
-                    }
-                });
-        // Update no of people going
-        meetupCollection.document(m.getMeetId())
-                .update("noPpl", m.getNoPpl()
+                .update("peopleGoing", m.getUserids(),"noPpl", m.getNoPpl()
                 ).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

@@ -45,7 +45,7 @@ public class ChatMeetupFragment extends Fragment{
             context = getContext();
         }
         view = inflater.inflate(R.layout.activity_chat_meetup_fragment, container, false);
-
+        meetupFirestoreHelper = new MeetupFirestoreHelper(this);
         createMeetup = view.findViewById(R.id.CreateMeetup);
         createMeetup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,12 +56,18 @@ public class ChatMeetupFragment extends Fragment{
         });
 
         // Create recycler view
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(layoutManager);
+
+        //init Adapter
         browseMeetups = new ArrayList<>();
         meetupAdapter = new MeetupAdapter(getContext(), browseMeetups);
         mRecyclerView.setAdapter(meetupAdapter);
 
         return view;
     }
+
 
     //updates adapter list
     public void UpdateList(List<Meetup> meetups) {
