@@ -53,8 +53,8 @@ public class MeetupFirestoreHelper {
                                 GeoPoint location = document.getGeoPoint("location");
                                 String meetupName = document.getString("meetupName");
                                 List<String> peopleGoing = (List<String>) document.get("peopleGoing");
-                                Meetup meetup = new Meetup(null, meetupName, date, groupChatId, location, peopleGoing.size(), peopleGoing);
-                                listMeetup.add(meetup);
+                                    meetup = new Meetup(meetId, meetupName, date, groupChatId, location, peopleGoing.size(), peopleGoing);
+                                    listMeetup.add(meetup);
                             }
                             createMeetupFragment.UpdateList(listMeetup);
                             createMeetupFragment.updateTasks();
