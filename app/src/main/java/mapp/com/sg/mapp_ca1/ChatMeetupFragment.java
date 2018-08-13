@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,10 @@ import java.util.List;
 
 import mapp.com.sg.mapp_ca1.Adapter.MeetupAdapter;
 import mapp.com.sg.mapp_ca1.Firestore.MeetupFirestoreHelper;
+import mapp.com.sg.mapp_ca1.Models.GroupChats;
 import mapp.com.sg.mapp_ca1.Models.Meetup;
+
+import static android.content.ContentValues.TAG;
 
 
 public class ChatMeetupFragment extends Fragment {
@@ -28,6 +32,7 @@ public class ChatMeetupFragment extends Fragment {
     private RecyclerView aRecyclerView;
     private MeetupAdapter meetupAdapter;
     private ArrayList<Meetup> browseMeetups;
+    private GroupChats selectedChat;
 
     private MeetupFirestoreHelper meetupFirestoreHelper;
 
@@ -38,8 +43,16 @@ public class ChatMeetupFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             context = getContext();
         }
+
+        //get data from activity to current fragment
+        if (getArguments() != null) {
+            selectedChat = (GroupChats) getArguments().getSerializable("chat2");
+        } else {
+            Log.d(TAG, "chat not retrieved");
+        }
+
         view = inflater.inflate(R.layout.activity_chat_meetup_fragment, container, false);
-        meetupFirestoreHelper = new MeetupFirestoreHelper(this);
+        meetupFirestoreHelper = new MeetupFirestoreHelper(this, selectedChat);
 
         createMeetup = view.findViewById(R.id.CreateMeetup);
 

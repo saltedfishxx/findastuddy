@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import co.ceryle.segmentedbutton.SegmentedButtonGroup;
@@ -25,7 +26,7 @@ public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MeetupView
 
     public MeetupAdapter(Context context, List<Meetup> meetupList){
         this.mContext = context;
-        this.meetupList = meetupList;
+        this.meetupList = new ArrayList<>();
     }
 
     public Context getmContext() {
@@ -46,7 +47,8 @@ public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MeetupView
         //Setting content for each view
         holder.txtMeetupName.setText(meetup.getMeetupName());
         holder.txtDateTime.setText(meetup.getDateTime().toString());
-        holder.txtNoPpl.setText(meetup.getNoPpl());
+        String ppl = String.valueOf(meetup.getNoPpl());
+        holder.txtNoPpl.setText(ppl);
         holder.txtLocation.setText(meetup.getLocation().toString());
     }
 
@@ -84,7 +86,7 @@ public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MeetupView
 
         TextView txtMeetupName, txtNoPpl, txtDateTime, txtLocation;
         SegmentedButtonGroup sbg;
-        int pos = getAdapterPosition();
+        int pos = getAdapterPosition() +1;
         final Meetup meetup = meetupList.get(pos);
         int num = meetup.getNoPpl();
 
@@ -112,8 +114,7 @@ public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MeetupView
             meetupFirestoreHelper = new MeetupFirestoreHelper();
 
             meetupFirestoreHelper.updateData(updatedMeetup);
-            Intent intent = new Intent(getmContext(), ChatMeetupFragment.class);
-            getmContext().startActivity(intent);
+//
         }
     }
 }

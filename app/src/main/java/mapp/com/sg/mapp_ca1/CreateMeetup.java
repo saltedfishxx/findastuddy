@@ -54,7 +54,7 @@ public class CreateMeetup extends AppCompatActivity implements DatePickerDialog.
         setContentView(R.layout.activity_create_meetup);
 
         Bundle bundle = getIntent().getExtras();
-        selectedChatId = (GroupChats) bundle.getSerializable("selectedChats");
+        //selectedChatId = (GroupChats) bundle.getSerializable("selectedChats");
 
 
         name = (EditText) findViewById(R.id.editMeetup);

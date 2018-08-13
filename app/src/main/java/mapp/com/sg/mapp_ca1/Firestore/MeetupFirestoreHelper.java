@@ -21,7 +21,9 @@ import java.util.Map;
 
 import mapp.com.sg.mapp_ca1.ChatMeetupFragment;
 import mapp.com.sg.mapp_ca1.CreateMeetup;
+import mapp.com.sg.mapp_ca1.Models.GroupChats;
 import mapp.com.sg.mapp_ca1.Models.Meetup;
+import mapp.com.sg.mapp_ca1.Models.Users;
 
 import static android.support.constraint.Constraints.TAG;
 
@@ -33,11 +35,13 @@ public class MeetupFirestoreHelper {
 
     static CollectionReference meetupCollection = FirebaseFirestore.getInstance().collection("Meetup");
     private List<Meetup> listMeetup;
+    private List<Meetup> filteredList;
     private Meetup meetup;
 
     //constructor to read data from meetup collection
-    public MeetupFirestoreHelper(ChatMeetupFragment cm) {
+    public MeetupFirestoreHelper(ChatMeetupFragment cm, GroupChats gc) {
         final ChatMeetupFragment createMeetupFragment = cm;
+        final GroupChats selectedchat = gc;
 
         meetupCollection
                 .get()
@@ -45,6 +49,7 @@ public class MeetupFirestoreHelper {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         listMeetup = new ArrayList<>();
+                        filteredList = new ArrayList<>();
                         if (task.isSuccessful()) {
                             for (DocumentSnapshot document : task.getResult()) {
                                 String meetId = document.getId();
@@ -56,7 +61,12 @@ public class MeetupFirestoreHelper {
                                     meetup = new Meetup(meetId, meetupName, date, groupChatId, location, peopleGoing.size(), peopleGoing);
                                     listMeetup.add(meetup);
                             }
-                            createMeetupFragment.UpdateList(listMeetup);
+                            for (Meetup u : listMeetup) {
+                              if(u.getGroupChatID().equals(selectedchat.getChatId())){
+                                  filteredList.add(u);
+                              }
+                            }
+                            createMeetupFragment.UpdateList(filteredList);
                             createMeetupFragment.updateTasks();
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());

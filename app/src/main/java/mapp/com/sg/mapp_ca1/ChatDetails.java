@@ -110,7 +110,11 @@ public class ChatDetails extends AppCompatActivity  {
                     chatInfoFragment.setArguments(bundle);
                     return chatInfoFragment;
                 case 1:
-                    return new ChatMeetupFragment();
+                    Bundle bundle2 = new Bundle();
+                    bundle2.putSerializable("chat2", selectedChat);
+                    ChatMeetupFragment chatMeetupFragment = new ChatMeetupFragment();
+                    chatMeetupFragment.setArguments(bundle2);
+                    return chatMeetupFragment;
                 default:
                     return null;
             }
