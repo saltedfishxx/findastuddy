@@ -52,6 +52,10 @@ public class ChatMeetupFragment extends Fragment {
         }
 
         view = inflater.inflate(R.layout.activity_chat_meetup_fragment, container, false);
+        //get data from activity to current fragment
+        if (getArguments() != null) {
+            selectedChat = (GroupChats) getArguments().getSerializable("chat2");
+        } else Log.d(TAG, "chat not retrieved");
         meetupFirestoreHelper = new MeetupFirestoreHelper(this, selectedChat);
 
         createMeetup = view.findViewById(R.id.CreateMeetup);
@@ -65,21 +69,20 @@ public class ChatMeetupFragment extends Fragment {
         });
 
         //init recycler view
-        aRecyclerView = (RecyclerView) view.findViewById(R.id.meetupList);
+        aRecyclerView = view.findViewById(R.id.meetupList);
 
         // Create recycler view
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         aRecyclerView.setLayoutManager(layoutManager);
 
         //init Adapter
         browseMeetups = new ArrayList<>();
-        meetupAdapter = new MeetupAdapter(getContext(), browseMeetups);
+        meetupAdapter = new MeetupAdapter(context, browseMeetups);
         aRecyclerView.setAdapter(meetupAdapter);
 
         return view;
     }
-
 
     //updates adapter list
     public void UpdateList(List<Meetup> meetups) {

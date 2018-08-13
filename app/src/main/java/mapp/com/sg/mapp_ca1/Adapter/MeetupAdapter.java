@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.ceryle.segmentedbutton.SegmentedButtonGroup;
+import mapp.com.sg.mapp_ca1.ChatDetails;
 import mapp.com.sg.mapp_ca1.ChatMeetupFragment;
 import mapp.com.sg.mapp_ca1.Firestore.MeetupFirestoreHelper;
 import mapp.com.sg.mapp_ca1.Models.Meetup;
@@ -110,11 +111,11 @@ public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MeetupView
                 }
             });
             Meetup updatedMeetup = new Meetup(meetup.getMeetId(), meetup.getMeetupName(),
-                    meetup.getDateTime(),meetup.getGroupChatID(),meetup.getLocation(),num, meetup.getUserids());
+                    meetup.getDateTime(),meetup.getGroupChatID(),meetup.getLocation(), num, meetup.getUserids());
             meetupFirestoreHelper = new MeetupFirestoreHelper();
 
             meetupFirestoreHelper.updateData(updatedMeetup);
-//
+
         }
     }
 }

@@ -66,31 +66,12 @@ public class CreateMeetup extends AppCompatActivity implements DatePickerDialog.
         firebaseAuth = FirebaseAuth.getInstance();
         uid = firebaseAuth.getCurrentUser().getUid();
 
+        // get current group id
+        Bundle bundle = getIntent().getExtras();
+        selectedChatId = (GroupChats) bundle.getSerializable("selectedChats");
+        groupChatID = selectedChatId.getChatId();
 
     }
-
-//    View.OnClickListener clickListener = new View.OnClickListener() {
-//        @Override
-//        public void onClick(View v) {
-//            switch(v.getId()){
-//                //TODO: code methods for each buttons' onclick
-//                case(R.id.btnMeetupDateTime):
-//                    Intent i = new Intent(getApplicationContext(),PickDateTime.class);
-//                    startActivity(i);
-//                    break;
-//
-//                case(R.id.btnMeetupLocation):
-//                    Intent i2 = new Intent(getApplicationContext(),PickLocation.class);
-//                    startActivity(i2);
-//                    break;
-//
-//                case(R.id.btnCreateMeetup):
-//                    AddMeetUp();
-//
-//
-//            }
-//        }
-//    };
 
     //Adding meetup to FireStore
     private void AddMeetUp() {

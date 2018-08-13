@@ -87,7 +87,6 @@ public class ChatDetails extends AppCompatActivity  {
         finish();
     }
 
-
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -104,10 +103,10 @@ public class ChatDetails extends AppCompatActivity  {
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("chat", selectedChat);
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putSerializable("chat", selectedChat);
                     ChatInfoFragment chatInfoFragment = new ChatInfoFragment();
-                    chatInfoFragment.setArguments(bundle);
+                    chatInfoFragment.setArguments(bundle1);
                     return chatInfoFragment;
                 case 1:
                     Bundle bundle2 = new Bundle();
@@ -120,7 +119,6 @@ public class ChatDetails extends AppCompatActivity  {
             }
 
         }
-
 
         @Override
         public int getCount() {

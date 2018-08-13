@@ -31,6 +31,7 @@ import static android.support.constraint.Constraints.TAG;
  * This firestorehelper is used to read, write and update meetups
  */
 
+
 public class MeetupFirestoreHelper {
 
     static CollectionReference meetupCollection = FirebaseFirestore.getInstance().collection("Meetup");
@@ -58,8 +59,8 @@ public class MeetupFirestoreHelper {
                                 GeoPoint location = document.getGeoPoint("location");
                                 String meetupName = document.getString("meetupName");
                                 List<String> peopleGoing = (List<String>) document.get("peopleGoing");
-                                    meetup = new Meetup(meetId, meetupName, date, groupChatId, location, peopleGoing.size(), peopleGoing);
-                                    listMeetup.add(meetup);
+                                meetup = new Meetup(meetId, meetupName, date, groupChatId, location, peopleGoing.size(), peopleGoing);
+                                listMeetup.add(meetup);
                             }
                             for (Meetup u : listMeetup) {
                               if(u.getGroupChatID().equals(selectedchat.getChatId())){
@@ -68,6 +69,7 @@ public class MeetupFirestoreHelper {
                             }
                             createMeetupFragment.UpdateList(filteredList);
                             createMeetupFragment.updateTasks();
+                            createMeetupFragment.UpdateList(filteredList);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
@@ -84,10 +86,9 @@ public class MeetupFirestoreHelper {
         Map<String, Object> data = new HashMap<>();
         data.put("meetupName", m.getMeetupName());
         data.put("date", m.getDateTime());
-        data.put("groupChatId", m.getGroupChatID());
+        data.put("groupChatID", m.getGroupChatID());
         data.put("location", m.getLocation());
         data.put("peopleGoing", m.getUserids());
-        data.put("noPpl", m.getNoPpl());
         meetupCollection.document(m.getMeetId()).set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -116,7 +117,7 @@ public class MeetupFirestoreHelper {
     public void updateData(Meetup m) {
         // update who is going & number
         meetupCollection.document(m.getMeetId())
-                .update("peopleGoing", m.getUserids(),"noPpl", m.getNoPpl()
+                .update("peopleGoing", m.getUserids()
                 ).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
