@@ -1,6 +1,7 @@
 package mapp.com.sg.mapp_ca1.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import co.ceryle.segmentedbutton.SegmentedButtonGroup;
+import mapp.com.sg.mapp_ca1.ChatMeetupFragment;
 import mapp.com.sg.mapp_ca1.Firestore.MeetupFirestoreHelper;
 import mapp.com.sg.mapp_ca1.Models.Meetup;
 import mapp.com.sg.mapp_ca1.R;
@@ -82,6 +84,9 @@ public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MeetupView
 
         TextView txtMeetupName, txtNoPpl, txtDateTime, txtLocation;
         SegmentedButtonGroup sbg;
+        int pos = getAdapterPosition();
+        final Meetup meetup = meetupList.get(pos);
+        int num = meetup.getNoPpl();
 
         public MeetupViewHolder(View itemView) {
             super(itemView);
@@ -95,12 +100,20 @@ public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MeetupView
                 public void onClickedButtonPosition(int position) {
                     //not going decrease 1 from noPpl
                     if(position == 0){
-                        int pos = getAdapterPosition();
-                        final Meetup meetup = meetupList.get(pos);
-                        
+                        num--;
+                    //going increase 1 from noPpl
+                    }else if(position == 1){
+                        num++;
                     }
                 }
             });
+            Meetup updatedMeetup = new Meetup(meetup.getMeetId(),meetup.getDateTime(),
+                    meetup.getGroupChatID(),meetup.getLocation(),meetup.getMeetupName(),num);
+            meetupFirestoreHelper = new MeetupFirestoreHelper();
+
+            meetupFirestoreHelper.updateData(updatedMeetup);
+            Intent intent = new Intent(getmContext(), ChatMeetupFragment.class);
+            getmContext().startActivity(intent);
         }
     }
 }

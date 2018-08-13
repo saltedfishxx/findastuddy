@@ -116,6 +116,12 @@ public class CreateMeetup extends AppCompatActivity implements DatePickerDialog.
         }
         Meetup meetup = new Meetup(null, meetupName, meetupDateTime, groupChatID, location, peopleGoing.size(), peopleGoing);
         meetupFirestoreHelper.saveData(meetup);
+<<<<<<< Updated upstream
+=======
+
+
+
+>>>>>>> Stashed changes
     }
 
 

@@ -9,9 +9,13 @@ import java.util.List;
 public class Meetup implements Serializable{
     //Meetup ID in firestore
     private String meetId;
+<<<<<<< Updated upstream
     //meetup name
     private String meetupName;
     //meetup date
+=======
+    //meetup date and time
+>>>>>>> Stashed changes
     private Date dateTime;
     //Selected chat id for meetup
     private String groupChatID;
@@ -26,7 +30,10 @@ public class Meetup implements Serializable{
     // Constructor
     public Meetup(String meetId, String meetupName, Date dateTime, String groupChatID, GeoPoint location, int noPpl, List<String> userids) {
         this.meetId = meetId;
+<<<<<<< Updated upstream
         this.meetupName = meetupName;
+=======
+>>>>>>> Stashed changes
         this.dateTime = dateTime;
         this.groupChatID = groupChatID;
         this.location = location;
