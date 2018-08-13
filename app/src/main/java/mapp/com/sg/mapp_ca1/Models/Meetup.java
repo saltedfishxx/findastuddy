@@ -4,84 +4,62 @@ import com.google.firebase.firestore.GeoPoint;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class Meetup implements Serializable{
     //Meetup ID in firestore
     private String meetId;
+    //meetup name
+    private String meetupName;
     //meetup date
     private Date dateTime;
     //Selected chat id for meetup
     private String groupChatID;
     //selected location
     private GeoPoint location;
-    //meetup name
-    private String meetupName;
     //number of people going for meetup
     private int noPpl;
+    // userid of users going
+    private List<String> userids;
 
-    public Meetup() {
 
-    }
-
-    //constructor
-    public Meetup(String meetId, Date dateTime, String groupChatID, GeoPoint location, String meetupName, int noPpl) {
+    // Constructor
+    public Meetup(String meetId, String meetupName, Date dateTime, String groupChatID, GeoPoint location, int noPpl, List<String> userids) {
         this.meetId = meetId;
-
+        this.meetupName = meetupName;
         this.dateTime = dateTime;
         this.groupChatID = groupChatID;
         this.location = location;
-        this.meetupName = meetupName;
         this.noPpl = noPpl;
+        this.userids = userids;
     }
 
-    // Getters() and Setters()
+    // Getter () and Setter()
+    public String getMeetId() {return meetId;}
 
-    public Date getDateTime() {
-        return dateTime;
-    }
+    public void setMeetId(String meetId) {this.meetId = meetId;}
 
-    public void setDateTime(Date dateTime) {
-        this.dateTime = dateTime;
-    }
+    public String getMeetupName() {return meetupName;}
 
-    public String getGroupChatID() {
-        return groupChatID;
-    }
+    public void setMeetupName(String meetupName) {this.meetupName = meetupName;}
 
-    public void setGroupChatID(String groupChatID) {
-        this.groupChatID = groupChatID;
-    }
+    public Date getDateTime() {return dateTime;}
 
-    public GeoPoint getLocation() {
-        return location;
-    }
+    public void setDateTime(Date dateTime) {this.dateTime = dateTime;}
 
-    public void setLocation(GeoPoint location) {
-        this.location = location;
-    }
+    public String getGroupChatID() {return groupChatID;}
 
-    public String getMeetupName() {
-        return meetupName;
-    }
+    public void setGroupChatID(String groupChatID) {this.groupChatID = groupChatID;}
 
-    public void setMeetupName(String meetupName) {
-        this.meetupName = meetupName;
-    }
+    public GeoPoint getLocation() {return location;}
 
-    public int getNoPpl() {
-        return noPpl;
-    }
+    public void setLocation(GeoPoint location) {this.location = location;}
 
-    public void setNoPpl(int noPpl) {
-        this.noPpl = noPpl;
-    }
+    public int getNoPpl() {return noPpl;}
 
-    public String getMeetId() {
-        return meetId;
-    }
+    public void setNoPpl(int noPpl) {this.noPpl = noPpl;}
 
-    public void setMeetId(String meetId) {
-        this.meetId = meetId;
-    }
+    public List<String> getUserids() {return userids;}
 
+    public void setUserids(List<String> userids) {this.userids = userids;}
 }
