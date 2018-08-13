@@ -107,8 +107,8 @@ public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MeetupView
                     }
                 }
             });
-            Meetup updatedMeetup = new Meetup(meetup.getMeetId(),meetup.getDateTime(),
-                    meetup.getGroupChatID(),meetup.getLocation(),meetup.getMeetupName(),num);
+            Meetup updatedMeetup = new Meetup(meetup.getMeetId(), meetup.getMeetupName(),
+                    meetup.getDateTime(),meetup.getGroupChatID(),meetup.getLocation(),num, meetup.getUserids());
             meetupFirestoreHelper = new MeetupFirestoreHelper();
 
             meetupFirestoreHelper.updateData(updatedMeetup);

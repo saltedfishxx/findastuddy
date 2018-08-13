@@ -31,7 +31,7 @@ public class ChatMeetupFragment extends Fragment{
     private View view;
     private Context context;
     private Button createMeetup;
-    private RecyclerView mRecyclerView;
+    private RecyclerView aRecyclerView;
     private MeetupAdapter meetupAdapter;
     private ArrayList<Meetup> browseMeetups;
 
@@ -55,18 +55,24 @@ public class ChatMeetupFragment extends Fragment{
             }
         });
 
+        //init recycler view
+        aRecyclerView = (RecyclerView) view.findViewById(R.id.meetupList);
+
         // Create recycler view
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(layoutManager);
+        aRecyclerView.setLayoutManager(layoutManager);
 
         //init Adapter
         browseMeetups = new ArrayList<>();
         meetupAdapter = new MeetupAdapter(getContext(), browseMeetups);
-        mRecyclerView.setAdapter(meetupAdapter);
+        aRecyclerView.setAdapter(meetupAdapter);
 
         return view;
     }
+
+    // onClickCreateMeetup
+
 
 
     //updates adapter list
@@ -77,7 +83,7 @@ public class ChatMeetupFragment extends Fragment{
     }
 
     public void updateTasks() {
-        mRecyclerView.getRecycledViewPool().clear();
+        aRecyclerView.getRecycledViewPool().clear();
         meetupAdapter.notifyDataSetChanged();
     }
 
