@@ -64,6 +64,7 @@ public class ChatMeetupFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), CreateMeetup.class);
+                intent.putExtra("selectedChat", selectedChat);
                 startActivity(intent);
             }
         });

@@ -53,10 +53,6 @@ public class CreateMeetup extends AppCompatActivity implements DatePickerDialog.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_meetup);
 
-        Bundle bundle = getIntent().getExtras();
-        //selectedChatId = (GroupChats) bundle.getSerializable("selectedChats");
-
-
         name = (EditText) findViewById(R.id.editMeetup);
         meetupDateAndTime = (Button) findViewById(R.id.btnMeetupDateTime);
         meetupLocation = (Button) findViewById(R.id.btnMeetupLocation);
@@ -68,7 +64,7 @@ public class CreateMeetup extends AppCompatActivity implements DatePickerDialog.
 
         // get current group id
         Bundle bundle = getIntent().getExtras();
-        selectedChatId = (GroupChats) bundle.getSerializable("selectedChats");
+        selectedChatId = (GroupChats) bundle.getSerializable("selectedChat");
         groupChatID = selectedChatId.getChatId();
 
     }
