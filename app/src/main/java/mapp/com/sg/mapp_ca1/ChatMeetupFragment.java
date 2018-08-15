@@ -105,10 +105,10 @@ public class ChatMeetupFragment extends Fragment {
                             System.err.println("Listen failed:" + e);
                             return;
                         }
+                        browseMeetups = new ArrayList<>();
+                        filteredList = new ArrayList<>();
                         for (DocumentSnapshot document : queryDocumentSnapshots) {
                             if (document.getData() != null) {
-                                browseMeetups = new ArrayList<>();
-                                filteredList = new ArrayList<>();
                                 String meetId = document.getId();
                                 Date date = document.getDate("date");
                                 String groupChatId = document.getString("groupChatID");
@@ -118,15 +118,15 @@ public class ChatMeetupFragment extends Fragment {
                                 Meetup meetup = new Meetup(meetId, meetupName, date, groupChatId, location, peopleGoing.size(), peopleGoing);
                                 browseMeetups.add(meetup);
                             }
-                            for (Meetup u : browseMeetups) {
-                                if (u.getGroupChatID().equals(selectedChat.getChatId())) {
-                                    filteredList.add(u);
-                                }
-                            }
-                            updateTasks();
-                            UpdateList(filteredList);
-                            Log.d("Update", "Success");
                         }
+                        for (Meetup u : browseMeetups) {
+                            if (u.getGroupChatID().equals(selectedChat.getChatId())) {
+                                filteredList.add(u);
+                            }
+                        }
+                        updateTasks();
+                        UpdateList(filteredList);
+                        Log.d("Update", "Success");
                     }
 
                 });

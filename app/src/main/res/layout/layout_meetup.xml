@@ -6,13 +6,13 @@
     android:layout_marginRight="@dimen/activity_horizontal_margin"
     android:layout_marginLeft="@dimen/activity_horizontal_margin"
     android:layout_marginTop="@dimen/activity_minor_margin"
+    android:background="@color/color_white"
     app:cardCornerRadius="5dp"  
     >
     
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/activity_minor_margin"
         android:background="@color/cardview_light_background">
 
         <LinearLayout
