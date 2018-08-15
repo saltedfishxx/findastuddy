@@ -59,7 +59,8 @@ public class MeetupFirestoreHelper {
                                 GeoPoint location = document.getGeoPoint("location");
                                 String meetupName = document.getString("meetupName");
                                 List<String> peopleGoing = (List<String>) document.get("peopleGoing");
-                                meetup = new Meetup(meetId, meetupName, date, groupChatId, location, peopleGoing.size(), peopleGoing);
+                                String address = document.getString("address");
+                                meetup = new Meetup(meetId, meetupName, date, groupChatId, location, peopleGoing.size(), peopleGoing,address);
                                 listMeetup.add(meetup);
                             }
                             for (Meetup u : listMeetup) {
@@ -89,6 +90,7 @@ public class MeetupFirestoreHelper {
         data.put("groupChatID", m.getGroupChatID());
         data.put("location", m.getLocation());
         data.put("peopleGoing", m.getUserids());
+        data.put("address",m.getAddress());
         meetupCollection.document().set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

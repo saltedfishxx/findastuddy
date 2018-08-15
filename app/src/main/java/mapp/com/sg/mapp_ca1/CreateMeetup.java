@@ -2,10 +2,12 @@ package mapp.com.sg.mapp_ca1;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Fragment;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -40,6 +42,7 @@ public class CreateMeetup extends AppCompatActivity implements DatePickerDialog.
     private String groupChatID, dateDisplay, timeDisplay, uid;
     private GeoPoint location;
     private String meetupName;
+    private String address;
     private int noPpl;
     private GroupChats selectedChatId;
     private DatePickerDialog datePickerDialog;
@@ -68,6 +71,21 @@ public class CreateMeetup extends AppCompatActivity implements DatePickerDialog.
         groupChatID = selectedChatId.getChatId();
 
     }
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        meetupDateAndTime.setText(dayOfMonth + "/" + (month + 1) + "/" + year + "   " + meetupDateAndTime.getText());
+        mDate = Calendar.getInstance();
+        mDate.set(year, month, dayOfMonth);
+    }
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        mTime = Calendar.getInstance();
+        mTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        mTime.set(Calendar.MINUTE, minute);
+
+        meetupDateAndTime.setText(String.format("%02d:%02d", hourOfDay, minute));
+
+    }
 
     //Adding meetup to FireStore
     private void AddMeetUp() {
@@ -91,7 +109,7 @@ public class CreateMeetup extends AppCompatActivity implements DatePickerDialog.
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Meetup meetup = new Meetup(null, meetupName, meetupDateTime, groupChatID, location, peopleGoing.size(), peopleGoing);
+        Meetup meetup = new Meetup(null, meetupName, meetupDateTime, groupChatID, location, peopleGoing.size(), peopleGoing,address);
         meetupFirestoreHelper.saveData(meetup);
         finish();
     }
@@ -115,12 +133,7 @@ public class CreateMeetup extends AppCompatActivity implements DatePickerDialog.
 
     }
 
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        meetupDateAndTime.setText(dayOfMonth + "/" + (month + 1) + "/" + year + "   " + meetupDateAndTime.getText());
-        mDate = Calendar.getInstance();
-        mDate.set(year, month, dayOfMonth);
-    }
+
 
     public void onClickLocation(View view) {
 //        Intent i = new Intent(getApplicationContext(),PickLocation.class);
@@ -142,9 +155,10 @@ public class CreateMeetup extends AppCompatActivity implements DatePickerDialog.
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
-                String address = String.format("%s", place.getAddress());
+                address = String.format("%s", place.getAddress());
                 location = new GeoPoint(place.getLatLng().latitude, place.getLatLng().longitude);
                 meetupLocation.setText(address);
+
             }
         }
     }
@@ -153,13 +167,5 @@ public class CreateMeetup extends AppCompatActivity implements DatePickerDialog.
         AddMeetUp();
     }
 
-    @Override
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        mTime = Calendar.getInstance();
-        mTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
-        mTime.set(Calendar.MINUTE, minute);
 
-        meetupDateAndTime.setText(String.format("%02d:%02d", hourOfDay, minute));
-
-    }
 }

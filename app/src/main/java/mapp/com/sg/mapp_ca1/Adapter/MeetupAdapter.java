@@ -53,7 +53,7 @@ public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MeetupView
             holder.txtDateTime.setText(meetup.getDateTime().toString());
         }
         if(meetup.getLocation() != null){
-            holder.txtLocation.setText(meetup.getLocation().toString());
+            holder.txtLocation.setText(meetup.getAddress());
         }
         String ppl = String.valueOf(meetup.getNoPpl());
         holder.txtNoPpl.setText(ppl + " people are going");
@@ -109,17 +109,20 @@ public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MeetupView
                 @Override
                 public void onClickedButtonPosition(int position) {
                     //not going decrease 1 from noPpl
-                    if(position == 0){
-                        num--;
-                    //going increase 1 from noPpl
-                    }else if(position == 1){
-                        num++;
+                    while(num > 0) {
+                        if (position == 0) {
+                            num--;
+                            //going increase 1 from noPpl
+                        } else if (position == 1) {
+                            num++;
+                        }
                     }
                     txtNoPpl.setText(num + " people are going");
                 }
             });
+
             Meetup updatedMeetup = new Meetup(meetup.getMeetId(), meetup.getMeetupName(),
-                    meetup.getDateTime(),meetup.getGroupChatID(),meetup.getLocation(), num, meetup.getUserids());
+                    meetup.getDateTime(),meetup.getGroupChatID(),meetup.getLocation(), num, meetup.getUserids(),meetup.getAddress());
             meetupFirestoreHelper = new MeetupFirestoreHelper();
 
             meetupFirestoreHelper.updateData(updatedMeetup);

@@ -115,7 +115,8 @@ public class ChatMeetupFragment extends Fragment {
                                 GeoPoint location = document.getGeoPoint("location");
                                 String meetupName = document.getString("meetupName");
                                 List<String> peopleGoing = (List<String>) document.get("peopleGoing");
-                                Meetup meetup = new Meetup(meetId, meetupName, date, groupChatId, location, peopleGoing.size(), peopleGoing);
+                                String address = document.getString("address");
+                                Meetup meetup = new Meetup(meetId, meetupName, date, groupChatId, location, peopleGoing.size(), peopleGoing,address);
                                 browseMeetups.add(meetup);
                             }
                         }

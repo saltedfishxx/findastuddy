@@ -22,10 +22,12 @@ public class Meetup implements Serializable{
     private int noPpl;
     // userid of users going
     private List<String> userids;
+    // address of location
+    private String address;
 
 
     // Constructor
-    public Meetup(String meetId, String meetupName, Date dateTime, String groupChatID, GeoPoint location, int noPpl, List<String> userids) {
+    public Meetup(String meetId, String meetupName, Date dateTime, String groupChatID, GeoPoint location, int noPpl, List<String> userids, String address) {
         this.meetId = meetId;
         this.meetupName = meetupName;
         this.dateTime = dateTime;
@@ -33,7 +35,9 @@ public class Meetup implements Serializable{
         this.location = location;
         this.noPpl = noPpl;
         this.userids = userids;
+        this.address = address;
     }
+
 
     // Getter () and Setter()
     public String getMeetId() {return meetId;}
@@ -63,4 +67,13 @@ public class Meetup implements Serializable{
     public List<String> getUserids() {return userids;}
 
     public void setUserids(List<String> userids) {this.userids = userids;}
+
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }
