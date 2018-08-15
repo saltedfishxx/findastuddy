@@ -56,7 +56,7 @@ public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MeetupView
             holder.txtLocation.setText(meetup.getLocation().toString());
         }
         String ppl = String.valueOf(meetup.getNoPpl());
-        holder.txtNoPpl.setText(ppl);
+        holder.txtNoPpl.setText(ppl + " people are going");
 
     }
 
@@ -115,6 +115,7 @@ public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MeetupView
                     }else if(position == 1){
                         num++;
                     }
+                    txtNoPpl.setText(num + " people are going");
                 }
             });
             Meetup updatedMeetup = new Meetup(meetup.getMeetId(), meetup.getMeetupName(),
