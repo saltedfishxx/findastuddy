@@ -89,7 +89,7 @@ public class MeetupFirestoreHelper {
         data.put("groupChatID", m.getGroupChatID());
         data.put("location", m.getLocation());
         data.put("peopleGoing", m.getUserids());
-        meetupCollection.document(m.getMeetId()).set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+        meetupCollection.document().set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d("FirestoreHelper", "Document has been saved");

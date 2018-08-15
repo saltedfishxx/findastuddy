@@ -14,13 +14,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import mapp.com.sg.mapp_ca1.Adapter.MeetupAdapter;
 import mapp.com.sg.mapp_ca1.Firestore.MeetupFirestoreHelper;
 import mapp.com.sg.mapp_ca1.Models.GroupChats;
 import mapp.com.sg.mapp_ca1.Models.Meetup;
+import mapp.com.sg.mapp_ca1.Models.Message;
 
 import static android.content.ContentValues.TAG;
 
@@ -31,9 +43,9 @@ public class ChatMeetupFragment extends Fragment {
     private Button createMeetup;
     private RecyclerView aRecyclerView;
     private MeetupAdapter meetupAdapter;
-    private ArrayList<Meetup> browseMeetups;
+    private ArrayList<Meetup> browseMeetups, filteredList;
     private GroupChats selectedChat;
-
+    private CollectionReference collectionReference;
     private MeetupFirestoreHelper meetupFirestoreHelper;
 
 
@@ -60,7 +72,7 @@ public class ChatMeetupFragment extends Fragment {
 
         createMeetup = view.findViewById(R.id.CreateMeetup);
 
-        createMeetup.setOnClickListener(new View.OnClickListener(){
+        createMeetup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), CreateMeetup.class);
@@ -82,8 +94,46 @@ public class ChatMeetupFragment extends Fragment {
         meetupAdapter = new MeetupAdapter(context, browseMeetups);
         aRecyclerView.setAdapter(meetupAdapter);
 
+        collectionReference = FirebaseFirestore.getInstance().collection("Meetup");
+
+        //update messages
+        collectionReference
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            System.err.println("Listen failed:" + e);
+                            return;
+                        }
+                        for (DocumentSnapshot document : queryDocumentSnapshots) {
+                            if (document.getData() != null) {
+                                browseMeetups = new ArrayList<>();
+                                filteredList = new ArrayList<>();
+                                String meetId = document.getId();
+                                Date date = document.getDate("date");
+                                String groupChatId = document.getString("groupChatID");
+                                GeoPoint location = document.getGeoPoint("location");
+                                String meetupName = document.getString("meetupName");
+                                List<String> peopleGoing = (List<String>) document.get("peopleGoing");
+                                Meetup meetup = new Meetup(meetId, meetupName, date, groupChatId, location, peopleGoing.size(), peopleGoing);
+                                browseMeetups.add(meetup);
+                            }
+                            for (Meetup u : browseMeetups) {
+                                if (u.getGroupChatID().equals(selectedChat.getChatId())) {
+                                    filteredList.add(u);
+                                }
+                            }
+                            updateTasks();
+                            UpdateList(filteredList);
+                            Log.d("Update", "Success");
+                        }
+                    }
+
+                });
+
         return view;
     }
+
 
     //updates adapter list
     public void UpdateList(List<Meetup> meetups) {

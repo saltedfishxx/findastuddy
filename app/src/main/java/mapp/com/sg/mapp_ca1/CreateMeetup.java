@@ -82,7 +82,7 @@ public class CreateMeetup extends AppCompatActivity implements DatePickerDialog.
         String date = dateFormat.format(mDate.getTime());
         final SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm");
         String time = timeFormat.format(mTime.getTime());
-        String dateTime = (date + time);
+        String dateTime = (date + " " + time);
         try {
             final SimpleDateFormat finalFormat = new SimpleDateFormat("dd/MM/yy hh:mm");
             Date parsedDate = finalFormat.parse(dateTime);
@@ -93,6 +93,7 @@ public class CreateMeetup extends AppCompatActivity implements DatePickerDialog.
         }
         Meetup meetup = new Meetup(null, meetupName, meetupDateTime, groupChatID, location, peopleGoing.size(), peopleGoing);
         meetupFirestoreHelper.saveData(meetup);
+        finish();
     }
 
 

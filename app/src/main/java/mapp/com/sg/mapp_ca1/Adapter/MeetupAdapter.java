@@ -46,11 +46,18 @@ public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MeetupView
     public void onBindViewHolder(@NonNull MeetupAdapter.MeetupViewHolder holder, int position) {
         Meetup meetup = meetupList.get(position);
         //Setting content for each view
-        holder.txtMeetupName.setText(meetup.getMeetupName());
-        holder.txtDateTime.setText(meetup.getDateTime().toString());
+        if(meetup.getMeetupName() != null){
+            holder.txtMeetupName.setText(meetup.getMeetupName());
+        }
+        if(meetup.getDateTime() != null){
+            holder.txtDateTime.setText(meetup.getDateTime().toString());
+        }
+        if(meetup.getLocation() != null){
+            holder.txtLocation.setText(meetup.getLocation().toString());
+        }
         String ppl = String.valueOf(meetup.getNoPpl());
         holder.txtNoPpl.setText(ppl);
-        holder.txtLocation.setText(meetup.getLocation().toString());
+
     }
 
     @Override
